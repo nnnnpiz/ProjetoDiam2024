@@ -1,0 +1,181 @@
+{% extends 'romax/base_page.html' %}
+
+ {% block css_of_rest_of_page %}
+         #welcome_div {
+            width : 70%;
+            & #cross_div {
+                display: flex;
+                justify-content: flex-end;
+                & svg {
+                    color: red;
+                    margin: 5px;
+                }
+            }
+            & #welcome_msg_div {
+                & #welcome_msg  {
+                    font-size: large;
+                    color: #725500;
+                }
+            }
+            margin: 10px;
+            border-radius: 12px;
+            background-color: #fff3cd;
+            padding: 5px 0 20px 0;//TODO ADD
+        }
+
+     #carrossel_outer_div  {
+        display: grid;
+        grid-template-columns: 5% 1fr 5%;
+        grid-template-rows: 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+
+         & #left_button {
+            grid-area: 1 / 1 / 2 / 2;
+            width: 100%
+         }
+         & #Carrossel {
+            grid-area: 1 / 2 / 2 / 3;
+
+            display: flex;
+            flex-direction: row;
+         }
+         & #right_button {
+            grid-area: 1 / 3 / 2 / 4;
+            width: 100%
+         }
+     }
+        {% endblock %}
+
+{% block rest_of_page %}
+     <main>
+
+    {% if not request.user.is_authenticated %}
+        {# TODO inverte condition once there are accounts in the website #}
+        <div class="horizontal_center">
+            <div id="welcome_div">
+                <div id="cross_div">
+                    {# TODO Make this reusable ( don't forget it's css ) #}
+                    <svg onclick="document.getElementById('welcome_div').hidden = true"
+                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                </div>
+                <div id="welcome_msg_div">
+                    <h3 id="welcome_msg" class="horizontal_center"></h3>
+                    <script>
+                        function dar_dia_tarde_ou_noite() {
+                            /*
+                               Method responsible for deciding if to say
+                               "Bom dia", "Boa tarde" or "Boa noite"
+                                depending on user local hour!!
+                             */
+                            //TODO corrigir qnd é periodo do dia, tarde, noite
+                            function between(n, min, max) {
+                                return min <= n && n <= max;
+                            }
+
+                            const curr_hora = new Date().getHours();
+                            if (between(curr_hora, 6, 12))
+                                return "Bom dia"
+                            else if (between(curr_hora, 12, 20))
+                                return 'Boa tarde'
+                            else
+                                return "Boa noite"
+                        }
+
+                        document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()}, {1º e ultimo nome} estamos gratos de o ver novamente!`
+                    </script>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+     <div id="carrossel_outer_div" style="display: flex"> {# Carrossel #}
+         <div id="left_button" onclick="onclick_left_button()">
+             {# TODO mudar cor center e size #}
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+            </svg>
+         </div>
+         <div id="Carrossel">
+             <script>
+                const Carrossel = document.getElementById("Carrossel");
+                const how_many_at_a_time = 4;
+                let first_showed = 1;
+                let last_showed = 1 + how_many_at_a_time - 1;
+                for(let i = 1; i < 10; i++){
+                    // TODO tirar a duvida no TODO file para decidir como fazer isto
+                    Carrossel.appendChild(create_property_cards(i))
+                }
+
+                function create_property_cards(i) {
+                      const div = document.createElement('div');
+                        div.style = "background-color: red; height: 500px; width: 200px"
+                        div.style.backgroundColor ='grey'
+                        if(i  >  how_many_at_a_time ){
+                            div.hidden = true;
+                        }
+                        div.innerText= i
+                    return div;
+                }
+
+                 function onclick_left_button(){
+                    Carrossel.children[--first_showed].hidden = false;
+                    Carrossel.children[last_showed--].hidden = true;
+                }
+                function onclick_right_button(){
+                     Carrossel.children[first_showed++].hidden = true;
+                    Carrossel.children[++last_showed].hidden = false;
+                }
+
+            </script>
+         </div>
+         <div id="right_button" onclick=" onclick_right_button()">
+             {#  TODO mudar cor center e size #}
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+         </div>
+     </div>
+     <div class="accordion" id="accordionExample">
+
+   <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Pesquisar
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+          <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
+
+          <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
+            <div class="mb-3">
+              <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
+              <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
+            </div>
+              <div class="row">
+                  <div class="col">
+                    <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                    <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
+                  </div>
+              </div>
+
+            </form>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+    </main>
+{%  endblock %}

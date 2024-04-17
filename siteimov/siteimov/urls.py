@@ -24,6 +24,10 @@ urlpatterns = [
     #perguntar ao mendy se é suposto ir logo p /romax ou pode ficar no localhost... talvez duvida p prof
     #TODO meter isto nas duv file
     path('admin/', admin.site.urls),
+
+
+
+
 ]
 
 if settings.DEBUG:
