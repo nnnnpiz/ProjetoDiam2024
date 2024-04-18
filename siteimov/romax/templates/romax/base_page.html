@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>ROMAX</title>
 
     {#  Bootstrap links #}
@@ -27,22 +28,30 @@
             justify-content: center;
         }
 
+
+
+
+
         {# TODO name this better #}
+
         {% block css_of_rest_of_page %}
+
         {% endblock %}
     </style>
 </head>
 <body>
     <nav id="Header" class="navbar bg-body-tertiary">
         {# INFO: This nav is the header #}
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+      <div class="container-fluid" >
+        <a class="navbar-brand" href="{% url 'romax:landing_page' %}">
             {% load static %}
             <img src="{% static 'romax/images/LOGO_ROMAX_NEW.png' %}" alt="Logo"  class="d-inline-block align-text-top">
         </a>
       </div>
     </nav>
+
     {% block rest_of_page %}
+
     {%  endblock %}
 </body>
 </html>
