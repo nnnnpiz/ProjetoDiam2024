@@ -20,6 +20,8 @@
 
         #Header {
             background-color: #725500;
+            height: 10vh;
+
         }
 
         .horizontal_center {
@@ -28,19 +30,18 @@
             justify-content: center;
         }
 
-        {#  TODO name this better  #}
 
         {% block css_of_rest_of_page %}
         {% endblock %}
     </style>
 </head>
 <body>
-    <nav id="Header" class="navbar bg-body-tertiary">
+    <nav id="Header" class="navbar bg-body-tertiary" >
         {# INFO: This nav is the header #}
       <div class="container-fluid" >
         <a class="navbar-brand" href="{% url 'romax:landing_page' %}">
-            {% load static %}
-            <img src="{% static 'romax/images/LOGO_ROMAX_NEW.png' %}" alt="Logo"  class="d-inline-block align-text-top">
+           {% load static %}
+           <img src="{% static 'romax/images/LOGO_ROMAX_NEW.png' %}" alt="Logo" style="height: 7vh" {# TODO dar um fix nisto #} class="d-inline-block align-text-top">
         </a>
       </div>
     </nav>
