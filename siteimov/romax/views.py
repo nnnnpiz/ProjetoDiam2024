@@ -8,6 +8,9 @@ from django.template import loader
 def landing_page(request):
     return render(request,'romax/landing_page.html')
 
+def propriedade(request):
+    return render(request, 'romax/propriedade.html')
+
     #TODO fix that
 def pesquisa_avancada(request):
     #pagina com form para pesquisa
