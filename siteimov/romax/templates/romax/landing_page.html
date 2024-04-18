@@ -74,9 +74,8 @@
                              */
                             //TODO corrigir qnd é periodo do dia, tarde, noite
                             function between(n, min, max) {
-                                return min <= n && n <= max;
+                                return min <= n && n < max;
                             }
-
                             const curr_hora = new Date().getHours();
                             if (between(curr_hora, 6, 12))
                                 return "Bom dia"

@@ -27,16 +27,20 @@
             justify-content: center;
         }
 
-        {# TODO name this better #}
+        {#  TODO name this better  #}
+
+
         {% block css_of_rest_of_page %}
         {% endblock %}
+
     </style>
 </head>
+
 <body>
     <nav id="Header" class="navbar bg-body-tertiary">
         {# INFO: This nav is the header #}
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'romax:resultados_pesquisa' %}">
             {% load static %}
             <img src="{% static 'romax/images/LOGO_ROMAX_NEW.png' %}" alt="Logo"  class="d-inline-block align-text-top">
         </a>
