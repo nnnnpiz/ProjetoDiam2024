@@ -49,7 +49,6 @@
 
 {% block rest_of_page %}
      <main>
-
     {% if not request.user.is_authenticated %}
         {# TODO inverte condition once there are accounts in the website #}
         <div class="horizontal_center">
@@ -92,9 +91,8 @@
             </div>
         </div>
     {% endif %}
-
-     <div id="carrossel_outer_div" style="display: flex"> {# Carrossel #}
-         <div id="left_button" onclick="onclick_left_button()">
+     <div id="carrossel_outer_div"> {# Carrossel #}
+         <div id="left_button" onclick="on_click_left_button()">
              {# TODO mudar cor center e size #}
              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
@@ -102,38 +100,48 @@
          </div>
          <div id="Carrossel">
              <script>
-                const Carrossel = document.getElementById("Carrossel");
-                const how_many_at_a_time = 4;
-                let first_showed = 1;
-                let last_showed = 1 + how_many_at_a_time - 1;
-                for(let i = 1; i < 10; i++){
-                    // TODO tirar a duvida no TODO file para decidir como fazer isto
-                    Carrossel.appendChild(create_property_cards(i))
+                const CARROSSEL = document.getElementById("Carrossel");
+                const HOW_MANY_AT_A_TIME = 4;
+                const HOW_MANY_TOTAL = 10; //TODO change this, this is temp
+                const CARROSSEL_ELEM_LIST = []
+
+                let first_showed = 0;
+                let last_showed = HOW_MANY_AT_A_TIME - 1;
+
+                for(let i = 0; i < HOW_MANY_TOTAL; i++){
+                    CARROSSEL_ELEM_LIST.push(create_property_cards(i))
+                }
+                for(let i = 0; i < HOW_MANY_AT_A_TIME; i++){
+                    CARROSSEL.appendChild(CARROSSEL_ELEM_LIST[i])
                 }
 
                 function create_property_cards(i) {
                       const div = document.createElement('div');
                         div.style = "background-color: red; height: 500px; width: 200px"
                         div.style.backgroundColor ='grey'
-                        if(i  >  how_many_at_a_time ){
-                            div.hidden = true;
-                        }
                         div.innerText= i
                     return div;
                 }
 
-                 function onclick_left_button(){
-                    Carrossel.children[--first_showed].hidden = false;
-                    Carrossel.children[last_showed--].hidden = true;
+                 function on_click_left_button(){
+                    first_showed=--first_showed >= 0? first_showed: HOW_MANY_TOTAL - 1
+                     CARROSSEL.prepend(CARROSSEL_ELEM_LIST[first_showed])
+                     CARROSSEL.removeChild(CARROSSEL.lastChild)
+                     //TODO fix line above
+                    last_showed=  --last_showed >= 0? last_showed: HOW_MANY_TOTAL - 1
                 }
-                function onclick_right_button(){
-                     Carrossel.children[first_showed++].hidden = true;
-                    Carrossel.children[++last_showed].hidden = false;
-                }
+                function on_click_right_button(){
+                     first_showed= ++first_showed < HOW_MANY_TOTAL? first_showed : 0
+                     last_showed= ++last_showed < HOW_MANY_TOTAL? last_showed : 0
+                     //TODO fix line above
 
+                     CARROSSEL.removeChild(CARROSSEL.firstChild)
+                     CARROSSEL.append(CARROSSEL_ELEM_LIST[last_showed])
+
+                }
             </script>
          </div>
-         <div id="right_button" onclick=" onclick_right_button()">
+         <div id="right_button" onclick=" on_click_right_button()">
              {#  TODO mudar cor center e size #}
              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
