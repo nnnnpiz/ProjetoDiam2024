@@ -6,8 +6,22 @@
 
 {% block rest_of_page %}
 
-<main>
-    ola
+<main>{% load static %}
+
+    <script>
+        if ("content" in document.createElement("template")) {
+            let template = document.querySelector('#card_for_highlighted_properties');
+            const new_card = template.content.cloneNode(true);
+            const new_card_body = new_card.children[0]
+            new_card_body.querySelector('img').src = ''
+            new_card_body.querySelector('.card-title').innerText = "title"
+            new_card_body.querySelector('.card-text').innerText = "title"
+
+            document.querySelector('main').appendChild(new_card)
+        } else {
+            //TODO
+        }
+    </script>
     {% comment %}
         depois qd BD pronta, percorrer o total de
         propriedades na BD e lista las nesta pagina!
