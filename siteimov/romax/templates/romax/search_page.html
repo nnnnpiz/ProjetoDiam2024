@@ -1,0 +1,108 @@
+
+{% extends 'romax/base_page.html' %}
+{% block rest_of_page %}
+    <nav>
+        <form action="{% url 'romax:filtrarpesquisa' %}" name="filtros" method="post">
+            <div>
+                <label for="distrito"  class="label">Distrito</label>
+                <input type="text" class="form-control" id="distrito">
+            </div>
+            <div>
+                <label for="cidade"  class="label">Cidade</label>
+                <input type="text" class="form-control" id="cidade">
+            </div>
+            <div>
+                <label for="freguesia"  class="label">Freguesia</label>
+                <input type="text" class="form-control" id="freguesia">
+            </div>
+            <div>
+                <label class="label" for="tipopropriedade">Tipo de propriedade</label>
+                <select class="form-control" id="tipopropriedade">
+                    <option value="0">Apartamento</option>
+                    <option value="1">Moradia</option>
+                    <option value="2">Outro</option>
+                </select>
+            </div>
+            <div>
+                <label class="label" for="subtipopropriedade">Subtipo de propriedade</label>
+                <select class="form-control" id="subtipopropriedade">
+                </select>
+            </div>
+            <div>
+                <label class="label" for="classeenergetica">Classe energética:</label>
+                <select class="form-control" id="classeenergetica">
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="B-">B-</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+            <div>
+                <label for="numeroquartos" class="label">Número de quartos</label>
+                <input type="number" class="form-control" id="numeroquartos" max="2">
+                <label for="numerowcs" class="label">Número de casas de banho</label>
+                <input type="number" class="form-control" id="numerowcs" max="2">
+            </div>
+            <div>
+                <h5>Preço:</h5>
+                <br>
+                <label for="maxpreco" class="label">Máx</label>
+                <input type="number" min="0" class="form-control" id="maxpreco">
+                <label for="minpreco" class="label">Min</label>
+                <input type="number" min="0" class="form-control" id="minpreco">
+            </div>
+            <div>
+                <h5>Área:</h5>
+                <br>
+                <label for="maxarea" class="label">Máx</label>
+                <input type="number" min="0" class="form-control" id="maxarea">
+                <label for="minarea" class="label">Min</label>
+                <input type="number" min="0" class="form-control" id="minarea">
+            </div>
+            <div>
+                <h5>Mobilado:</h5>
+                <label for="mobilia" class="label">Sim</label>
+                <input id="mobilia" type="radio" class="form-control" value="true">
+                <label for="smobilia" class="label">Não</label>
+                <input id="smobilia" type="radio" class="form-control" value="false">
+            </div>
+            <div>
+                <h5>Preço negociável:</h5>
+                <label for="negociavel" class="label">Sim</label>
+                <input id="negociavel" type="radio" class="form-control" value="true">
+                <label for="snegociavel" class="label">Não</label>
+                <input id="snegociavel" type="radio" class="form-control" value="false">
+            </div>
+            <div>
+                <h5>Animais de estimação:</h5>
+                <label for="animais" class="label">Sim</label>
+                <input id="animais" type="radio" class="form-control" value="true">
+                <label for="sanimais" class="label">Não</label>
+                <input id="sanimais" type="radio" class="form-control" value="false">
+            </div>
+            <input type="submit=" class="submitButton" value="Filtrar">
+        </form>
+        <form action="{% url 'ordenarpesquisa' %}" name="ordenacao" method="post">
+            <div>
+                <label class="label" for="ordenar">Classe energética:</label>
+                <select class="form-control" id="ordenar">
+                    <option value="0">Preço ascendente</option>
+                    <option value="1">Preço descendente</option>
+                    <option value="2">Maior área</option>
+                    <option value="3">Menor área</option>
+                    <option value="4">Mais recente</option>
+                    <option value="5">Mais antigo</option>
+                </select>
+            </div>
+        </form>
+    </nav>
+
+    <main>
+
+        {% for
+    </main>
+

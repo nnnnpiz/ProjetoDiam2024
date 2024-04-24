@@ -19,10 +19,11 @@ import datetime
 #    def __str__(self):
 #        return self.opcao_texto
 
-
+def Q():
+    return
 #
 #
-#
+# mudei os models antonio so para testar config
 #
 #
 #
