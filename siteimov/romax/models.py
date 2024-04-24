@@ -18,13 +18,6 @@ import datetime
 #    votos = models.IntegerField(default=0)
 #    def __str__(self):
 #        return self.opcao_texto
-
-def Q():
-    return
-
-def A():
-    return
-#
 #
 # mudei os models antonio so para testar config
 #
