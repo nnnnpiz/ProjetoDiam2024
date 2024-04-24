@@ -21,6 +21,9 @@ import datetime
 
 def Q():
     return
+
+def A():
+    return
 #
 #
 # mudei os models antonio so para testar config
