@@ -14,8 +14,8 @@ ESTADOS_CIVIS =  {
 }
 CLASSES_ENERGETICAS = {1: 'A+', 2: 'A', 3: 'B', 4: 'B-', 5: 'C', 6: 'D', 7: 'E'}
 class BasicUser(User):
-    NomeCompleto = CharField(max=MAX_NAME_LEN, unique=true)
-    Email= EmailField(unique=true) # Acho que ja existe na super class
+    NomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    Email= models.EmailField(unique=True) # Acho que ja existe na super class
 
     # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
     Idade = models.PositiveSmallIntegerField()
@@ -23,21 +23,21 @@ class BasicUser(User):
     #NIF, CC
 
 class Propriedade(models.Model):
-    Id = BigAutoField()
-    Animals = BooleanField()
+    Id = models.BigAutoField(primary_key=True)
+    Animals = models.BooleanField()
     #TODO TipoDePropriedade antonio WTF you wanted here ?
-    DataDeCriacao= models.DateTimeField(auto_now_add=true)
+    DataDeCriacao= models.DateTimeField(auto_now_add=True)
     #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
-    CodigoPostal = models.CharField(max=8)
-    Morada = models.CharField(max=MAX_MORADA_LEN)
+    CodigoPostal = models.CharField(max_length=8)
+    Morada = models.CharField(max_length=MAX_MORADA_LEN)
     NumQuartos = models.PositiveSmallIntegerField()
     Area = models.FloatField()
     AnoConstrucao = models.PositiveSmallIntegerField()
-    Mobilada = BooleanField()
-    Negociavel = BooleanField()
-    Descricao = TextField()
+    Mobilada = models.BooleanField()
+    Negociavel = models.BooleanField()
+    Descricao = models.TextField()
     NumWCs = models.PositiveSmallIntegerField()
     ClasseEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS)
     #EstadoAnuncio TODO
-    Titulo = models.CharField(max=MAX_TITULO_LEN)
-    Highlighted = BooleanField()
+    Titulo = models.CharField(max_length=MAX_TITULO_LEN)
+    Highlighted = models.BooleanField()
