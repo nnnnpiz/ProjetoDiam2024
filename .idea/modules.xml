@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../PRIMACASA/.idea/PRIMACASA.iml" filepath="$PROJECT_DIR$/../PRIMACASA/.idea/PRIMACASA.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/siteimov.iml" filepath="$PROJECT_DIR$/.idea/siteimov.iml" />
     </modules>
   </component>

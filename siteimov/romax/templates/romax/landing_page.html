@@ -2,7 +2,7 @@
 
 {% block css_of_rest_of_page %}
          #welcome_div {
-            width : 70%;
+            width : 50%;
             & #cross_div {
                 display: flex;
                 justify-content: flex-end;
@@ -32,7 +32,6 @@
                 color: #FAB605;
                 margin-top: 20px;
                 margin-bottom: 20px;
-
             }
 
             & #left_button {
@@ -63,7 +62,6 @@
 {% endblock %}
 
 {% block rest_of_page %}
-     <main>
     {% if not request.user.is_authenticated %}
         {# TODO inverte condition once there are accounts in the website #}
         <div class="horizontal_center">
@@ -98,23 +96,23 @@
                             else
                                 return "Boa noite"
                         }
-
                         document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()}, {1º e ultimo nome} estamos gratos de o ver novamente!`
                     </script>
                 </div>
             </div>
         </div>
     {% endif %}
-     <div id="carrossel_outer_div"> {# Carrossel #}
+    <div class="horizontal_center">
+         <div id="carrossel_outer_div"> {# Carrossel #}
          <template id="card_for_highlighted_properties">
-             <div  class="card" style="width: 18rem;">
+             <div  class="card" > {# TODO tirar isto do inline CSS #}
               <img  class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <p class="card-text"></p>
               </div>
               <div class="card-footer text-body-secondary">
-                  <span id="City"></span><span id="Price" style="float: right"></span>
+                  <span></span><span style="float: right"></span>
               </div>
             </div>
          </template>
@@ -139,26 +137,29 @@
                 const CARROSSEL = document.getElementById("Carrossel");
                 const HOW_MANY_AT_A_TIME = 4;
                 const HOW_MANY_TOTAL = 10; //TODO change this, this is temp
-                const CARROSSEL_ELEM_LIST = [];
+                const SHIFT_PERIOD = 5000; //TODO
+
+                const CARROSSEL_ELEM_LIST = {{ highlighted_properties }}.map(i => {
+                    //TODO acabar qunado for a altura
+                    let template = document.querySelector('#card_for_highlighted_properties');
+                    const new_card = template.content.cloneNode(true).children[0];
+                    new_card.querySelector('img').src = '/imagem_propriedade/' +  'Logo.png'
+                    new_card.querySelector('.card-title').innerText = 'Titulo' + i
+                    new_card.querySelector('.card-text').innerText = "descrição até caber e remover resto da string"
+                    new_card.querySelector('.card-footer').children[0].innerText= 'Cidade'
+                    new_card.querySelector('.card-footer').children[1].innerText= 'Preço ' + '€'
+                    return new_card;
+                })
 
                 let first_showed = 0;
                 let last_showed = HOW_MANY_AT_A_TIME - 1;
 
-                for( i of {{ properties|safe }} ){
-                    CARROSSEL_ELEM_LIST.push(create_property_cards(i))
-                }
+                setInterval(on_click_right_button, SHIFT_PERIOD)
+
                 for(let i = 0; i < HOW_MANY_AT_A_TIME; i++){
                     CARROSSEL.appendChild(CARROSSEL_ELEM_LIST[i])
                 }
-                function create_property_cards(i) {
-                    //TODO acabar qunado for a altura
-                    let template = document.querySelector('#card_for_highlighted_properties');
-                    const new_card = template.content.cloneNode(true).children[0];
-                    new_card.querySelector('img').src = ''
-                    new_card.querySelector('.card-title').innerText = i
-                    new_card.querySelector('.card-text').innerText = "title"
-                    return new_card;
-                }
+
                  function on_click_left_button(){
                     first_showed=--first_showed >= 0? first_showed: HOW_MANY_TOTAL - 1
                      console.log(CARROSSEL_ELEM_LIST.length)
@@ -174,40 +175,38 @@
                      CARROSSEL.append(CARROSSEL_ELEM_LIST[last_showed])
                 }
             </script>
-     </div>
-     <hr>
-     <div class="accordion" id="accordionExample">
-         <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Pesquisar
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                  <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
-                  <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
-                    <div class="mb-3">
-                      <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
-                      <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
-                    </div>
-                      <div class="row">
-                          <div class="col">
-                            <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                            <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
-                          </div>
-                      </div>
-
-                    </form>
-              </div>
-            </div>
-         </div>
+        </div>
     </div>
-</div>
-
-    </main>
+    <div class="horizontal_center">
+         <div style="width: 50%"  class="accordion" id="accordionExample">
+             <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Pesquisar
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                      <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
+                      <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
+                        <div class="mb-3">
+                          <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
+                          <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
+                        </div>
+                          <div class="row">
+                              <div class="col">
+                                <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col">
+                                <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
+                              </div>
+                          </div>
+                        </form>
+                  </div>
+                </div>
+             </div>
+        </div>
+    </div>
 {%  endblock %}

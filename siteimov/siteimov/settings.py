@@ -124,6 +124,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/romax/static/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,
-'romax/static/media')
+# MEDIA_URL = '/romax/static/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'romax/static/media')
+
+MEDIA_URL = 'imagem_propriedade/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'romax/imagens_propriedades')

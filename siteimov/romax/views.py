@@ -2,12 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-
-
 # Create your views here.
 def landing_page(request):
     return render(request,'romax/landing_page.html',
-                  context={ 'properties' : [i for i in range(10)] })
+                  context={ 'highlighted_properties' : [i for i in range(10)] })
 
 def propriedade(request):
     return render(request, 'romax/propriedade.html')
