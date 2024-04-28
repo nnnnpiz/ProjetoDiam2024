@@ -117,3 +117,7 @@ G.idea/sonarlint/issuestore/9/9/99351b17cbdc37f617e71dbc94c6f40b831d61b7,1\9\19
 Q.idea/sonarlint/securityhotspotstore/9/9/99351b17cbdc37f617e71dbc94c6f40b831d61b7,a\f\afa11ed32ad14f865e538ad33a50295a99f24abe
 w
 G.idea/sonarlint/issuestore/1/6/16a2666e61d10a31d060f3e1f3e668951d5654dc,5\9\5903a5fe7780a8444f47f61366eb7a6d10b8089e
+h
+8siteimov/romax/static/romax/javascript/carousel_index.js,c\b\cb71f43afb8bc4809d5aede085e136ddd062f340
+n
+>siteimov/romax/static/romax/javascript/carousel_propriedade.js,f\3\f3a1886a8945e60185b493c37f07653cb5191b1f

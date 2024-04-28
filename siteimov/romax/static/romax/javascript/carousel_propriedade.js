@@ -22,5 +22,4 @@ let slideIndex = 0;
             slideIndex++;
             showSlides();
         }
-
         showSlides();
