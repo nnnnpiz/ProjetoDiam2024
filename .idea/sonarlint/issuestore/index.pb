@@ -21,8 +21,6 @@ I
 siteimov/siteimov/urls.py,7\0\70d42919748ed02c49086f16ac8197d81d5ea22c
 M
 siteimov/siteimov/settings.py,8\8\8866b2f29ecbd5d865c2805f89e93f156bafd02e
-M
-apps/PRIMACASA_SITE/models.py,6\8\685cc0051a2962c05f52f851ff37461cb2c8d4fb
 w
 G.idea/sonarlint/issuestore/a/d/ad1f9185ceb008abfd18da0cf132dabc449d14c8,4\6\4629b0be3c94eea7fa12ecc79122fee3d371ddea
 Å
@@ -61,3 +59,5 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 w
 G.idea/sonarlint/issuestore/2/e/2e26096367f400fa2cc684af968d380c486c64cd,e\0\e0d468debadb76948793362384125375885626fe
+w
+G.idea/sonarlint/issuestore/8/1/8157baf417177c12f7141d70d6cb6ea3d037d9eb,f\7\f717a7b115a1e00a9495eacb71d66d28b2bcce45

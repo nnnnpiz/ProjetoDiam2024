@@ -96,7 +96,7 @@
                             else
                                 return "Boa noite"
                         }
-                        document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()}, {1º e ultimo nome} estamos gratos de o ver novamente!`
+                        document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()}, {{ request.user.NomeCompleto }} estamos gratos de o ver novamente!`
                     </script>
                 </div>
             </div>

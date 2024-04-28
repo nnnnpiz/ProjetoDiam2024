@@ -12,19 +12,51 @@ ESTADOS_CIVIS =  {
       4 : 'Divorciado',
       5 : 'Separado judicialmente de pessoas e bens'
 }
-CLASSES_ENERGETICAS = {1: 'A+', 2: 'A', 3: 'B', 4: 'B-', 5: 'C', 6: 'D', 7: 'E'}
-class BasicUser(User):
+CLASSES_ENERGETICAS = {1: 'A+',
+                       2: 'A',
+                       3: 'B',
+                       4: 'B-',
+                       5: 'C',
+                       6: 'D',
+                       7: 'E'
+}
+
+
+class Cliente(models.Model):
+    Id = models.BigAutoField(primary_key=True)
     NomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    Email= models.EmailField(unique=True) # Acho que ja existe na super class
+    Email = models.EmailField(unique=True)  # Acho que ja existe na super class
+    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    Idade = models.PositiveSmallIntegerField()
+    EstadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    # NIF, CC
+    User = models.OneToOneField(User,on_delete=models.CASCADE)
+    Animais = models.BooleanField()
+class AgenteImobiliario(models.Model):
+    Id = models.BigAutoField(primary_key=True)
+    NomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    Email = models.EmailField(unique=True)  # Acho que ja existe na super class
 
     # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
     Idade = models.PositiveSmallIntegerField()
     EstadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    #NIF, CC
+    # NIF, CC
+    User = models.OneToOneField(User,on_delete=models.CASCADE)
+
+class Admin(models.Model):
+    Id = models.BigAutoField(primary_key=True)
+    NomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    Email = models.EmailField(unique=True)  # Acho que ja existe na super class
+
+    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    Idade = models.PositiveSmallIntegerField()
+    EstadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    # NIF, CC
+    User = models.OneToOneField(User,on_delete=models.CASCADE)
 
 class Propriedade(models.Model):
     Id = models.BigAutoField(primary_key=True)
-    Animals = models.BooleanField()
+    Animais = models.BooleanField()
     #TODO TipoDePropriedade antonio WTF you wanted here ?
     DataDeCriacao= models.DateTimeField(auto_now_add=True)
     #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
