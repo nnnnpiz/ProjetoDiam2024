@@ -1,5 +1,10 @@
 -----  Duvidas  -----------
 
+Filipe: pessoal, eu meti o media dentro do static pq é assim que o prof nos ensinou.
+sei que é meio cagativo mas nao quero q ele noie com nada de mt diferente. temos que depois
+ver como é para quando temos varias dirs diferentes de cada propriiedade para ir buscar essas fotos de cada.
+por enquanto deixei as fotos no media fora da dir "imagem_propriedade" pq nao estava a conseguir chama-la c elas la dentro.
+tmb mudei os settings.py para a parte das fotos para tar de acordo.
 
 -----   TODO   -----------
 
