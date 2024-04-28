@@ -2,7 +2,7 @@
 
 {% block css_of_rest_of_page %}
          #welcome_div {
-            width : 50%;
+            width : 50vw;
             & #cross_div {
                 display: flex;
                 justify-content: flex-end;
@@ -59,6 +59,7 @@
                 align-items: center;
             }
     }
+
 {% endblock %}
 
 {% block rest_of_page %}
@@ -96,7 +97,7 @@
                             else
                                 return "Boa noite"
                         }
-                        document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()}, {{ request.user.NomeCompleto }} estamos gratos de o ver novamente!`
+                        document.getElementById("welcome_msg").innerText = `${dar_dia_tarde_ou_noite()},` + ' 1º e ultimo nome ' + `estamos gratos de o ver novamente!`
                     </script>
                 </div>
             </div>
@@ -143,7 +144,7 @@
                     //TODO acabar qunado for a altura
                     let template = document.querySelector('#card_for_highlighted_properties');
                     const new_card = template.content.cloneNode(true).children[0];
-                    new_card.querySelector('img').src = '/imagem_propriedade/' +  'Logo.png'
+                    new_card.querySelector('img').src = 'media/imagem_propriedade/' +  'Logo.png'
                     new_card.querySelector('.card-title').innerText = 'Titulo' + i
                     new_card.querySelector('.card-text').innerText = "descrição até caber e remover resto da string"
                     new_card.querySelector('.card-footer').children[0].innerText= 'Cidade'
@@ -154,7 +155,7 @@
                 let first_showed = 0;
                 let last_showed = HOW_MANY_AT_A_TIME - 1;
 
-                setInterval(on_click_right_button, SHIFT_PERIOD)
+                setInterval(on_click_right_button, SHIFT_PERIOD);
 
                 for(let i = 0; i < HOW_MANY_AT_A_TIME; i++){
                     CARROSSEL.appendChild(CARROSSEL_ELEM_LIST[i])
