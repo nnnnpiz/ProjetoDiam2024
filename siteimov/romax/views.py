@@ -5,10 +5,14 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def landing_page(request):
-    return render(request,'romax/landing_page.html',
-                  context={'highlighted_properties': [i for i in range(10)] })
+    return render(request, 'romax/landing_page.html',
+                      context={'highlighted_properties': [i for i in range(10)]})
 
+def login(request):
+    pass
 def propriedade(request, id):
+    return render(request, 'romax/propriedade.html', context={
+    })
     try:
         Propriedade.objects.get(id=id)
         return render(request, 'romax/propriedade.html', context={

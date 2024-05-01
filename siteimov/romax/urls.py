@@ -10,6 +10,6 @@ urlpatterns = [
     path('pesquisa_avancada/', views.pesquisa_avancada, name='pesquisa_avancada'),
     path('resultados_pesquisa/', views.resultados_pesquisa, name='resultados_pesquisa'),
     path('propriedade/<int:id>/', views.propriedade, name='propriedade'),
-
+    path('login/', views.login, name='login'),
 ]
 

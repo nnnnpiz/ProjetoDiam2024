@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            background-color: #EEEEEE;
+          /*  TODO color: #76885B; */
         }
         #Header {
             background-color: #76885B;
@@ -50,11 +50,37 @@
             display: flex;
             justify-content: center;
         }
+        .close_cross_wrapper {
+            display: flex;
+            justify-content: flex-end;
+        }
+        main {
+            width: 80%;
+            margin-left: 10%;
+        }
 
-            main {
-                width: 80%;
+        dialog {
+            border-radius: 12.5px;
+            border-color: #76885B;
+            border-width: 2px;
+            width: 30%;
+            padding-bottom: 2%;
+
+
+            & main {
+                width : 80%;
                 margin-left: 10%;
+
+                & h3 {
+                color: #355408; /* #314f05*/
+
             }
+            }
+        }
+        #entrar_botao{
+            display: flex;
+            justify-content: end;
+        }
         {% block css_of_rest_of_page %}
         {% endblock %}
     </style>
@@ -67,12 +93,41 @@
         </a>
         <a href="#">Contactos</a>
         <a href="#">Sobre</a>
-        <a style=" margin-left: auto;">Login/Registar</a>
+        {% if  request.user.is_authenticated %}
 
+        {% else %}
+            <a style=" margin-left: auto;" onclick="login_registar_dialog.showModal()">Login/Registar</a>
+        {% endif %}
     </nav>
     <main>
         {% block rest_of_page %}
         {%  endblock %}
     </main>
+{% if not request.user.is_authenticated %}
+    <dialog id="login_registar_dialog">
+        <div  class="close_cross_wrapper" onclick="login_registar_dialog.close()">
+            {% include "romax/cruz.html" %}
+        </div>
+        <main >
+            <h3>Entrar</h3>
+            <form action="{% url 'romax:login' %}" method="post" >
+                <div class="mb-3">
+                  <label for="user-email" class="form-label">Endereço de Email</label>
+                  <input type="email" class="form-control" id="user-email"  required >
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password"  required>
+                </div>
+                <div id="entrar_botao">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+            </form>
+            <hr>
+            <h3>Não tens conta?</h3>
+            <button type="button" class="btn btn-outline-secondary">Clica aqui para criar</button>
+        </main>
+    </dialog>
+{% endif %}
 </body>
 </html>

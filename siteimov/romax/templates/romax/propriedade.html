@@ -1,8 +1,6 @@
 {% extends 'romax/base_page.html' %}
 
 {% block css_of_rest_of_page %}
-
-
     .main-prop {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -69,8 +67,17 @@
                 <img src="/romax/static/media/casa.png" alt="Imagem 3" class="carousel-image">
 
             </div>
-            <button class="carousel-btn prev-btn" onclick="prevSlide()">&#10094;</button>
-            <button class="carousel-btn next-btn" onclick="nextSlide()">&#10095;</button>
+            <div class="carousel-btn prev-btn" onclick="prevSlide()">
+                             {# TODO mudar cor center e size #}
+
+                 {% include "romax/left_button.html" %}
+            </div>
+
+            <div  class="carousel-btn next-btn"  onclick="nextSlide()">
+                             {# TODO mudar cor center e size #}
+
+                {% include "romax/right_button.html" %}
+            </div>
         </div>
 
 
@@ -89,7 +96,6 @@
         <p>Email: joaosilva@example.com</p>
         <p>Telefone: +55 123 456 789</p>
     </div>
-
     <script src="/static/romax/javascript/carousel_propriedade.js">
     </script>
     </div>

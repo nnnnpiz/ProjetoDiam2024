@@ -121,3 +121,9 @@ h
 8siteimov/romax/static/romax/javascript/carousel_index.js,c\b\cb71f43afb8bc4809d5aede085e136ddd062f340
 n
 >siteimov/romax/static/romax/javascript/carousel_propriedade.js,f\3\f3a1886a8945e60185b493c37f07653cb5191b1f
+X
+(siteimov/romax/templates/romax/cruz.html,3\3\33da141bdce7945dac00ac038bdb8c4662f7546a
+_
+/siteimov/romax/templates/romax/left_button.html,5\1\511b8a5eed13f7462f43ed23184ea36052be9e65
+`
+0siteimov/romax/templates/romax/right_button.html,5\8\584b846e020270fa549800389edbd5172c31fa8b
