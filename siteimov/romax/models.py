@@ -1,34 +1,71 @@
 from django.db import models
 from django.utils import timezone
-#from six import string_types
-import datetime
+from django.contrib.auth.models import User
+
+MAX_NAME_LEN=400
+MAX_MORADA_LEN=400
+MAX_TITULO_LEN=300
+ESTADOS_CIVIS = {
+      1: 'Solteiro',
+      2: 'Casado',
+      3: 'Viúvo',
+      4: 'Divorciado',
+      5: 'Separado judicialmente de pessoas e bens'
+}
+CLASSES_ENERGETICAS = {1: 'A+',
+                       2: 'A',
+                       3: 'B',
+                       4: 'B-',
+                       5: 'C',
+                       6: 'D',
+                       7: 'E'
+}
 
 
-# Modelos dos exs semanais para referencia:
-#
-#class Questao(models.Model):
-#    questao_texto = models.CharField(max_length=200)
-#    pub_data = models.DateTimeField('data de publicacao')
-#   def __str__(self):
-#       return self.questao_texto
-#
-#class Opcao(models.Model):
-#    questao = models.ForeignKey(Questao,on_delete=models.CASCADE)
-#    opcao_texto = models.CharField(max_length=200)
-#    votos = models.IntegerField(default=0)
-#    def __str__(self):
-#        return self.opcao_texto
-#
-# mudei os models antonio so para testar config
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+class Cliente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    email = models.EmailField(unique=True)  # Acho que ja existe na super class
+    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    idade = models.PositiveSmallIntegerField()
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    # NIF, CC
+    animais = models.BooleanField()
+class AgenteImobiliario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    email = models.EmailField(unique=True)  # Acho que ja existe na super class
+    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    idade = models.PositiveSmallIntegerField()
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    # NIF, CC
+
+
+class Admin(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
+    email = models.EmailField(unique=True)  # Acho que ja existe na super class
+    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    idade = models.PositiveSmallIntegerField()
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    # NIF, CC
+
+
+class Propriedade(models.Model):
+    animais = models.BooleanField()
+    #TODO TipoDePropriedade antonio WTF you wanted here ?
+    dataDeCriacao= models.DateTimeField(auto_now_add=True)
+    #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
+    codigoPostal = models.CharField(max_length=8)
+    morada = models.CharField(max_length=MAX_MORADA_LEN)
+    numQuartos = models.PositiveSmallIntegerField()
+    area = models.FloatField()
+    anoConstrucao = models.PositiveSmallIntegerField()
+    mobilada = models.BooleanField()
+    negociavel = models.BooleanField()
+    descricao = models.TextField()
+    numWCs = models.PositiveSmallIntegerField()
+    classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS)
+    #EstadoAnuncio TODO
+    titulo = models.CharField(max_length=MAX_TITULO_LEN)
+    highlighted = models.BooleanField()
