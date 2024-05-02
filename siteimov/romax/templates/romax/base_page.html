@@ -111,13 +111,14 @@
         <main >
             <h3>Entrar</h3>
             <form action="{% url 'romax:login' %}" method="post" >
+                {% csrf_token %}
                 <div class="mb-3">
                   <label for="user-email" class="form-label">Endereço de Email</label>
-                  <input type="email" class="form-control" id="user-email"  required >
+                  <input type="email" class="form-control" id="user-email" name="user-email"  required >
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password"  required>
+                  <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div id="entrar_botao">
                         <button type="submit" class="btn btn-primary">Entrar</button>
@@ -125,7 +126,7 @@
             </form>
             <hr>
             <h3>Não tens conta?</h3>
-            <button type="button" class="btn btn-outline-secondary">Clica aqui para criar</button>
+            <a href="{% url 'romax:login' %}" class="btn btn-outline-secondary">Clica aqui para criar</a>
         </main>
     </dialog>
 {% endif %}

@@ -127,3 +127,5 @@ _
 /siteimov/romax/templates/romax/left_button.html,5\1\511b8a5eed13f7462f43ed23184ea36052be9e65
 `
 0siteimov/romax/templates/romax/right_button.html,5\8\584b846e020270fa549800389edbd5172c31fa8b
+_
+/siteimov/romax/templates/romax/criar_conta.html,c\9\c9bb36d51ce5e8980a79f94ee69f67f3d4c773b9

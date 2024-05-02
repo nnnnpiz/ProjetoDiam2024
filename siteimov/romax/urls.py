@@ -11,5 +11,7 @@ urlpatterns = [
     path('resultados_pesquisa/', views.resultados_pesquisa, name='resultados_pesquisa'),
     path('propriedade/<int:id>/', views.propriedade, name='propriedade'),
     path('login/', views.login, name='login'),
+    path('criar_conta/', views.criar_conta, name='criar_conta'),
+
 ]
 
