@@ -27,8 +27,7 @@ def propriedade(request, id):
 
     #TODO fix that
 def pesquisa_avancada(request):
-    #pagina com form para pesquisa
-    pass #TODO
+    return render(request, 'romax/pesquisa_avancada.html')
 
 def resultados_pesquisa(request):
     #pesquisa pelo titulo sera based num regex (case insensitive) *titulo*

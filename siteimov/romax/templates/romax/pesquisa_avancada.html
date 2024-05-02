@@ -2,7 +2,7 @@
 {% extends 'romax/base_page.html' %}
 {% block rest_of_page %}
     <nav>
-        <form action="{% url 'romax:filtrarpesquisa' %}" name="filtros" method="post">
+        <form action="" name="filtros" method="post" target="">
             <div>
                 <label for="distrito"  class="label">Distrito</label>
                 <input type="text" class="form-control" id="distrito">
@@ -86,7 +86,7 @@
             </div>
             <input type="submit=" class="submitButton" value="Filtrar">
         </form>
-        <form action="{% url 'ordenarpesquisa' %}" name="ordenacao" method="post">
+        <form action="" name="ordenacao" method="post">
             <div>
                 <label class="label" for="ordenar">Classe energética:</label>
                 <select class="form-control" id="ordenar">
@@ -100,9 +100,4 @@
             </div>
         </form>
     </nav>
-
-    <main>
-
-        {% for
-    </main>
-
+{% endblock %}
