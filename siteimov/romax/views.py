@@ -4,7 +4,7 @@ from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Propriedade
-
+from romax.models import ESTADOS_CIVIS
 
 # Create your views here.
 def landing_page(request):
@@ -36,11 +36,32 @@ def resultados_pesquisa(request):
     pass #TODO
 
 def criar_conta_page(request):
-    return render(request, 'romax/criar_conta_page.html')
+    return render(request, 'romax/criar_conta_page.html', context = {
+        'ESTADOS_CIVIS' : ESTADOS_CIVIS
+    })
 
 def criar_conta(request):
-    pass
-    return render(request, 'romax/criar_conta_page.html')
+    # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
+
+    #TODO server side validation
+
+    #Criar conta
+    user = User.objects.create_user('',#TODO o que fazer aqui?,
+                                    request.POST['email'],
+                                    request.POST['password']
+                                    )
+    Cliente.objects.create(
+        user=user,
+        nomeCompleto = request.POST['nome-completo'],
+        telemovel = request.POST['telemovel'],
+        idade = request.POST['idade'],
+        estadoCivil = request.POST['Estado-Civil'],
+        nif = request.POST['NIF'],
+        cc = request.POST['CC'],
+        animais = request.POST['tem-animais'],
+    )
+
+
 
 def informacaopessoal(request):
     return render(request, 'romax/informacao_pessoal.html')
