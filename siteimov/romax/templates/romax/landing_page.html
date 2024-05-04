@@ -3,14 +3,6 @@
 {% block css_of_rest_of_page %}
          #welcome_div {
             width : 50vw;
-            & #cross_div {
-                display: flex;
-                justify-content: flex-end;
-                & svg {
-                    color: red;
-                    margin: 5px;
-                }
-            }
             & #welcome_msg_div {
                 & #welcome_msg  {
                     font-size: large;
@@ -22,7 +14,6 @@
             background-color: #fff3cd;
             padding: 5px 0 20px 0;//TODO ADD
         }
-
         #carrossel_outer_div {
             display: grid;
             grid-template-columns: 10% 1fr 10%;
@@ -33,7 +24,6 @@
                 margin-top: 20px;
                 margin-bottom: 20px;
             }
-
             & #left_button {
                 grid-area: 2 / 1 / 3 / 2;
             }
@@ -63,27 +53,22 @@
 {% endblock %}
 
 {% block rest_of_page %}
-    {% if not request.user.is_authenticated %}
-        {# TODO inverte condition once there are accounts in the website #}
-        <div class="horizontal_center">
-            <div id="welcome_div">
-                <div id="cross_div">
-                    {# TODO Make this reusable ( don't forget it's css ) #}
-                    <svg onclick="document.getElementById('welcome_div').hidden = true"
-                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-x-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                    </svg>
-                </div>
-                <div id="welcome_msg_div">
-                    <h3 id="welcome_msg" class="horizontal_center"></h3>
-                    <script src="/static/romax/javascript/saudacao.js">
-                    </script>
-                </div>
+{% if not request.user.is_authenticated %}
+    {# TODO inverte condition once there are accounts in the website #}
+    <div class="horizontal_center">
+        <div id="welcome_div">
+
+            <div class="close_cross_wrapper" onclick="document.getElementById('welcome_div').hidden = true">
+                {% include "romax/cruz.html" %}
+            </div>
+            <div id="welcome_msg_div">
+                <h3 id="welcome_msg" class="horizontal_center"></h3>
+                <script src="/static/romax/javascript/saudacao.js">
+                </script>
             </div>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
     <div class="horizontal_center">
          <div id="carrossel_outer_div"> {# Carrossel #}
          <template id="card_for_highlighted_properties">
@@ -104,17 +89,14 @@
          </h2>
          <div id="left_button" onclick="on_click_left_button()">
              {# TODO mudar cor center e size #}
-             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-            </svg>
+             {% include "romax/left_button.html" %}
+
          </div>
          <div id="Carrossel"></div>
 
          <div id="right_button" onclick=" on_click_right_button()">
              {#  TODO mudar cor center e size #}
-             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-            </svg>
+             {% include "romax/right_button.html" %}
          </div>
          <script >
              const CARROSSEL = document.getElementById("Carrossel");
