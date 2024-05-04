@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
-
-from .models import Propriedade
-from romax.models import ESTADOS_CIVIS
+from django.urls import reverse, reverse_lazy
+from .models import Propriedade, Cliente, ESTADOS_CIVIS
+from django.contrib.auth.models import User
 
 # Create your views here.
 def landing_page(request):
@@ -17,11 +17,6 @@ def login(request):
     #request.POST['password']
 def propriedade(request, propriedade_id):
     try:
-        prop = Propriedade.objects.get(pk=propriedade_id)
-        return render(request, 'romax/propriedade.html', context={
-                'propriedade': prop
-            }
-        )
         propriedade = Propriedade.objects.get(pk=propriedade_id)
         return render(request,
         'romax/propriedade.html',
@@ -54,15 +49,16 @@ def criar_conta(request):
     print(request.POST)
     print(s*3)
 
-    #TODO server side validation
+    #TODO server side
+
+    #Criar conta
+
     user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
                                     )
-
-
     Cliente.objects.create(
-        user= user,
+        user=user,
         nomeCompleto = request.POST['nome-completo'],
         telemovel = int(request.POST['telemovel']),
         idade = None if 'idade' in request.POST else int(request.POST['idade']),
@@ -71,5 +67,9 @@ def criar_conta(request):
         cc = request.POST['CC'],
         animais = 'tem-animais' in request.POST,
     )
+    return HttpResponseRedirect(reverse('romax:landing_page'))
 
 
+
+def informacaopessoal(request):
+    return render(request, 'romax/informacao_pessoal.html')

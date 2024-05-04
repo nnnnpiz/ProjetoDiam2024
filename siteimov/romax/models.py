@@ -26,32 +26,31 @@ CLASSES_ENERGETICAS = {1: 'A+',
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    telemovel = models.PositiveIntegerField()
+    telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField(blank=True)
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
-    nif = models.PositiveBigIntegerField()
-    cc = models.CharField(max_length=CC_LEN)
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN, default=0)
     animais = models.BooleanField()
     salvos = models.ManyToManyField('Propriedade')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    telemovel = models.PositiveIntegerField()
-
+    telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    nif = models.PositiveBigIntegerField()
-    cc = models.CharField(max_length=CC_LEN)
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN,default=0)
 
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    telemovel = models.PositiveIntegerField()
+    telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    nif = models.PositiveBigIntegerField()
-    cc = models.CharField(max_length=CC_LEN)
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN, default=0)
 
 
 class Propriedade(models.Model):
