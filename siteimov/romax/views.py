@@ -48,10 +48,9 @@ def criar_conta_page(request):
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
-    #TODO server side validation
 
     #Criar conta
-    user = User.objects.create_user('',#TODO o que fazer aqui?,
+    user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
                                     )
