@@ -35,5 +35,9 @@ def resultados_pesquisa(request):
     #pesquisa pelo titulo sera based num regex (case insensitive) *titulo*
     pass #TODO
 
+def criar_conta_page(request):
+    return render(request, 'romax/criar_conta_page.html')
+
 def criar_conta(request):
     pass
+    return render(request, 'romax/criar_conta_page.html')

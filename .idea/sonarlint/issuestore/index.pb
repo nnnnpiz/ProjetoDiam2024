@@ -133,3 +133,5 @@ I
 siteimov/siteimov/wsgi.py,4\4\44d8d9aaf5ca438e0a28dd5e16a0830b6c8dbce2
 e
 5siteimov/romax/templates/romax/pesquisa_avancada.html,4\6\46bf067ea02230cc843b55cb7fb6ef14aa083ed7
+d
+4siteimov/romax/templates/romax/criar_conta_page.html,6\9\697bafc761a996e423e290f732d4d1790c1287f2

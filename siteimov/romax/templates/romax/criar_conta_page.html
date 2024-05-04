@@ -1,0 +1,22 @@
+{% extends 'romax/base_page.html' %}
+
+{% block css_of_rest_of_page %}
+{% endblock %}
+
+{% block rest_of_page %}
+        <h1 style="color : red">Cortesia</h1>
+<form action="{% url 'romax:criar_conta' %}" method="post">
+    <div class="mb-3">
+        <label for="nome-completo" class="form-label">Nome Completo</label>
+        <input type="text" class="form-control" id="nome-completo" >
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Endereço de Email</label>
+        <input type="email" class="form-control" id="email">
+    </div>
+    <div>
+
+    </div>
+
+</form>
+{%  endblock %}
