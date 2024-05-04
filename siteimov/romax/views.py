@@ -41,3 +41,6 @@ def criar_conta_page(request):
 def criar_conta(request):
     pass
     return render(request, 'romax/criar_conta_page.html')
+
+def informacaopessoal(request):
+    return render(request, 'romax/informacao_pessoal.html')

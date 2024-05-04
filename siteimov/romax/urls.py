@@ -12,5 +12,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('criar_conta_page/', views.criar_conta_page, name='criar_conta_page'),
     path('criar_conta/', views.criar_conta, name='criar_conta'),
+
+    path('informacao_pessoal/', views.informacaopessoal, name='informacaopessoal')
 ]
 
