@@ -127,9 +127,9 @@ _
 /siteimov/romax/templates/romax/left_button.html,5\1\511b8a5eed13f7462f43ed23184ea36052be9e65
 `
 0siteimov/romax/templates/romax/right_button.html,5\8\584b846e020270fa549800389edbd5172c31fa8b
-_
-/siteimov/romax/templates/romax/criar_conta.html,c\9\c9bb36d51ce5e8980a79f94ee69f67f3d4c773b9
 I
 siteimov/siteimov/wsgi.py,4\4\44d8d9aaf5ca438e0a28dd5e16a0830b6c8dbce2
 e
 5siteimov/romax/templates/romax/pesquisa_avancada.html,4\6\46bf067ea02230cc843b55cb7fb6ef14aa083ed7
+d
+4siteimov/romax/templates/romax/criar_conta_page.html,6\9\697bafc761a996e423e290f732d4d1790c1287f2

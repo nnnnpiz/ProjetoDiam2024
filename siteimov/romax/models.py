@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 MAX_NAME_LEN=400
 MAX_MORADA_LEN=400
 MAX_TITULO_LEN=300
+CC_LEN= 10 #TODO see this
 ESTADOS_CIVIS = {
       1: 'Solteiro',
       2: 'Casado',
@@ -25,30 +26,31 @@ CLASSES_ENERGETICAS = {1: 'A+',
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
-    idade = models.PositiveSmallIntegerField()
-    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    telemovel = models.PositiveIntegerField(default=0)
+    idade = models.PositiveSmallIntegerField(blank=True)
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN, default=0)
     animais = models.BooleanField()
+    salvos = models.ManyToManyField('Propriedade')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN,default=0)
 
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    nif = models.PositiveBigIntegerField(default=0)
+    cc = models.CharField(max_length=CC_LEN, default=0)
 
 
 class Propriedade(models.Model):
@@ -69,3 +71,16 @@ class Propriedade(models.Model):
     #EstadoAnuncio TODO
     titulo = models.CharField(max_length=MAX_TITULO_LEN)
     highlighted = models.BooleanField()
+
+class PedidosCriacaoAnuncio(models.Model):
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    data_pedido = models.DateField(auto_now_add=True)
+    data_fecho = models.DateField(blank=True)
+
+class Oferta(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    propriedade_id = models.ForeignKey('Propriedade', on_delete=models.CASCADE)
+    data = models.DateField(auto_now_add=True)
+    quantia = models.FloatField()
+    mensagem = models.TextField(blank=True)
+
