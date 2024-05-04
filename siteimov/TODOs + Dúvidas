@@ -16,7 +16,22 @@ Mudar o favicon (Mendy qnd ele tiver tempo)
 
 Definir colors, style, font type, font letters
 
+SearchPage:
+            -fazer com que o min preço altere o valor min do max preço
+            -fazer com que o preço aumente às dezenas de milhares
+            - adionar m2 e euros na min e max de area e preço
+            -adciionar o subtipo de propriedades que deve alterar as opções conforme o tipo de propriedade selecionado
+            - mudar o nr de quartos e wcs para min e max
+            - separação entre campos : Tipo de propriedade e subtipo propriedade
+                                        radios sim e nao
+            - separação de titulos com o resto do div/etc..
+            -ajustar cores
+
+
+
+
 -------------   EXTRA   ----------------
 
 Simples Search engine para a barra de pesquisas
 Chatbot para apoio ao cliente
+
