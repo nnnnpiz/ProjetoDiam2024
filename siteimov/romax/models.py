@@ -31,6 +31,7 @@ class Cliente(models.Model):
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
     # NIF, CC
     animais = models.BooleanField()
+    salvos = models.ManyToManyField('Propriedade')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
@@ -69,3 +70,16 @@ class Propriedade(models.Model):
     #EstadoAnuncio TODO
     titulo = models.CharField(max_length=MAX_TITULO_LEN)
     highlighted = models.BooleanField()
+
+class PedidosCriacaoAnuncio(models.Model):
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
+    data_pedido = models.DateField(auto_now_add=True)
+    data_fecho = models.DateField(blank=True)
+
+class Oferta(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    propriedade_id = models.ForeignKey('Propriedade', on_delete=models.CASCADE)
+    data = models.DateField(auto_now_add=True)
+    quantia = models.FloatField()
+    mensagem = models.TextField(blank=True)
+
