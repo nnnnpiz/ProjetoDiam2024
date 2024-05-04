@@ -42,21 +42,30 @@ def criar_conta_page(request):
 
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
+
+    #TODO tirar antes de delivery
+    s='#'*10 + '\n'
+    print(s*3)
+    print(request.POST)
+    print(s*3)
+
+    #TODO server side
+
     #Criar conta
+
     user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
-
-                               )
+                                    )
     Cliente.objects.create(
         user=user,
         nomeCompleto = request.POST['nome-completo'],
-        telemovel = request.POST['telemovel'],
-        idade = int(request.POST['idade']),
-        estadoCivil = request.POST['Estado-Civil'],
-        nif = request.POST['NIF'],
+        telemovel = int(request.POST['telemovel']),
+        idade = None if 'idade' in request.POST else int(request.POST['idade']),
+        estadoCivil = None if 'idade' in request.POST else request.POST['Estado-Civil'],
+        nif = int(request.POST['NIF']),
         cc = request.POST['CC'],
-        animais='tem-animais' in request.POST,
+        animais = 'tem-animais' in request.POST,
     )
     return HttpResponseRedirect(reverse('romax:landing_page'))
 
