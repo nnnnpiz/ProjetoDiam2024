@@ -17,10 +17,10 @@ def login(request):
     #request.POST['password']
 def propriedade(request, propriedade_id):
     try:
-        prop = Propriedade.objects.get(pk=propriedade_id)
+        propriedade = Propriedade.objects.get(pk=propriedade_id)
         return render(request,
         'romax/propriedade.html',
-                      context={'propriedade': prop}
+                      context={'propriedade': propriedade}
                       )
     except (KeyError, Propriedade.DoesNotExist):
         return render(request, 'romax/propriedade_notfound.html', context={
