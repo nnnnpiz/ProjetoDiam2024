@@ -26,7 +26,6 @@ CLASSES_ENERGETICAS = {1: 'A+',
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
     telemovel = models.PositiveIntegerField()
     idade = models.PositiveSmallIntegerField(blank=True)
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
@@ -37,7 +36,6 @@ class Cliente(models.Model):
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
     telemovel = models.PositiveIntegerField()
 
     idade = models.PositiveSmallIntegerField()
@@ -49,7 +47,6 @@ class AgenteImobiliario(models.Model):
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    email = models.EmailField(unique=True)  # Acho que ja existe na super class
     telemovel = models.PositiveIntegerField()
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
