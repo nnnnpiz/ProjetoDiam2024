@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Propriedade
-from romax.models import ESTADOS_CIVIS
+from .models import Propriedade, Cliente, ESTADOS_CIVIS
+from django.contrib.auth.models import User
 
 # Create your views here.
 def landing_page(request):
@@ -46,7 +46,7 @@ def criar_conta(request):
     #TODO server side validation
 
     #Criar conta
-    user = User.objects.create_user('',#TODO o que fazer aqui?,
+    user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
                                     )
