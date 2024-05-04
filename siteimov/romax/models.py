@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 MAX_NAME_LEN=400
 MAX_MORADA_LEN=400
 MAX_TITULO_LEN=300
+CC_LEN= 10 #TODO see this
 ESTADOS_CIVIS = {
       1: 'Solteiro',
       2: 'Casado',
@@ -26,30 +27,34 @@ class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
-    idade = models.PositiveSmallIntegerField()
-    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    telemovel = PositiveIntegerField()
+    idade = models.PositiveSmallIntegerField(blank=True)
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
+    nif = models.PositiveBigIntegerField()
+    cc = models.CharField(max_length=CC_LEN)
     animais = models.BooleanField()
     salvos = models.ManyToManyField('Propriedade')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    telemovel = PositiveIntegerField()
+
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    nif = models.PositiveBigIntegerField()
+    cc = models.CharField(max_length=CC_LEN)
 
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     email = models.EmailField(unique=True)  # Acho que ja existe na super class
-    # TODO Telemovel =  vai ter o +351 ? se nao é PositiveIntegerField()
+    telemovel = PositiveIntegerField()
     idade = models.PositiveSmallIntegerField()
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
-    # NIF, CC
+    nif = models.PositiveBigIntegerField()
+    cc = models.CharField(max_length=CC_LEN)
 
 
 class Propriedade(models.Model):
