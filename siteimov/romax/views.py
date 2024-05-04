@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
+
+from .models import Propriedade
+
 
 # Create your views here.
 def landing_page(request):
@@ -12,16 +15,15 @@ def login(request):
     print( request.POST['user-email'], request.POST['password'] )
     #request.POST['user-email']
     #request.POST['password']
-def propriedade(request, id):
-    return render(request, 'romax/propriedade.html', context={
-    })
+def propriedade(request, propriedade_id):
     try:
-        Propriedade.objects.get(id=id)
-        return render(request, 'romax/propriedade.html', context={
-        })
-    except ObjectDoesNotExist:
-        #Filipe cria aqui a pagina do propriedade n existe
-        return render(request, 'romax/propriedade.html', context={
+        prop = Propriedade.objects.get(pk=propriedade_id)
+        return render(request,
+        'romax/propriedade.html',
+                      context={'propriedade': prop}
+                      )
+    except (KeyError, Propriedade.DoesNotExist):
+        return render(request, 'romax/propriedade_notfound.html', context={
         })
 
 
