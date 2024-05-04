@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.urls import reverse, reverse_lazy
 from .models import Propriedade, Cliente, ESTADOS_CIVIS
 from django.contrib.auth.models import User
 
@@ -42,23 +42,23 @@ def criar_conta_page(request):
 
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
-
-
     #Criar conta
     user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
-                                    )
+
+                               )
     Cliente.objects.create(
         user=user,
         nomeCompleto = request.POST['nome-completo'],
         telemovel = request.POST['telemovel'],
-        idade = request.POST['idade'],
+        idade = int(request.POST['idade']),
         estadoCivil = request.POST['Estado-Civil'],
         nif = request.POST['NIF'],
         cc = request.POST['CC'],
-        animais = request.POST['tem-animais'],
+        animais='tem-animais' in request.POST,
     )
+    return HttpResponseRedirect(reverse('romax:landing_page'))
 
 
 
