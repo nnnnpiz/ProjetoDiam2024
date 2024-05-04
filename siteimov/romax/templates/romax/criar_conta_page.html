@@ -14,9 +14,50 @@
 
 {% block rest_of_page %}
 <h1 style="color : red">Cortesia, password</h1>
-<form action="{% url 'romax:criar_conta' %}" method="post">
-    {% csrf_token %}
-    <div class="mb-3">
+<script>
+    const FORM = document.getElementById('criar_conta');
+
+    FORM.addEventListener('submit',
+        event => {
+            const password = FORM.getElementById('password').value
+            const password_repitied = FORM.getElementById('password').value
+
+            function has_digit(password){
+                for(c of password){
+                    let is_digit = '9' >= c && c >= '0'
+                    if (is_digit)
+                        return true;
+                }
+                return false;
+            }
+            function has_upper(password){
+                for(c of password){
+                    let is_digit = 'Z' >= c && c >= 'A'
+                    if (is_digit)
+                        return true;
+                }
+                return false;
+            }
+            function has_lower(password){
+                for(c of password){
+                    let is_digit = 'z' >= c && c >= 'a'
+                    if (is_digit)
+                        return true;
+                }
+                return false;
+            }
+            const password_valid = password_repitied === password && password.lenght >= 20 && has_upper(password) && has_lower(password)  && has_digit(password)
+            if (!form.checkValidity() || !password_valid) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+        }, false)
+    )
+</script>
+
+<form id="criar_conta" action="{% url 'romax:criar_conta' %}" method="post" novalidate>
+  {% csrf_token %}
+  <div class="mb-3">
         <label for="nome-completo" class="form-label">Nome Completo</label>
         <input type="text" class="form-control" id="nome-completo" name="nome-completo">
     </div>
@@ -25,56 +66,56 @@
         <input type="email" class="form-control" id="email" name="email">
     </div>
     <div class="row">
-      <div class="col">
+        <div class="col">
             <label for="telemovel" class="form-label">Número de Telemovel</label>
             <input type="tel" class="form-control" id="telemovel" name="telemovel">
-      </div>
-      <div class="col">
-        <label for="idade" class="form-label">Idade</label>
-        <input type="number" class="form-control" id="idade" name="idade">
-      </div>
+        </div>
+        <div class="col">
+            <label for="idade" class="form-label">Idade</label>
+            <input type="number" class="form-control" id="idade" name="idade">
+        </div>
     </div>
 
     <div class="row">
-      <div class="col">
-          <label class="form-label" for="NIF">NIF</label>
-          <input class="form-control" type="number" value=""  id="NIF" name="NIF">
-      </div>
-      <div class="col">
-          <label class="form-label" for="CC">Cartão de Cidadão</label>
-          <input class="form-control" type="text" value=""  id="CC" name="CC">
-      </div>
+        <div class="col">
+            <label class="form-label" for="NIF">NIF</label>
+            <input class="form-control" type="number" value=""  id="NIF" name="NIF">
+        </div>
+        <div class="col">
+            <label class="form-label" for="CC">Cartão de Cidadão</label>
+            <input class="form-control" type="text" value=""  id="CC" name="CC">
+        </div>
     </div>
 
     <div class="row">
-      <div class="col">
-          <div class="form-check">
-              <label class="form-check-label" for="tem-animais">Tem animais?</label>
-              <input class="form-check-input" type="checkbox" value=""  id="tem-animais" name="tem-animais">
-          </div>
-      </div>
-      <div class="col">
-          <label for="Estado-Civil" class="form-label">Estado Civil</label>
-          <select class="form-select"  id="Estado-Civil" name="Estado-Civil">
-              <option selected></option>
-              {% for id, estado_civil in ESTADOS_CIVIS.items %}
-                  <option value="{{ id }}">{{ estado_civil }}</option>
-              {% endfor %}
-          </select>
-      </div>
+        <div class="col">
+            <div class="form-check">
+                <label class="form-check-label" for="tem-animais">Tem animais?</label>
+                <input class="form-check-input" type="checkbox" value=""  id="tem-animais" name="tem-animais">
+            </div>
+        </div>
+        <div class="col">
+            <label for="Estado-Civil" class="form-label">Estado Civil</label>
+            <select class="form-select"  id="Estado-Civil" name="Estado-Civil">
+                <option selected></option>
+                {% for id, estado_civil in ESTADOS_CIVIS.items %}
+                <option value="{{ id }}">{{ estado_civil }}</option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
 
-     <div class="mb-3">
+    <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password">
-      </div>
+    </div>
 
-     <div class="mb-3">
+    <div class="mb-3">
         <label for="password-repitida" class="form-label">Repita a Password</label>
         <input type="password" class="form-control" id="password-repitida">
-      </div>
+    </div>
     <div class="mb-3" id="submeter_div" >
-      <button type="submit" class="btn btn-primary">Criar conta</button>
+        <button type="submit" class="btn btn-primary">Criar conta</button>
     </div>
 </form>
 {%  endblock %}
