@@ -22,6 +22,11 @@ def propriedade(request, propriedade_id):
                 'propriedade': prop
             }
         )
+        propriedade = Propriedade.objects.get(pk=propriedade_id)
+        return render(request,
+        'romax/propriedade.html',
+                      context={'propriedade': propriedade}
+                      )
     except (KeyError, Propriedade.DoesNotExist):
         return render(request, 'romax/propriedade_notfound.html', context={
         })
