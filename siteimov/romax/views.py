@@ -105,18 +105,18 @@ def resultados_pesquisa(request):
         criterio_ordenacao = request.Post.get('ordenar')
         if criterio_ordenacao:
             if criterio_ordenacao ==0:
-                #TODO ORDERNAR VIA PRECO ASCENDENTE
+                anuncios.sort(key=lambda x: x['preco'])
             elif criterio_ordenacao ==1:
-                #TODO ORDERNAR VIA PRECO DESCENDENTE
+                anuncios.sort(key=lambda x: x['preco'], reverse=True)
             elif criterio_ordenacao ==2:
-                #TODO ORDERNAR VIA MAIOR AREA
+                anuncios.sort(key=lambda x: x['area'])
             elif criterio_ordenacao ==3:
-                #TODO ORDERNAR VIA MENOR AREA
+                anuncios.sort(key=lambda x: x['area'], reverse=True)
             elif criterio_ordenacao ==4:
-                #TODO ORDERNAR VIA MAIS RECENTE
+                anuncios.sort(key=lambda x: x['dataDeCriacao'])
             elif criterio_ordenacao ==5:
-                #TODO ORDERNAR VIA MAIS ANTIGO
-    #ORDERNAR PARA OS ANUNCIOS HIGHLIGHTED SEREM OS PRIMEIROS
+                anuncios.sort(key=lambda x: x['dataDeCriacao'], reverse=True)
+    anuncios.sort(key=lambda x: x['highlighted'])
     return render(request, 'romax/resultados.html', context={'anuncios':anuncios})
 
 def criar_conta_page(request):
