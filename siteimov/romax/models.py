@@ -31,7 +31,7 @@ class Cliente(models.Model):
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN, default=0)
-    animais = models.BooleanField()
+    animais = models.BooleanField(blank=True)
     salvos = models.ManyToManyField('Propriedade')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

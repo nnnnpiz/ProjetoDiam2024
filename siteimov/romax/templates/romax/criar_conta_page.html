@@ -1,7 +1,8 @@
 {% extends 'romax/base_page.html' %}
 
 {% block css_of_rest_of_page %}
-    form {
+    #criar_conta {
+        padding-top: 2.5%;
         margin-left: 15%;
         width : 70%;
 
@@ -13,50 +14,10 @@
 {% endblock %}
 
 {% block rest_of_page %}
-<h1 style="color : red">Cortesia, password</h1>
-<script>
-    const FORM = document.getElementById('criar_conta');
-
-    FORM.addEventListener('submit',
-        event => {
-            const password = FORM.getElementById('password').value
-            const password_repitied = FORM.getElementById('password').value
-
-            function has_digit(password){
-                for(c of password){
-                    let is_digit = '9' >= c && c >= '0'
-                    if (is_digit)
-                        return true;
-                }
-                return false;
-            }
-            function has_upper(password){
-                for(c of password){
-                    let is_digit = 'Z' >= c && c >= 'A'
-                    if (is_digit)
-                        return true;
-                }
-                return false;
-            }
-            function has_lower(password){
-                for(c of password){
-                    let is_digit = 'z' >= c && c >= 'a'
-                    if (is_digit)
-                        return true;
-                }
-                return false;
-            }
-            const password_valid = password_repitied === password && password.lenght >= 20 && has_upper(password) && has_lower(password)  && has_digit(password)
-            if (!form.checkValidity() || !password_valid) {
-                event.preventDefault()
-                event.stopPropagation()
-              }
-        }, false)
-    )
-</script>
-
-<form id="criar_conta" action="{% url 'romax:criar_conta' %}" method="post" novalidate>
+<h1 style="color: red">pfp se sim por no form </h1>
+<form id="criar_conta" action="{% url 'romax:criar_conta' %}" method="post" enctype="multipart/form-data" novalidate>
   {% csrf_token %}
+    <h1>Criar conta</h1>
   <div class="mb-3">
         <label for="nome-completo" class="form-label">Nome Completo</label>
         <input type="text" class="form-control" id="nome-completo" name="nome-completo">
@@ -118,4 +79,33 @@
         <button type="submit" class="btn btn-primary">Criar conta</button>
     </div>
 </form>
+<script>
+    const FORM = document.getElementById('criar_conta');
+
+    function check_str_for(str, test){
+        for(c of str){
+            if (test(c))
+                return true;
+        }
+        return false;
+    }
+
+    const has_digit = password =>  check_str_for(password, (c) =>  '0' <=c && c <='9' );
+    const has_upper = password =>  check_str_for(password, (c) => 'A' <= c && c <= 'Z' );
+    const has_lower = password =>  check_str_for(password, (c) => 'a' <= c && c  <= 'z' );
+
+    const symbols_allowed = '|\\!"@#£$§%€&/{()[]=}?\';,:.-_*+ºª´`~^'
+    const has_symbol = password => check_str_for(password, (c) => symbols_allowed.includes(c) );
+    FORM.addEventListener('submit',
+        event => {
+            const password = FORM.getElementById('password').value
+            const password_repited = FORM.getElementById('password').value
+
+            const password_valid = password_repited === password && password.lenght >= 20 && has_upper(password) && has_lower(password) && has_symbol(password)  && has_digit(password)
+            if (!form.checkValidity() || !password_valid) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+        }, false)
+</script>
 {%  endblock %}

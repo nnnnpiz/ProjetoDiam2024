@@ -67,7 +67,6 @@
             width: 30%;
             padding-bottom: 2%;
 
-
             & main {
                 width : 80%;
                 margin-left: 10%;
@@ -103,6 +102,9 @@
         {% block rest_of_page %}
         {%  endblock %}
     </main>
+    <footer>
+
+    </footer>
 {% if not request.user.is_authenticated %}
     <dialog id="login_registar_dialog">
         <div  class="close_cross_wrapper" onclick="login_registar_dialog.close()">
