@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse, reverse_lazy
-from .models import Propriedade, Cliente, ESTADOS_CIVIS
+from .models import Propriedade, Cliente, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -37,7 +37,11 @@ def resultados_pesquisa(request):
 
 def criar_conta_page(request):
     return render(request, 'romax/criar_conta_page.html', context = {
-        'ESTADOS_CIVIS' : ESTADOS_CIVIS
+        'ESTADOS_CIVIS' : ESTADOS_CIVIS,
+        'MAX_NAME_LEN' : MAX_NAME_LEN,
+        'NOME_COMPLETO_REGEX_FORMAT': NOME_COMPLETO_REGEX_FORMAT,
+        'TELEMOVEL_REGEX_FORMAT' : TELEMOVEL_REGEX_FORMAT,
+        'NIF_OR_CC_REGEX_FORMAT' : NIF_OR_CC_REGEX_FORMAT
     })
 
 def criar_conta(request):
@@ -61,8 +65,8 @@ def criar_conta(request):
         user=user,
         nomeCompleto = request.POST['nome-completo'],
         telemovel = int(request.POST['telemovel']),
-        idade = None if 'idade' in request.POST else int(request.POST['idade']),
-        estadoCivil = None if 'idade' in request.POST else request.POST['Estado-Civil'],
+        idade = None if 'idade' not in request.POST else int(request.POST['idade']),
+        estadoCivil = None if 'Estado-Civil' not in request.POST else request.POST['Estado-Civil'],
         nif = int(request.POST['NIF']),
         cc = request.POST['CC'],
         animais = 'tem-animais' in request.POST,
