@@ -73,7 +73,7 @@
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password" class="form-control" id="password_criar_conta_form" name="password">
     </div>
 
     <div class="mb-3">
@@ -103,15 +103,16 @@
     const has_symbol = password => check_str_for(password, (c) => symbols_allowed.includes(c) );
     FORM.addEventListener('submit',
         event => {
-            const password = document.getElementById('password').value
+            const password = document.getElementById('password_criar_conta_form').value
             const password_repited = document.getElementById('password-repitida').value
-
             const password_valid = password_repited === password &&
-                password.lenght >= 20 &&
+                password.length >= 15 &&
                 has_upper(password) &&
                 has_lower(password) &&
                 has_symbol(password)  &&
                 has_digit(password)
+            console.log(!FORM.checkValidity() )
+            console.log(FORM.reportValidity())
             if (!FORM.checkValidity() || !password_valid) {
                 event.preventDefault()
                 event.stopPropagation()
