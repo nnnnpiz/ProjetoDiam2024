@@ -99,7 +99,7 @@
     const has_upper = password =>  check_str_for(password, (c) => 'A' <= c && c <= 'Z' );
     const has_lower = password =>  check_str_for(password, (c) => 'a' <= c && c  <= 'z' );
 
-    const symbols_allowed = '|\\!"@#£$§%€&/{()[]=}?\';,:.-_*+ºª´`~^'
+    const symbols_allowed = '|\\!"@#£$§%€&/{()[]=}?\';,:.\\-_*+ºª´`~^'
     const has_symbol = password => check_str_for(password, (c) => symbols_allowed.includes(c) );
     FORM.addEventListener('submit',
         event => {
@@ -107,7 +107,7 @@
             const password_repited = document.getElementById('password-repitida').value
 
             const password_valid = password_repited === password &&
-                password.lenght >= 20 &&
+                password.length >= 15 &&
                 has_upper(password) &&
                 has_lower(password) &&
                 has_symbol(password)  &&
