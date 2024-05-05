@@ -22,3 +22,27 @@ Por botão de save
 
 Simples Search engine para a barra de pesquisas
 Chatbot para apoio ao cliente
+
+
+------------- Dados    ------------------
+nomeConpleto
+        max de MAX_NAME_LEN
+        regex: ([A-Z][a-z]{2,} )+ [A-Z][a-z]{2,} #TODO incluir ç
+        telemovel
+                unique
+                remover espaços se chegarem
+                entre 900_000_000 e 999_999_999
+                regex = 9[0-9]{2} ?[0-9]{3} ?[0-9]{3}
+        idade
+                null
+                entre 18 e 130 (? o que acham)
+        estado civil
+                um de aqueles
+                null
+        nif
+            remover espaços se chegarem
+            regex: [0-9]{3} ?[0-9]{3} ?[0-9]{3}
+            unique
+        cc
+            unique
+            regex: [0-9]{3} ?[0-9]{3} ?[0-9]{3}

@@ -20,31 +20,37 @@
     <h1>Criar conta</h1>
   <div class="mb-3">
         <label for="nome-completo" class="form-label">Nome Completo</label>
-        <input type="text" class="form-control" id="nome-completo" name="nome-completo">
+        <input type="text" class="form-control" id="nome-completo" required name="nome-completo" maxlength="{{ MAX_NAME_LEN }}" pattern="{{ NOME_COMPLETO_REGEX_FORMAT }}">
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">Endereço de Email</label>
-        <input type="email" class="form-control" id="email" name="email">
+        <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="row">
         <div class="col">
             <label for="telemovel" class="form-label">Número de Telemovel</label>
-            <input type="tel" class="form-control" id="telemovel" name="telemovel">
+            <input type="tel" class="form-control" id="telemovel" name="telemovel"
+                   pattern="{{ TELEMOVEL_REGEX_FORMAT }}" required placeholder="9XX XXX XXX">
+        </div>
+        <div class="form-text">
+          <span style ="color: red">TODO fix</span>Por favor, não inclua o indicativo do país
+
         </div>
         <div class="col">
             <label for="idade" class="form-label">Idade</label>
-            <input type="number" class="form-control" id="idade" name="idade">
+            <input type="number" class="form-control" id="idade" name="idade"
+            min="18" max="130">
         </div>
     </div>
 
     <div class="row">
         <div class="col">
             <label class="form-label" for="NIF">NIF</label>
-            <input class="form-control" type="number" value=""  id="NIF" name="NIF">
+            <input class="form-control" type="text" value=""  id="NIF" name="NIF" required pattern="{{ NIF_OR_CC_REGEX_FORMAT }}">
         </div>
         <div class="col">
             <label class="form-label" for="CC">Cartão de Cidadão</label>
-            <input class="form-control" type="text" value=""  id="CC" name="CC">
+            <input class="form-control" type="text" value=""  id="CC" name="CC" required pattern="{{ NIF_OR_CC_REGEX_FORMAT }}">
         </div>
     </div>
 
@@ -52,7 +58,7 @@
         <div class="col">
             <div class="form-check">
                 <label class="form-check-label" for="tem-animais">Tem animais?</label>
-                <input class="form-check-input" type="checkbox" value=""  id="tem-animais" name="tem-animais">
+                <input class="form-check-input" type="checkbox" id="tem-animais" name="tem-animais">
             </div>
         </div>
         <div class="col">
@@ -98,11 +104,16 @@
     const has_symbol = password => check_str_for(password, (c) => symbols_allowed.includes(c) );
     FORM.addEventListener('submit',
         event => {
-            const password = FORM.getElementById('password').value
-            const password_repited = FORM.getElementById('password').value
+            const password = document.getElementById('password').value
+            const password_repited = document.getElementById('password-repitida').value
 
-            const password_valid = password_repited === password && password.lenght >= 20 && has_upper(password) && has_lower(password) && has_symbol(password)  && has_digit(password)
-            if (!form.checkValidity() || !password_valid) {
+            const password_valid = password_repited === password &&
+                password.lenght >= 20 &&
+                has_upper(password) &&
+                has_lower(password) &&
+                has_symbol(password)  &&
+                has_digit(password)
+            if (!FORM.checkValidity() || !password_valid) {
                 event.preventDefault()
                 event.stopPropagation()
               }

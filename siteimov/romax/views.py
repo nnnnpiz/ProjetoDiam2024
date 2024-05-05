@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse, reverse_lazy
-from .models import Propriedade, Cliente, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT
+from .models import Propriedade, Cliente, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -40,13 +40,18 @@ def criar_conta_page(request):
         'ESTADOS_CIVIS' : ESTADOS_CIVIS,
         'MAX_NAME_LEN' : MAX_NAME_LEN,
         'NOME_COMPLETO_REGEX_FORMAT': NOME_COMPLETO_REGEX_FORMAT,
-        'TELEMOVEL_REGEX_FORMAT' : TELEMOVEL_REGEX_FORMAT
+        'TELEMOVEL_REGEX_FORMAT' : TELEMOVEL_REGEX_FORMAT,
+        'NIF_OR_CC_REGEX_FORMAT' : NIF_OR_CC_REGEX_FORMAT
     })
 
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
-
+    #TODO tirar antes de delivery
+    s='#'*10 + '\n'
+    print(s*3)
+    print(request.POST)
+    print(s*3)
 
     #TODO server side
 
