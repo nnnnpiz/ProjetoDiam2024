@@ -6,6 +6,10 @@ MAX_NAME_LEN=400
 MAX_MORADA_LEN=400
 MAX_TITULO_LEN=300
 CC_LEN= 10 #TODO see this
+NOME_COMPLETO_REGEX_FORMAT='([A-Z][a-z]{2,} )+ [A-Z][a-z]{2,}'
+TELEMOVEL_REGEX_FORMAT = '9[0-9]{2} ?[0-9]{3} ?[0-9]{3}'
+NIF_OR_CC_REGEX_FORMAT='[0-9]{3} ?[0-9]{3} ?[0-9]{3}'
+
 ESTADOS_CIVIS = {
       1: 'Solteiro',
       2: 'Casado',
@@ -26,7 +30,7 @@ CLASSES_ENERGETICAS = {1: 'A+',
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
-    telemovel = models.PositiveIntegerField(default=0)
+    telemovel = models.PositiveIntegerField()
     idade = models.PositiveSmallIntegerField(blank=True)
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
     nif = models.PositiveBigIntegerField(default=0)
