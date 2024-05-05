@@ -22,6 +22,35 @@ CLASSES_ENERGETICAS = {1: 'A+',
                        7: 'E'
 }
 
+TIPOS_PROPRIEDADES = {1: 'Apartamento',
+                      2: 'Moradia',
+                      3: 'Outro'
+}
+
+SUBTIPO_PROPRIEDADES ={1:'Studio', #Inicio de subtipos de apartamentos
+                       2:'T1',
+                       3:'T2',
+                       4:'T3+',
+                       5:'Duplex', #tambem para moradias
+                       6:'Triplex', #tambem para moradias
+                       7:'Loft',
+                       8:'Garden', #Fim de subtipos de apartamentos
+                       9:'Penthouse', #Inicio de subtipos de moradias
+                       10:'Térrea',
+                       11:'Vila',
+                       12:'Campo',
+                       13:'Praia', #Fim de subtipos de moradia
+                       14:'Chalé', #O resto são para o tipo "Outro"
+                       15:'Loft'
+
+}
+
+ESTADO_ANUNCIO ={1:'Para Aprovar',
+                 2:'Ativo',
+                 3:'Suspenso',
+                 4:'Comprado'
+}
+
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -55,9 +84,12 @@ class Admin(models.Model):
 
 class Propriedade(models.Model):
     animais = models.BooleanField()
-    #TODO TipoDePropriedade antonio WTF you wanted here ?
+    tipo = models.PositiveSmallIntegerField(choices=TIPOS_PROPRIEDADES)
+    subtipo = models.PositiveSmallIntegerField(choices=SUBTIPO_PROPRIEDADES)
     dataDeCriacao= models.DateTimeField(auto_now_add=True)
-    #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
+    distrito = models.CharField(max_length=20)
+    cidade = models.CharField(max_length=20)
+    freguesia = models.CharField(max_length=40)
     codigoPostal = models.CharField(max_length=8)
     morada = models.CharField(max_length=MAX_MORADA_LEN)
     numQuartos = models.PositiveSmallIntegerField()
@@ -68,9 +100,10 @@ class Propriedade(models.Model):
     descricao = models.TextField()
     numWCs = models.PositiveSmallIntegerField()
     classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS)
-    #EstadoAnuncio TODO
+    estado = models.PositiveSmallIntegerField(choices=ESTADO_ANUNCIO)
     titulo = models.CharField(max_length=MAX_TITULO_LEN)
     highlighted = models.BooleanField()
+    preco = models.PositiveIntegerField()
 
 class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)

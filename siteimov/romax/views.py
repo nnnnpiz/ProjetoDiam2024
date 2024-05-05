@@ -32,76 +32,76 @@ def pesquisa_avancada(request):
     return render(request, 'romax/pesquisa_avancada.html')
 
 def resultados_pesquisa(request):
-    anuncios = Anuncio.objects.all()
+    anuncios = Propriedade.objects.filter(estado=2)
     if request.method == 'POST':
-        distrito = request.POST.get('distrito')  # Access data using the 'name' key
+        distrito = request.POST.get('distrito').lower()  # Access data using the 'name' key
         if distrito:
-            #TODO FILTRAR LISTA DE ACORDO COM O DISTRITO PREENCHIDO
+            anuncios = [anuncio for anuncio in anuncios if anuncio['distrito'] == distrito.lower()]
         cidade = request.Post.get('cidade')
         if cidade:
-            #TODO FILTRAR LISTA DE ACORDO COM O CIDADE PREENCHIDO
+            anuncios = [anuncio for anuncio in anuncios if anuncio['cidade'] == cidade.lower()]
         freguesia = request.Post.get('freguesia')
         if freguesia:
-            #TODO FILTRAR LISTA DE ACORDO COM A FREGUESIA PREENCHIDA
+            anuncios = [anuncio for anuncio in anuncios if anuncio['freguesia'] == freguesia.lower()]
         tipo_propriedade = request.Post.get('tipopropriedade')
         if tipo_propriedade: #TODO VERIFICAR SE ESTA CONDIÇÃO TAMBEM VERIFICA SE A SELEÇÃO DO TIPO DE PROPRIEDADE NAO FOI A DEFAULT
-            #TODO FILTRAR LISTA DE ACORDO COM O TIPOPROPRIEDADE PREENCHIDA
+            anuncios = [anuncio for anuncio in anuncios if anuncio['tipo'] == tipo_propriedade]
             subtipo_propriedade = request.Post.get('subtipopropriedade')
             if subtipo_propriedade: #TODO VERIFICAR SE ESTA CONDIÇÃO TAMBEM VERIFICA SE A SELEÇÃO DO SUBTIPO DE PROPRIEDADE NAO FOI A DEFAULT
-                #TODO FILTRAR LISTA DE ACORDO COM O SUBTIPOPROPRIEDADE PREENCHIDA
+                anuncios = [anuncio for anuncio in anuncios if anuncio['subtipo'] == subtipo_propriedade]
         classe_energetica = request.Post.get('classeenergetica')
         if classe_energetica: #TODO VERIFICAR SE ESTA CONDIÇÃO TAMBEM VERIFICA SE A SELEÇÃO DA CLASSE ENERGETICA NAO FOI A DEFAULT
-            #TODO FILTRAR LISTA DE ACORDO COM O CLASSENERGETICA PREENCHIDA
+            anuncios = [anuncio for anuncio in anuncios if anuncio['classeEnergetica'] == classe_energetica]
         min_wc = request.Post.get('minwc')
         max_wc = request.Post.get('maxwc')
         if min_wc & max_wc:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN E MAX PREENCHIDA - <=min && >=max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numWCs'] >= min_wc and anuncio['numWCs'] <=max_wc]
         elif min_wc:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - <=min
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numWCs'] >= min_wc]
         elif max_wc:
-        #TODO FILTRAR LISTA DE ACORDO COM O MIN - >= max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numWCs'] <=max_wc]
         min_quartos = request.Post.get('minquartos')
         max_quartos = request.Post.get('maxquartos')
         if min_quartos & max_quartos:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN E MAX PREENCHIDA - <=min && >=max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numQuartos'] >= min_quartos and anuncio['numQuartos'] <=max_quartos]
         elif min_quartos:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - <=min
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numQuartos'] >= min_quartos]
         elif max_quartos:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - >= max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['numQuartos'] <=max_quartos]
         min_area = request.Post.get('minarea')
         max_area = request.Post.get('maxarea')
         if min_area & max_area:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN E MAX PREENCHIDA - <=min && >=max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['area'] >= min_area and anuncio['area'] <=max_area]
         elif min_area:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - <=min
+            anuncios = [anuncio for anuncio in anuncios if anuncio['area'] >= min_area]
         elif max_area:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - >= max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['area'] <=max_area]
         cmobilia = request.Post.get('mobilia')
         smobilia= request.Post.get('smobilia')
         if cmobilia:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE CMOBILIA
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('mobilado', True) is True]
         elif smobilia:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE SMOBILIA
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('mobilado', False) is True]
         canimais = request.Post.get('animais')
         sanimais= request.Post.get('sanimais')
         if canimais:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE CANIMAIS
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('animais', True) is True]
         elif sanimais:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE SANIMAIS
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('animais', False) is True]
         min_preco = request.Post.get('minpreco')
         max_preco = request.Post.get('maxpreco')
         if min_preco & max_preco:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN E MAX PREENCHIDA - <=min && >=max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['preco'] >= min_preco and anuncio['preco'] <=max_preco]
         elif min_preco:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - <=min
+            anuncios = [anuncio for anuncio in anuncios if anuncio['preco'] >= min_preco]
         elif max_preco:
-            #TODO FILTRAR LISTA DE ACORDO COM O MIN - >= max
+            anuncios = [anuncio for anuncio in anuncios if anuncio['preco'] <= max_preco]
         negociavel = request.Post.get('negociavel')
         snegociavel= request.Post.get('snegociavel')
         if negociavel:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE NEGOCIAVEL
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('negociavel', True) is True]
         elif snegociavel:
-            #TODO FILTRAR LISTA DE ACORDO COM O VALOR DE SNEGOCIAVEL
+            anuncios = [anuncio for anuncio in anuncios if anuncio.get('negociavel', True) is True]
         criterio_ordenacao = request.Post.get('ordenar')
         if criterio_ordenacao:
             if criterio_ordenacao ==0:
