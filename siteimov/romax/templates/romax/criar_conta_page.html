@@ -38,7 +38,7 @@
         <div class="col">
             <label for="idade" class="form-label">Idade</label>
             <input type="number" class="form-control" id="idade" name="idade"
-            min="18" max="130">
+            min="18" max="122">
         </div>
     </div>
 
@@ -106,14 +106,13 @@
             const password = document.getElementById('password_criar_conta_form').value
             const password_repited = document.getElementById('password-repitida').value
             const password_valid = password_repited === password &&
-                password.length >= 15 &&
+                password.length >= {{ PASSWORD_LEN }} &&
                 has_upper(password) &&
                 has_lower(password) &&
                 has_symbol(password)  &&
                 has_digit(password)
-            console.log(!FORM.checkValidity() )
-            console.log(FORM.reportValidity())
             if (!FORM.checkValidity() || !password_valid) {
+                FORM.reportValidity()
                 event.preventDefault()
                 event.stopPropagation()
               }

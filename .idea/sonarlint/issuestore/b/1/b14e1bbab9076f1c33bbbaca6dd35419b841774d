@@ -1,7 +1,13 @@
 
-<python:S125"Remove this commented out code.(ûìðb8©ß²Íô1
-Spython:S1135"4Complete the task associated to this "TODO" comment.(èŸ±ê8©ß²Íô1
-Spython:S1135$"4Complete the task associated to this "TODO" comment.(½Ê„8©ß²Íô1
-Spython:S11350"4Complete the task associated to this "TODO" comment.(ðåÎõ8ªß²Íô1
-Rpython:S11352"4Complete the task associated to this "TODO" comment.(ƒ¸¨u8¨ñ×Íô1
-Spython:S11358"4Complete the task associated to this "TODO" comment.(ÀÓÞ8ªß²Íô1
+Spython:S1135"4Complete the task associated to this "TODO" comment.(ùÏ®¬8Ç‰éØô1
+=python:S6323"Remove this empty alternative.(ùÏ®¬8³ÛõØô1
+Kpython:S5855",Remove or rework this redundant alternative.(ùÏ®¬8¹ÛõØô1
+[python:S5842"<Rework this part of the regex to not match the empty string.(ùÏ®¬8¹ÛõØô1
+<python:S125"Remove this commented out code.(ûìðb8È‰éØô1
+Spython:S1135'"4Complete the task associated to this "TODO" comment.(èŸ±ê8È‰éØô1
+Spython:S1135-"4Complete the task associated to this "TODO" comment.(½Ê„8ýêìØô1
+Spython:S1135:"4Complete the task associated to this "TODO" comment.(ðåÎõ8È‰éØô1
+Xpython:S905A":Remove or refactor this statement; it has no side effects.(·‡ž€8È‰éØô1
+Wpython:S905M":Remove or refactor this statement; it has no side effects.(Ôù¸n8È‰éØô1
+[python:S5754["<Specify an exception class to catch or reraise the exception(ˆÊÉ·8È‰éØô1
+[python:S5754h"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8È‰éØô1

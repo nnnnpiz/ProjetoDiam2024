@@ -3,9 +3,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse, reverse_lazy
-from .models import Propriedade, Cliente, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
+from .models import Propriedade, Cliente,PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
 from django.contrib.auth.models import User
+import re
 
+
+EMAIL_VALIDATION_REGEX='^([A-Z]|.|_|-|)+@[a-z]+.[a-z]+$' #TODO Voltar aqui
+
+
+EMAIL_VALIDATION_REGEX_COMPILE = re.compile(EMAIL_VALIDATION_REGEX)
+NOME_COMPLETO_REGEX_FORMAT_COMPILE = re.compile(NOME_COMPLETO_REGEX_FORMAT)
+TELEMOVEL_REGEX_FORMAT_COMPILE = re.compile(TELEMOVEL_REGEX_FORMAT)
+NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
 # Create your views here.
 def landing_page(request):
     return render(request, 'romax/landing_page.html',
@@ -41,36 +50,59 @@ def criar_conta_page(request):
         'MAX_NAME_LEN' : MAX_NAME_LEN,
         'NOME_COMPLETO_REGEX_FORMAT': NOME_COMPLETO_REGEX_FORMAT,
         'TELEMOVEL_REGEX_FORMAT' : TELEMOVEL_REGEX_FORMAT,
-        'NIF_OR_CC_REGEX_FORMAT' : NIF_OR_CC_REGEX_FORMAT
+        'NIF_OR_CC_REGEX_FORMAT' : NIF_OR_CC_REGEX_FORMAT,
+        'PASSWORD_LEN' : PASSWORD_LEN
     })
 
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
-    #TODO tirar antes de delivery
-    s='#'*10 + '\n'
-    print(s*3)
-    print(request.POST)
-    print(s*3)
+    #Validar o email
+    re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])
 
-    #TODO server side
+    #validar o nome completo
+    nome_completo = request.POST['nome-completo']
+    len(nome_completo) <= MAX_NAME_LEN
+    re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)
+
+    #validar Telemovel
+    telemovel = request.POST['telemovel']
+    re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel)
+    telemovel = telemovel.replace(' ', '')
+
+    #Validar idade se Cliente inseriu uma
+    if('idade' in request.POST):
+        idade = int(request.POST['idade'])
+
+        18 <= idade <=122
+        del idade
+
+    #validar Estado Civil e Cliente inseriu um
+
+
+    #validar password
 
     #Criar conta
-
-    user = User.objects.create_user(request.POST['email'],
+    try:
+        user = User.objects.create_user(request.POST['email'],
                                     request.POST['email'],
                                     request.POST['password']
                                     )
-    Cliente.objects.create(
-        user=user,
-        nomeCompleto = request.POST['nome-completo'],
-        telemovel = int(request.POST['telemovel']),
-        idade = None if 'idade' not in request.POST else int(request.POST['idade']),
-        estadoCivil = None if 'Estado-Civil' not in request.POST else request.POST['Estado-Civil'],
-        nif = int(request.POST['NIF']),
-        cc = request.POST['CC'],
-        animais = 'tem-animais' in request.POST,
-    )
+    except:
+        pass #Enviar ao user uma resposta de erro (5XX)
+    try:
+        Cliente.objects.create(
+            user=user,
+            nomeCompleto =nome_completo,
+            telemovel = int(telemovel),
+            idade = None if 'idade' not in request.POST else int(request.POST['idade']),
+            estadoCivil = None if 'Estado-Civil' not in request.POST else int(request.POST['Estado-Civil']),
+            nif = int(request.POST['NIF']),
+            cc = request.POST['CC'],
+            animais = 'tem-animais' in request.POST,
+        )
+    except:
+        user.delete()
     return HttpResponseRedirect(reverse('romax:landing_page'))
 
 
