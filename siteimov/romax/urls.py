@@ -13,7 +13,9 @@ urlpatterns = [
 
     path('propriedade/<int:propriedade_id>/', views.propriedade, name='propriedade'),
 
-    path('login/', views.login, name='login'),
+    path('login/', views.login_view, name='login_view'),
+
+    path('logout/', views.logout_view, name='logout_view'),
 
     path('criar_conta_page/', views.criar_conta_page, name='criar_conta_page'),
 

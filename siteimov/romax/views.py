@@ -1,11 +1,25 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse, reverse_lazy
 from .models import Propriedade, Cliente,PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
 from django.contrib.auth.models import User
 import re
+from django.contrib.auth.decorators import permission_required, login_required
+from django.utils import timezone
+from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
@@ -16,19 +30,46 @@ NOME_COMPLETO_REGEX_FORMAT_COMPILE = re.compile(NOME_COMPLETO_REGEX_FORMAT)
 TELEMOVEL_REGEX_FORMAT_COMPILE = re.compile(TELEMOVEL_REGEX_FORMAT)
 NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
 # Create your views here.
+
 def landing_page(request):
     context = {
         'highlighted_properties': [i for i in range(10)],# TODO change this
         }
     if(request.user.is_authenticated):
-        Cliente= Cliente.objects.get(user=request.user)
-        nomes = Cliente.nomeCompleto.split(' ')
+        cliente= Cliente.objects.get(user=request.user)
+        nomes = cliente.nomeCompleto.split(' ')
         context['Cliente_1_nome']: nomes[0]
         context['Cliente_ultimo_nome']: nomes[-1]
-    return render(request, 'romax/landing_page.html', context= context)
+    return render(request, 'romax/landing_page.html', context=context)
 
-def login(request):
-    print( request.POST['user-email'], request.POST['password'] )
+def login_view(request):
+    print(request.POST['user-email'], request.POST['password'])
+    if request.method == 'POST':
+        try:
+            username = request.POST['user-email']
+            password = request.POST['password']
+        except KeyError:
+            print("KeyError")##return render(request, 'romax/login.html') com msg de erro?
+
+        if username and password: #se username e pass estao preenchidos
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(
+                    reverse('romax:landing_page')
+                )
+            else:
+               print("1º else")#FAZER? return HttpResponseRedirect(reverse('romax:logininsucesso')) #msg de erro no popup!
+        else:
+            return HttpResponseRedirect(reverse('romax:landing_page')) #falar com mendy para forma de dar return na pagina landing mas com o popup still aberto!
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(
+        reverse('romax:landing_page')
+    )
+
 
 def propriedade(request, propriedade_id):
     try:
@@ -91,10 +132,13 @@ def criar_conta(request):
 
     #Criar conta
     try:
-        user = User.objects.create_user(request.POST['email'],
-                                    request.POST['email'],
-                                    request.POST['password']
-                                    )
+        if not User.objects.filter(username=request.POST['email']).exists():
+            user = User.objects.create_user(request.POST['email'],
+                                        request.POST['email'],
+                                        request.POST['password']
+                                        )
+        else:
+            return render(request, 'romax/criar_conta_page.html', context={'error_msg': "User ja existe",})
     except:
         pass #Enviar ao user uma resposta de erro (5XX)
     try:

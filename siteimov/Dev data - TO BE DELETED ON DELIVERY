@@ -3,3 +3,9 @@
 ------------  TODO DELETED ON DELIVERY   --------------
 --------------------------------------------------------
 --------------------------------------------------------
+
+Filipe:
+
+=> falar com mendy pq de duvida na view de login para no caso de haver problema ao fazer login quero mandar uma msg para o pop
+up mas nao sei exatamente a forma de fazer isso ja que o popup nao é bem uma "pagina" onde posso dar render e passar uma msg
+de err no contexto!...

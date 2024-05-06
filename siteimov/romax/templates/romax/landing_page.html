@@ -62,7 +62,7 @@
                 {% include "romax/cruz.html" %}
             </div>
             <div id="welcome_msg_div">
-                <h3 id="welcome_msg" class="horizontal_center">{{ Cliente_1_nome }} {{ Cliente_ultimo_nome }} estamos gratos de o ver novamente!</h3>
+                <h3 id="welcome_msg" class="horizontal_center">{{ request.user.cliente.nomeCompleto }} estamos gratos de o ver novamente!</h3>
                 <script src="/static/romax/javascript/saudacao.js"></script>
             </div>
         </div>
