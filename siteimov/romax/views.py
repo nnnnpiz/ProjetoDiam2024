@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import re
 
 
-EMAIL_VALIDATION_REGEX='^([A-Z]|.|_|-|)+@[a-z]+.[a-z]+$' #TODO Voltar aqui
+EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
 
 
 EMAIL_VALIDATION_REGEX_COMPILE = re.compile(EMAIL_VALIDATION_REGEX)
@@ -17,13 +17,19 @@ TELEMOVEL_REGEX_FORMAT_COMPILE = re.compile(TELEMOVEL_REGEX_FORMAT)
 NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
 # Create your views here.
 def landing_page(request):
-    return render(request, 'romax/landing_page.html',
-                      context={'highlighted_properties': [i for i in range(10)]})
+    context = {
+        'highlighted_properties': [i for i in range(10)],# TODO change this
+        }
+    if(request.user.is_authenticated):
+        Cliente= Cliente.objects.get(user=request.user)
+        nomes = Cliente.nomeCompleto.split(' ')
+        context['Cliente_1_nome']: nomes[0]
+        context['Cliente_ultimo_nome']: nomes[-1]
+    return render(request, 'romax/landing_page.html', context= context)
 
 def login(request):
     print( request.POST['user-email'], request.POST['password'] )
-    #request.POST['user-email']
-    #request.POST['password']
+
 def propriedade(request, propriedade_id):
     try:
         propriedade = Propriedade.objects.get(pk=propriedade_id)
@@ -35,10 +41,11 @@ def propriedade(request, propriedade_id):
         return render(request, 'romax/propriedade_notfound.html', context={
         })
 
-
-    #TODO fix that
 def pesquisa_avancada(request):
-    return render(request, 'romax/pesquisa_avancada.html')
+    ordernar = [ "Preço ascendente", "Preço descendente", "Maior área", "Menor área", "Mais recente", "Mais antigo"]
+    return render(request, 'romax/pesquisa_avancada.html', context={
+       'ordernar' : zip(range(1,len(ordernar) ),ordernar)
+    })
 
 def resultados_pesquisa(request):
     #pesquisa pelo titulo sera based num regex (case insensitive) *titulo*

@@ -1,13 +1,10 @@
 
-Spython:S1135"4Complete the task associated to this "TODO" comment.(ùÏ®¬8Ç‰éØô1
-=python:S6323"Remove this empty alternative.(ùÏ®¬8³ÛõØô1
-Kpython:S5855",Remove or rework this redundant alternative.(ùÏ®¬8¹ÛõØô1
-[python:S5842"<Rework this part of the regex to not match the empty string.(ùÏ®¬8¹ÛõØô1
-<python:S125"Remove this commented out code.(ûìğb8È‰éØô1
-Spython:S1135'"4Complete the task associated to this "TODO" comment.(èŸ±ê8È‰éØô1
-Spython:S1135-"4Complete the task associated to this "TODO" comment.(½Ê„8ıêìØô1
-Spython:S1135:"4Complete the task associated to this "TODO" comment.(ğåÎõ8È‰éØô1
-Xpython:S905A":Remove or refactor this statement; it has no side effects.(·‡€8È‰éØô1
-Wpython:S905M":Remove or refactor this statement; it has no side effects.(Ôù¸n8È‰éØô1
-[python:S5754["<Specify an exception class to catch or reraise the exception(ˆÊÉ·8È‰éØô1
-[python:S5754h"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8È‰éØô1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8ËµÛô1
+vpython:S117"XRename this local variable "Cliente" to match the regular expression ^[_a-z][a-z0-9_]*$.(Øè´œ8ËµÛô1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ûŠ–şÿÿÿÿ8ÌµÛô1
+Spython:S11354"4Complete the task associated to this "TODO" comment.(½Ê„8ÌµÛô1
+Spython:S1135A"4Complete the task associated to this "TODO" comment.(ğåÎõ8ÌµÛô1
+Xpython:S905H":Remove or refactor this statement; it has no side effects.(·‡€8ÌµÛô1
+Wpython:S905T":Remove or refactor this statement; it has no side effects.(Ôù¸n8ÌµÛô1
+[python:S5754b"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
+[python:S5754o"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
