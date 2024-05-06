@@ -45,7 +45,6 @@ def landing_page(request):
 def login_view(request):
     print(request.POST['user-email'], request.POST['password'])
     return HttpResponse(status=200, content='http://127.0.0.1:8000/')
-    return HttpResponseRedirect(reverse('romax:landing_page'))
 
 
     if request.method == 'POST':
@@ -63,7 +62,7 @@ def login_view(request):
                     reverse('romax:landing_page')
                 )
             else:
-               return HttpResponse(status=401)#FAZER? return HttpResponseRedirect(reverse('romax:logininsucesso')) #msg de erro no popup!
+               return HttpResponse('Utilizador nao existe', status=401) #FAZER? return HttpResponseRedirect(reverse('romax:logininsucesso')) #msg de erro no popup!
         else:
             return HttpResponseRedirect(reverse('romax:landing_page')) #falar com mendy para forma de dar return na pagina landing mas com o popup still aberto!
 
@@ -108,7 +107,7 @@ def criar_conta_page(request):
 
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
-    return HttpResponseRedirect(reverse('romax:landing_page'))
+
     #Validar o email
     re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])
 
