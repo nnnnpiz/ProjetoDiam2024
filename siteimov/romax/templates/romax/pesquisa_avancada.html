@@ -92,12 +92,10 @@
                 <label class="label" for="ordenar">Classe energética:</label>
                 <select class="form-control" id="ordenar">
                     {# TODO por isto num For e opção de nao escolher 1 #}
-                    <option value="0">Preço ascendente</option>
-                    <option value="1">Preço descendente</option>
-                    <option value="2">Maior área</option>
-                    <option value="3">Menor área</option>
-                    <option value="4">Mais recente</option>
-                    <option value="5">Mais antigo</option>
+                    <option value="0"></option>
+                    {% for k, v in ordernar %}
+                        <option value="{{ k }}">{{ v }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </form>
