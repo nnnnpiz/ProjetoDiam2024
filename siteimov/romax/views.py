@@ -44,6 +44,10 @@ def landing_page(request):
 
 def login_view(request):
     print(request.POST['user-email'], request.POST['password'])
+    return HttpResponse(status=200, content='http://127.0.0.1:8000/')
+    return HttpResponseRedirect(reverse('romax:landing_page'))
+
+
     if request.method == 'POST':
         try:
             username = request.POST['user-email']
@@ -103,9 +107,8 @@ def criar_conta_page(request):
     })
 
 def criar_conta(request):
-    print()
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
-
+    return HttpResponseRedirect(reverse('romax:landing_page'))
     #Validar o email
     re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])
 

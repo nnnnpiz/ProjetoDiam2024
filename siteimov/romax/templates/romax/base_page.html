@@ -122,40 +122,42 @@
                   <label for="password" class="form-label">Password</label>
                   <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <p id="msg-email-pass-invalidas" style="color: red" hidden="">E-mail ou password invalidas</p>
                 <div id="entrar_botao">
                         <button type="submit" class="btn btn-primary">Entrar</button>
                 </div>
             </form>
             <script>
-    function foo(a){
-        let out =''
-        for( key in a ){
-            out += `${key}=${a[key]}&`
-        }
-        return out;
-    }
-    document.getElementById('login-form').addEventListener('submit',
-        event => {
-                event.preventDefault()
-                event.stopPropagation()
-        console.log(Object.fromEntries(new FormData(event.target)))
-        if (document.getElementById('login-form').checkValidity()) {
-            $.ajax({
-                url: "{% url 'romax:criar_conta' %}",
-                dataType: 'json',
-                type: 'post',
-                //contentType: 'application/json',
-                data: foo(Object.fromEntries(new FormData(event.target))),   //new FormData(event.target)  //JSON.stringify( Object.fromEntries(new FormData(event.target)) ),
-                processData: false,
-                success: function( data, textStatus, jQxhr ){
-                    $('#response pre').html( JSON.stringify( data ) );
-                },
-                error: function( jqXhr, textStatus, errorThrown ){
-                    console.log( errorThrown );
+            function foo(a){
+                let out =''
+                for( key in a ){
+                    out += `${key}=${a[key]}&`
                 }
-            });
-        }
-    }, false)
+                return out;
+            }
+            document.getElementById('login-form').addEventListener('submit',
+                event => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        if (document.getElementById('login-form').checkValidity()) {
+                            $.ajax({
+                                url: "{% url 'romax:login_view' %}",
+                                dataType: 'html',
+                                type: 'post',
+                                //contentType: 'application/json',
+                                data: foo(Object.fromEntries(new FormData(event.target))),   //new FormData(event.target)  //JSON.stringify( Object.fromEntries(new FormData(event.target)) ),
+                                processData: false,
+                                statusCode: {
+                                401: function() {
+                                   document.getElementById('msg-email-pass-invalidas').hidden = false;
+                                }
+                              },
+                            'success': function(response){
+                               window.location.href=response;
+                           }
+                            });
+                        }
+                    }, false)
             </script>
             <hr>
             <h3>Não tens conta?</h3>

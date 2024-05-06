@@ -1,10 +1,12 @@
 
-rpython:S1192;"SDefine a constant instead of duplicating this literal 'romax:landing_page' 4 times.(µÁ½¢8»ê÷ùô1
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8¼ê÷ùô1
-Xpython:S1135$"4Complete the task associated to this "TODO" comment.(ûŠ–şÿÿÿÿ8½ê÷ùô1
-Spython:S1135]"4Complete the task associated to this "TODO" comment.(½Ê„8½ê÷ùô1
-Spython:S1135k"4Complete the task associated to this "TODO" comment.(ğåÎõ8½ê÷ùô1
-Xpython:S905r":Remove or refactor this statement; it has no side effects.(·‡€8¾ê÷ùô1
-Wpython:S905~":Remove or refactor this statement; it has no side effects.(Ôù¸n8¾ê÷ùô1
-\python:S5754"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
-\python:S5754œ"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
+wpython:S11920"SDefine a constant instead of duplicating this literal 'romax:landing_page' 6 times.(¹ÎãŞşÿÿÿÿ8ÁØ¹şô1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8ÂØ¹şô1
+Xpython:S1135$"4Complete the task associated to this "TODO" comment.(ûŠ–şÿÿÿÿ8ÂØ¹şô1
+kpython:S17633"GDelete this unreachable code or refactor the code to make it reachable.(ôª¢âùÿÿÿÿ8ÂØ¹şô1
+kpython:S17630"GDelete this unreachable code or refactor the code to make it reachable.(¹ÎãŞşÿÿÿÿ8ÃØ¹şô1
+Spython:S1135a"4Complete the task associated to this "TODO" comment.(½Ê„8ÃØ¹şô1
+Spython:S1135n"4Complete the task associated to this "TODO" comment.(ğåÎõ8ÃØ¹şô1
+Xpython:S905u":Remove or refactor this statement; it has no side effects.(·‡€8ÃØ¹şô1
+Xpython:S905":Remove or refactor this statement; it has no side effects.(Ôù¸n8ÃØ¹şô1
+\python:S5754’"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÃØ¹şô1
+\python:S5754Ÿ"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÃØ¹şô1
