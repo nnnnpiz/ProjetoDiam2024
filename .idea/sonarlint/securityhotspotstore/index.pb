@@ -2669,3 +2669,7 @@ w
 G.idea/sonarlint/issuestore/5/6/56383464313824fa5c9296f3623b32325d793a22,7\3\73290df285032f40d1f4fe13a3460216424b718d
 Å
 Q.idea/sonarlint/securityhotspotstore/3/c/3c22f963925621717be3284c5f99175eeca72bd3,c\b\cb2f4b5f281266b6ce942a46e7e0e437f9d792dc
+h
+8siteimov/romax/templates/romax/propriedade_notfound.html,e\0\e0ff9cd6ec57700a48341984729cdd8e52ca3bd3
+b
+2siteimov/romax/static/romax/javascript/saudacao.js,9\9\993e80571acf852859a07dbb949f749caebaecfc

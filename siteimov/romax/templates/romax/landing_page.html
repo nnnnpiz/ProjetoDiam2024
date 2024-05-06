@@ -53,7 +53,7 @@
 {% endblock %}
 
 {% block rest_of_page %}
-{% if not request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
     {# TODO inverte condition once there are accounts in the website #}
     <div class="horizontal_center">
         <div id="welcome_div">
@@ -62,9 +62,8 @@
                 {% include "romax/cruz.html" %}
             </div>
             <div id="welcome_msg_div">
-                <h3 id="welcome_msg" class="horizontal_center"></h3>
-                <script src="/static/romax/javascript/saudacao.js">
-                </script>
+                <h3 id="welcome_msg" class="horizontal_center">{{ Cliente_1_nome }} {{ Cliente_ultimo_nome }} estamos gratos de o ver novamente!</h3>
+                <script src="/static/romax/javascript/saudacao.js"></script>
             </div>
         </div>
     </div>
