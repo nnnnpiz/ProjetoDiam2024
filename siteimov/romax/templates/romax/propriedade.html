@@ -56,7 +56,7 @@
 {% block rest_of_page %}
     <div class="main-prop">
         <div class="container">
-        <h1>Propriedade à Venda</h1>
+        <h1>{{ propriedade.titulo }}</h1>
         <div class="carousel-container">
             <div class="carousel">
                 <!-- TODO Re-fazer para percorrer a lista associada à propriedade
@@ -84,7 +84,7 @@
 
 
         <h2>Descrição:</h2>
-        <p>meter aqui desc</p>
+        <p>{{ propriedade.descricao }}</p>
         <h2>Detalhes da Propriedade:</h2>
         <ul>
             <li><strong>Localização:</strong> Nome da rua, Cidade, País</li>
