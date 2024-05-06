@@ -18,9 +18,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        body {
-          /*  TODO color: #76885B; */
-        }
+
         #Header {
             background-color: #76885B;
             height: 10vh;
@@ -45,7 +43,6 @@
                 width: auto;
             }
         }
-
         .horizontal_center {
             /* simulates the <center> div that has been deprecated */
             display: flex;
@@ -80,6 +77,10 @@
             display: flex;
             justify-content: end;
         }
+        footer {
+            background-color: #76885B;
+
+        }
         {% block css_of_rest_of_page %}
         {% endblock %}
     </style>
@@ -102,7 +103,7 @@
         {%  endblock %}
     </main>
     <footer>
-        <h1 style="font-size: xxx-large">TODO </h1>
+
     </footer>
 {% if not request.user.is_authenticated %}
     <dialog id="login_registar_dialog">
@@ -111,7 +112,7 @@
         </div>
         <main >
             <h3>Entrar</h3>
-            <form action="{% url 'romax:login_view' %}" method="post" >
+            <form  id='login-form' action="{% url 'romax:login_view' %}" method="post" >
                 {% csrf_token %}
                 <div class="mb-3">
                   <label for="user-email" class="form-label">Endereço de Email</label>
@@ -125,6 +126,37 @@
                         <button type="submit" class="btn btn-primary">Entrar</button>
                 </div>
             </form>
+            <script>
+    function foo(a){
+        let out =''
+        for( key in a ){
+            out += `${key}=${a[key]}&`
+        }
+        return out;
+    }
+    document.getElementById('login-form').addEventListener('submit',
+        event => {
+                event.preventDefault()
+                event.stopPropagation()
+        console.log(Object.fromEntries(new FormData(event.target)))
+        if (document.getElementById('login-form').checkValidity()) {
+            $.ajax({
+                url: "{% url 'romax:criar_conta' %}",
+                dataType: 'json',
+                type: 'post',
+                //contentType: 'application/json',
+                data: foo(Object.fromEntries(new FormData(event.target))),   //new FormData(event.target)  //JSON.stringify( Object.fromEntries(new FormData(event.target)) ),
+                processData: false,
+                success: function( data, textStatus, jQxhr ){
+                    $('#response pre').html( JSON.stringify( data ) );
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+            });
+        }
+    }, false)
+            </script>
             <hr>
             <h3>Não tens conta?</h3>
             <a href="{% url 'romax:criar_conta_page' %}" class="btn btn-outline-secondary">Clica aqui para criar</a>

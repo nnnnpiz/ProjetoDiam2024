@@ -1,10 +1,10 @@
 
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8ËµÛô1
-vpython:S117"XRename this local variable "Cliente" to match the regular expression ^[_a-z][a-z0-9_]*$.(Øè´œ8ËµÛô1
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(ûŠ–şÿÿÿÿ8ÌµÛô1
-Spython:S11354"4Complete the task associated to this "TODO" comment.(½Ê„8ÌµÛô1
-Spython:S1135A"4Complete the task associated to this "TODO" comment.(ğåÎõ8ÌµÛô1
-Xpython:S905H":Remove or refactor this statement; it has no side effects.(·‡€8ÌµÛô1
-Wpython:S905T":Remove or refactor this statement; it has no side effects.(Ôù¸n8ÌµÛô1
-[python:S5754b"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
-[python:S5754o"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
+rpython:S1192;"SDefine a constant instead of duplicating this literal 'romax:landing_page' 4 times.(µÁ½¢8»ê÷ùô1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8¼ê÷ùô1
+Xpython:S1135$"4Complete the task associated to this "TODO" comment.(ûŠ–şÿÿÿÿ8½ê÷ùô1
+Spython:S1135]"4Complete the task associated to this "TODO" comment.(½Ê„8½ê÷ùô1
+Spython:S1135k"4Complete the task associated to this "TODO" comment.(ğåÎõ8½ê÷ùô1
+Xpython:S905r":Remove or refactor this statement; it has no side effects.(·‡€8¾ê÷ùô1
+Wpython:S905~":Remove or refactor this statement; it has no side effects.(Ôù¸n8¾ê÷ùô1
+\python:S5754"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
+\python:S5754œ"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ÌµÛô1
