@@ -43,29 +43,18 @@ def landing_page(request):
     return render(request, 'romax/landing_page.html', context=context)
 
 def login_view(request):
-    print(request.POST['user-email'], request.POST['password'])
-    return HttpResponse(status=200, content='http://127.0.0.1:8000/')
-
-
     if request.method == 'POST':
-        try:
-            username = request.POST['user-email']
-            password = request.POST['password']
-        except KeyError:
-            print("KeyError")##return render(request, 'romax/login.html') com msg de erro?
-
-        if username and password: #se username e pass estao preenchidos
-            user = authenticate(username=username, password=password)
+        if request.POST['user-email'] and request.POST['password'] and 'user-email' in request.POST and 'password' in request.POST: #se username e pass estao preenchidos
+            user = authenticate(username=request.POST['user-email'], password=request.POST['password'])
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(
-                    reverse('romax:landing_page')
-                )
+                return HttpResponse(status=200, content=reverse('romax:landing_page'))
             else:
-               return HttpResponse('Utilizador nao existe', status=401) #FAZER? return HttpResponseRedirect(reverse('romax:logininsucesso')) #msg de erro no popup!
+               return HttpResponse('Utilizador nao existe', status=401)
         else:
-            return HttpResponseRedirect(reverse('romax:landing_page')) #falar com mendy para forma de dar return na pagina landing mas com o popup still aberto!
-
+            return HttpResponse(status=400, content='400 Bad Request. HTTP request deve vir com o email e password para poder fazer login')
+    else:
+        return HttpResponse(status=400, content='400 Bad Request. HTTP request deve ser POST')
 
 def logout_view(request):
     logout(request)

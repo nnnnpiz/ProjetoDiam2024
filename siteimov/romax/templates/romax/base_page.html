@@ -112,7 +112,7 @@
         </div>
         <main >
             <h3>Entrar</h3>
-            <form  id='login-form' action="{% url 'romax:login_view' %}" method="post" >
+            <form id='login-form' action="{% url 'romax:login_view' %}" method="post" >
                 {% csrf_token %}
                 <div class="mb-3">
                   <label for="user-email" class="form-label">Endereço de Email</label>
@@ -128,36 +128,36 @@
                 </div>
             </form>
             <script>
-            function foo(a){
-                let out =''
-                for( key in a ){
-                    out += `${key}=${a[key]}&`
+                const LOGIN_FORM = document.getElementById('login-form');
+                function create_payload(){
+                    let out = '';
+                    const FORM_DATA = Object.fromEntries(new FormData(LOGIN_FORM));
+                    for(key in FORM_DATA){
+                        out += `${key}=${FORM_DATA[key]}&`
+                    }
+                    return out;
                 }
-                return out;
-            }
-            document.getElementById('login-form').addEventListener('submit',
-                event => {
-                        event.preventDefault()
-                        event.stopPropagation()
-                        if (document.getElementById('login-form').checkValidity()) {
-                            $.ajax({
-                                url: "{% url 'romax:login_view' %}",
-                                dataType: 'html',
-                                type: 'post',
-                                //contentType: 'application/json',
-                                data: foo(Object.fromEntries(new FormData(event.target))),   //new FormData(event.target)  //JSON.stringify( Object.fromEntries(new FormData(event.target)) ),
-                                processData: false,
-                                statusCode: {
-                                401: function() {
-                                   document.getElementById('msg-email-pass-invalidas').hidden = false;
-                                }
-                              },
-                            'success': function(response){
-                               window.location.href=response;
-                           }
-                            });
-                        }
-                    }, false)
+                LOGIN_FORM.addEventListener('submit',
+                    event => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            if (LOGIN_FORM.checkValidity()) {
+                                $.ajax({
+                                    url: LOGIN_FORM.action,
+                                    dataType: 'text',
+                                    type: 'post',
+                                    data: create_payload(),
+                                    statusCode: {
+                                    401: function() {
+                                       document.getElementById('msg-email-pass-invalidas').hidden = false;
+                                    }
+                                  },
+                                'success': function(response){
+                                   window.location.href=response;
+                               }
+                                });
+                            }
+                        }, false)
             </script>
             <hr>
             <h3>Não tens conta?</h3>
