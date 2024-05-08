@@ -1,125 +1,124 @@
- {% extends 'romax/base_page.html' %}
+{% extends 'romax/base_page.html' %}
 
 
 {% block css_of_rest_of_page %}
 
 
-.outer-container {
-    margin: 0;
-    padding: 0;
-}
+    .outer-container {
+        margin: 0;
+        padding: 0;
+    }
 
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
 
-h1 {
-    color: #333;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
+    h1 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
 
-h3{
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
+    h3{
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
-/* Form Styles */
-form {
-    margin-top: 20px;
-}
+    form {
+        margin-top: 20px;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
 
-input[type="submit"] {
-    background-color: #ff5500;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-}
+    input[type="submit"] {
+        background-color: #ff5500;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+    }
 
-input[type="submit"]:hover {
-    background-color: #e04400;
-}
+    input[type="submit"]:hover {
+        background-color: #e04400;
+    }
 
-/* Avatar Styles */
-.avatar-container {
-    margin-top: 10px;
-    position: relative; /* Ensure proper positioning for absolute positioning */
-}
+    /* Avatar Styles */
+    .avatar-container {
+        margin-top: 10px;
+        position: relative;
+    }
 
-.avatar-preview {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 10px;
-    background-color: #f0f0f0;
-    position: absolute; /* Position the avatar absolutely */
-    top: -30px; /* Align to the top */
-    right: 55px; /* Align to the right */
-    border: 1px solid black; /* Add black border */
-    box-sizing: border-box; /* Ensure border is included in the size */
-}
+    .avatar-preview {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 10px;
+        background-color: #f0f0f0;
+        position: absolute;
+        top: -30px;
+        right: 55px;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
 
-.avatar-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .avatar-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-.avatar-upload {
-    display: none;
-}
+    .avatar-upload {
+        display: none;
+    }
 
-.avatar-upload-label {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: inline-block;
-}
+    .avatar-upload-label {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        display: inline-block;
+    }
 
-.avatar-upload-label:hover {
-    background-color: #0056b3;
-}
+    .avatar-upload-label:hover {
+        background-color: #0056b3;
+    }
 
- .avatar-preview:hover .change-icon {
-   visibility: visible;
-}
-.change-icon {
-    visibility: hidden;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 24px; /* Adjust icon size as needed */
-}
+     .avatar-preview:hover .change-icon {
+       visibility: visible;
+    }
+    .change-icon {
+        visibility: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 24px;
+    }
 
 
 {% endblock %}
