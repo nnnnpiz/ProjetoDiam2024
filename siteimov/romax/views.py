@@ -33,7 +33,7 @@ NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
 
 def landing_page(request):
     context = {
-        'highlighted_properties': [i for i in range(10)],# TODO change this
+        'highlighted_properties': [i for i in range(10)],# TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora as 10 mais recentes)
         }
     if(request.user.is_authenticated):
         cliente= Cliente.objects.get(user=request.user)

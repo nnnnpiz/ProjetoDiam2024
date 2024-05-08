@@ -7,7 +7,7 @@ MAX_MORADA_LEN=400
 MAX_TITULO_LEN=300
 PASSWORD_LEN = 15
 CC_LEN= 10 #TODO see this
-NOME_COMPLETO_REGEX_FORMAT = '([A-Z][a-z]{2,} ?)+[A-Z][a-z]{2,}'
+NOME_COMPLETO_REGEX_FORMAT = '([A-Z][a-z]{1,} ?)+[A-Z][a-z]{2,}'
 TELEMOVEL_REGEX_FORMAT = '9[0-9]{2} ?[0-9]{3} ?[0-9]{3}'
 NIF_OR_CC_REGEX_FORMAT='[0-9]{3} ?[0-9]{3} ?[0-9]{3}'
 
@@ -18,6 +18,7 @@ ESTADOS_CIVIS = {
       4: 'Divorciado',
       5: 'Separado judicialmente de pessoas e bens'
 }
+
 CLASSES_ENERGETICAS = {1: 'A+',
                        2: 'A',
                        3: 'B',
