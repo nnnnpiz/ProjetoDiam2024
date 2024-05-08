@@ -3,6 +3,7 @@
 {% block rest_of_page %}
     <nav>
         <form action="" name="filtros" method="post" target="">
+            {% csrf_token %}
             <div>
                 <label for="distrito"  class="label">Distrito</label>
                 <input type="text" class="form-control" id="distrito">

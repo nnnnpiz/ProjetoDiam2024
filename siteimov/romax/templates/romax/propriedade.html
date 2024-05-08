@@ -65,8 +65,7 @@
                 <img src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
                 <img src="/romax/static/media/casa2.png" alt="Imagem 2" class="carousel-image">
                 <img src="/romax/static/media/casa.png" alt="Imagem 3" class="carousel-image">
-                <img src="/romax/static/media/imagem_propriedade/pyth.jpg" alt="Imagem 4" class="carousel-image"
-                style="width: 500px; height: auto">
+
 
             </div>
             <div class="carousel-btn prev-btn" onclick="prevSlide()">
@@ -87,16 +86,40 @@
         <p>{{ propriedade.descricao }}</p>
         <h2>Detalhes da Propriedade:</h2>
         <ul>
-            <li><strong>Localização:</strong> Nome da rua, Cidade, País</li>
-            <li><strong>Preço:</strong> $XXX,XXX</li>
-            <li><strong>Quartos:</strong> 3</li>
-            <li><strong>WCs:</strong> 2</li>
-            <li><strong>Área:</strong> 150 m²</li>
+            <li><strong>Localização:</strong> {{ propriedade.morada }}, Cidade {{ propriedade.codigoPostal }}</li>
+            <li><strong>Preço:</strong> XXX,XXX €</li>
+            <li><strong>Quartos:</strong> {{ propriedade.numQuartos }}</li>
+            <li><strong>WCs:</strong> {{ propriedade.numWCs }}</li>
+            <li><strong>Área:</strong> {{ propriedade.area }} m²</li>
+            <li><strong>Mobilada:</strong>
+                {% if propriedade.mobilada == 1 %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
+            <li><strong>Negociável:</strong>
+                {% if propriedade.negociavel == 1 %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
+            <!-- TODO classe energetica ; e ver Pais, CIdade etc -->
+            <li><strong>Ano Construção:</strong> {{ propriedade.anoConstrucao }} m²</li>
+            <li><strong>Permite animais:</strong>
+                {% if propriedade.animais %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
         </ul>
         <h2>Contato do Agente:</h2>
         <p>Nome do Agente: João Silva</p>
         <p>Email: joaosilva@example.com</p>
         <p>Telefone: +55 123 456 789</p>
+        <p>Data de Criação: {{ propriedade.dataDeCriacao }}</p>
     </div>
     <script src="/static/romax/javascript/carousel_propriedade.js">
     </script>

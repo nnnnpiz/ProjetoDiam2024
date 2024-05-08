@@ -21,6 +21,9 @@ urlpatterns = [
 
     path('criar_conta/', views.criar_conta, name='criar_conta'),
 
-    path('informacao_pessoal/', views.informacaopessoal, name='informacaopessoal')
+    path('informacao_pessoal/', views.informacaopessoal, name='informacaopessoal'),
+
+
+
 ]
 

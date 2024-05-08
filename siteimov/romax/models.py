@@ -38,6 +38,7 @@ class Cliente(models.Model):
     cc = models.CharField(max_length=CC_LEN, default=0)
     animais = models.BooleanField(blank=True)
     salvos = models.ManyToManyField('Propriedade')
+    urlprofilepic = models.URLField(default='')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)

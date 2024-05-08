@@ -122,6 +122,22 @@ def criar_conta(request):
 
     #validar password
 
+    #url:
+    myfile = request.FILES.get('myfile')
+    if myfile:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        # verificar se foto ja existe no media dir
+        if fs.exists(myfile.name):
+            fs.delete(myfile.name)
+
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+    else:
+        uploaded_file_url=''
+
+
+
     #Criar conta
     try:
         if not User.objects.filter(username=request.POST['email']).exists():
@@ -143,6 +159,7 @@ def criar_conta(request):
             nif = int(request.POST['NIF']),
             cc = request.POST['CC'],
             animais = 'tem-animais' in request.POST,
+            urlprofilepic = uploaded_file_url
         )
     except:
         user.delete()
@@ -152,3 +169,5 @@ def criar_conta(request):
 
 def informacaopessoal(request):
     return render(request, 'romax/informacao_pessoal.html')
+
+

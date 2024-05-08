@@ -154,6 +154,7 @@
                   <div class="accordion-body">
                       <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
                       <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
+                          {% csrf_token %}
                         <div class="mb-3">
                           <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
                           <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
