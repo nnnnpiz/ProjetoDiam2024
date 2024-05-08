@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block rest_of_page %}
-<h1 style="color: red">pfp se sim por no form </h1>
 <form id="criar_conta" action="{% url 'romax:criar_conta' %}" method="post" enctype="multipart/form-data" novalidate>
   {% csrf_token %}
     <h1>Criar conta</h1>
