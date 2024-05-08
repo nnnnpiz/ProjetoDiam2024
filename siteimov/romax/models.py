@@ -28,6 +28,10 @@ CLASSES_ENERGETICAS = {1: 'A+',
                        7: 'E'
 }
 
+CIDADES = {0: 'Grande Lisboa',
+           1: 'Grande Porto',
+           2: 'Aveiro', 3: 'Braga', 4: 'Coimbra', 5: 'Faro', 6: 'Funchal', 7: 'Guimarães', 8: 'Ponta Delgada', 9: 'Póvoa de Varzim', 10: 'Viana do Castelo', 11: 'Vila Franca de Xira',12:'Viseu'}
+
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -78,6 +82,8 @@ class Propriedade(models.Model):
     #EstadoAnuncio TODO
     titulo = models.CharField(max_length=MAX_TITULO_LEN)
     highlighted = models.BooleanField()
+    preco = models.FloatField()
+    cidade = models.PositiveSmallIntegerField(choices=CIDADES)
 
 class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
