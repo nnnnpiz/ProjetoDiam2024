@@ -170,4 +170,66 @@ def criar_conta(request):
 def informacaopessoal(request):
     return render(request, 'romax/informacao_pessoal.html')
 
+def salvar_alteracoes_conta(request):
+    if request.method == 'POST':
+        re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE, request.POST['email'])
+
+        # validar o nome completo
+        nome_completo = request.POST['nome-completo']
+        len(nome_completo) <= MAX_NAME_LEN
+        re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)
+
+        # validar Telemovel
+        telemovel = request.POST['telemovel']
+        re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel)
+        telemovel = telemovel.replace(' ', '')
+
+        # Validar idade se Cliente inseriu uma
+        if ('idade' in request.POST):
+            idade = int(request.POST['idade'])
+
+            18 <= idade <= 122
+            del idade
+
+        # validar Estado Civil e Cliente inseriu um
+
+        # validar password
+
+
+        #buscar user: (se quiser aceder ao cliente p mudar fzr objc.cliente
+        objc = User.objects.get(username=request.user.username)
+
+        # url:
+        if 'myfile' in request.FILES:
+            myfile = request.FILES['myfile']
+            fs = FileSystemStorage()
+            # verificar se foto ja existe no media dir
+            if fs.exists(myfile.name):
+                fs.delete(myfile.name)
+
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+        else:
+            uploaded_file_url = objc.cliente.urlprofilepic
+
+        objc.username = request.POST['email']
+        objc.email = request.POST['email']
+        objc.save()
+        objc.cliente.nomeCompleto = nome_completo
+        objc.cliente.idade = int(request.POST['idade'])
+        objc.cliente.estadoCivil = int(request.POST['Estado-Civil'])
+        objc.cliente.animais = 'tem-animais' in request.POST
+        objc.cliente.telemovel = int(telemovel)
+        objc.cliente.nif = int(request.POST['NIF'])
+        objc.cliente.cc = request.POST['CC']
+        objc.cliente.urlprofilepic = uploaded_file_url
+        objc.cliente.save()
+
+        return HttpResponseRedirect(reverse('romax:informacaopessoal'))
+    else:
+        return render(request, 'votacao/informacao_pessoal.html')
+
+
+
+
 

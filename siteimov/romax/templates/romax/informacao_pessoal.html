@@ -31,53 +31,22 @@
         margin-bottom: 10px;
     }
 
-    form {
-        margin-top: 20px;
-    }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-    }
-
-    input[type="submit"] {
-        background-color: #ff5500;
-        color: #fff;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-        transition: background-color 0.3s ease;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #e04400;
-    }
-
-    /* Avatar Styles */
     .avatar-container {
         margin-top: 10px;
         position: relative;
     }
 
     .avatar-preview {
-        width: 200px;
-        height: 200px;
+        width: 230px;
+        height: 230px;
         border-radius: 50%;
         overflow: hidden;
         margin-bottom: 10px;
         background-color: #f0f0f0;
         position: absolute;
-        top: -30px;
-        right: 55px;
+        top: 10px;
+        right: 75px;
         border: 1px solid black;
         box-sizing: border-box;
     }
@@ -88,27 +57,9 @@
         object-fit: cover;
     }
 
-    .avatar-upload {
-        display: none;
-    }
-
-    .avatar-upload-label {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        display: inline-block;
-    }
-
-    .avatar-upload-label:hover {
-        background-color: #0056b3;
-    }
-
      .avatar-preview:hover .change-icon {
-       visibility: visible;
+        visibility: visible;
+        transform: scale(2.5) translate(-35%, -35%); /* aumenta o size a 150% e centra o icon quando faz a transicao */
     }
     .change-icon {
         visibility: hidden;
@@ -118,7 +69,10 @@
         transform: translate(-50%, -50%);
         color: #fff;
         font-size: 24px;
+        transition: transform 0.3s ease;
     }
+
+
 
 
 {% endblock %}
@@ -130,69 +84,118 @@
         <h1>Informações do Utilizador</h1>
 
         <div class="avatar-container">
-                <div class="avatar-preview">
+
+
+                <div class="avatar-preview" id="avatar-preview">
 
                     {% if request.user.cliente.urlprofilepic %}
 
                         <a>
                             <img src="{{ request.user.cliente.urlprofilepic }}" width="100px" height="auto">
                         </a>
+
                         <span class="change-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-  <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
-  <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
-</svg>
-                </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+                                <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
+                                <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                            </svg>
+                        </span>
 
                     {% else %}
                         <a>
                             <img src="/romax/static/media/Logo.png" width="100px" height="auto">
                         </a>
+                        <span class="change-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+                                <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
+                                <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                            </svg>
+                        </span>
 
                     {% endif %}
 
                 </div>
         </div>
 
-        <div>
-            <h3>Email: {{ request.user.email }}  </h3>
-            <h3>Nome: {{ request.user.cliente.nomeCompleto }}</h3>
-            <h3>Idade: {{ request.user.cliente.idade }}</h3>
-            <h3>Estado Civil: {% if request.user.cliente.estadoCivil == 1 %}
-                    Solteiro
-                {% elif request.user.cliente.estadoCivil == 2 %}
-                    Casado
-                {% elif request.user.cliente.estadoCivil == 3 %}
-                    Viúvo
-                {% elif request.user.cliente.estadoCivil == 4 %}
-                    Divorciado
-                {% else %}
-                    Separado judicialmente de pessoas e bens
-                {% endif %}
-            </h3>
-            <h3>Possui animais: {% if request.user.cliente.animais == 1 %}
-                                    sim
-                                {% else %}
-                                    nao
-                                {% endif %}
-            </h3>
-            <h3>Telemovel: {{ request.user.cliente.telemovel }}</h3>
+        <form id="info_pessoal" action="{% url 'romax:salvar_alteracoes_conta' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="file" id="avatar-upload" name="myfile" value='' style="display: none;" >
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email: </label>
+                <input class="form-control" type="email" value="{{ request.user.email }}" name="email" id="email" style="width: 30%">
+            </div>
+
+            <div class="mb-3">
+                <label for="nome-completo" class="form-label">Nome: </label> <!-- TODO verificacao nome nao funciona e outras!-->
+                <input class="form-control" type="text" value="{{ request.user.cliente.nomeCompleto }}" name="nome-completo" id="nome-completo" style="width: 30%">
+            </div>
+
+            <div class="mb-3">
+                <label for="idade" class="form-label">Idade: </label>
+                <input class="form-control" type="number" value="{{ request.user.cliente.idade }}" name="idade" id="idade" min="18" max="122" style="width: 30%">
+            </div>
+
+            <div class="mb-3">
+                <label for="Estado-Civil" class="form-label">Estado Civil: </label>
+                <select class="form-select" name="Estado-Civil" id="Estado-Civil" style="width: 30%">
+                    <option value="1" {% if request.user.cliente.estadoCivil == 1 %} selected {% endif %}>Solteiro</option>
+                    <option value="2" {% if request.user.cliente.estadoCivil == 2 %} selected {% endif %}>Casado</option>
+                    <option value="3" {% if request.user.cliente.estadoCivil == 3 %} selected {% endif %}>Viúvo</option>
+                    <option value="4" {% if request.user.cliente.estadoCivil == 4 %} selected {% endif %}>Divorciado</option>
+                    <option value="5" {% if request.user.cliente.estadoCivil == 5 %} selected {% endif %}>Separado judicialmente de pessoas e bens</option>
+                </select>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label" for="tem-animais">Possui animais </label>
+                <input class="form-check-input" type="checkbox" {% if request.user.cliente.animais == 1 %} checked {% endif %} name="tem-animais" id="tem-animais">
+            </div>
+
+            <div class="mb-3">
+                <label for="telemovel" class="form-label">Telemovel:</label>
+                <input type="tel" value="{{ request.user.cliente.telemovel }}" class="form-control" id="telemovel" name="telemovel" required placeholder="9XX XXX XXX">
+                <div class="form-text">
+                    Por favor, não inclua o indicativo do país
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="NIF">NIF</label>
+                <input class="form-control" type="text" value="{{ request.user.cliente.nif }}"  id="NIF" name="NIF">
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label" for="CC">Cartão de Cidadão</label>
+                <input class="form-control" type="text" value="{{ request.user.cliente.cc }}"  id="CC" name="CC">
+            </div>
+
+            <div class="mb-3" id="salvar" style="display: flex; justify-content: end;">
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+
+        </form>
+
+
+        <div class="wrap" style="display: flex; justify-content: start;">
+            <a href="{% url 'romax:landing_page' %}">
+                <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                    </svg>
+                    Voltar à página inicial</button>
+            </a>
         </div>
-
-
-
-            <div class="casas-gostadas">
-                <h3>Casas que você gostou:</h3>
-                <p>blablablabla</p>
-            </div>
-
-            <div class="wrap">
-                <a href="{% url 'romax:landing_page' %}">
-                    <button type="submit">Voltar à página inicial</button>
-                </a>
-            </div>
 
     </div>
 </div>
+
+<script>
+    document.getElementById('avatar-preview').addEventListener('click', function() {
+        document.getElementById('avatar-upload').click();
+    });
+</script>
 
 {% endblock %}

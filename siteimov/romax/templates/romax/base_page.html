@@ -104,7 +104,7 @@
                     <img src="{{ request.user.cliente.urlprofilepic }}" width="100px" height="auto">
                 </a>
             {% else %}
-                <a>
+                <a href="{% url 'romax:informacaopessoal' %}">
                     <img src="/romax/static/media/Logo.png" width="100px" height="auto">
                 </a>
             {% endif %}
