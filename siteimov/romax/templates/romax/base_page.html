@@ -25,6 +25,7 @@
 
             display: flex;
             flex-direction: row;
+
             & a {
 
                 padding: 0 10px 0 10px;
@@ -82,6 +83,13 @@
 
         }
 
+        #Header .nav-links-user {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        }
+
+
 
         {% block css_of_rest_of_page %}
         {% endblock %}
@@ -96,7 +104,8 @@
         <a href="#">Sobre</a>
         {% if  request.user.is_authenticated %}
 
-
+        <div class="nav-links-user">
+            <a style="margin-left: auto;" href="#">Favoritos</a>
             <a style="margin-left: auto;" href="{% url 'romax:logout_view' %}">Logout</a>
 
             {% if request.user.cliente.urlprofilepic %}
@@ -112,6 +121,7 @@
         {% else %}
             <a style=" margin-left: auto;" onclick="login_registar_dialog.showModal()">Login/Registar</a>
         {% endif %}
+        </div>
     </nav>
     <main>
         {% block rest_of_page %}
