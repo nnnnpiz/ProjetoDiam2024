@@ -25,5 +25,7 @@ urlpatterns = [
 
     path('informacao_pessoal/salvar_alteracoes_conta', views.salvar_alteracoes_conta, name='salvar_alteracoes_conta'),
 
+    path('sobre_page', views.sobre_page, name='sobre_page'),
+
 ]
 

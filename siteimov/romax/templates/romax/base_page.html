@@ -101,7 +101,7 @@
         <a  href="{% url 'romax:landing_page' %}" style="padding: 0;  height: 100%; display: initial">
            <img id="logo" src="{% static 'romax/images/LOGO_ROMAX_NEW.png' %}" alt="Logo" {# TODO dar um fix nisto #} >
         </a>
-        <a href="#">Sobre</a>
+        <a href="{% url 'romax:sobre_page' %}">Sobre</a>
         {% if  request.user.is_authenticated %}
 
         <div class="nav-links-user">

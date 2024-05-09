@@ -227,7 +227,10 @@ def salvar_alteracoes_conta(request):
 
         return HttpResponseRedirect(reverse('romax:informacaopessoal'))
     else:
-        return render(request, 'votacao/informacao_pessoal.html')
+        return render(request, 'romax/informacao_pessoal.html')
+
+def sobre_page(request):
+    return render(request, 'romax/sobre_page.html')
 
 
 
