@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
+from .models import CIDADES
 
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
@@ -33,13 +34,15 @@ NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
 
 def landing_page(request):
     context = {
-        'highlighted_properties': Propriedade.objects.filter(highlighted=True) #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
+        'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
+        'CIDADES':CIDADES
         }
     if(request.user.is_authenticated):
         cliente= Cliente.objects.get(user=request.user)
         nomes = cliente.nomeCompleto.split(' ')
         context['Cliente_1_nome']: nomes[0]
         context['Cliente_ultimo_nome']: nomes[-1]
+
     return render(request, 'romax/landing_page.html', context=context)
 
 def login_view(request):
@@ -228,6 +231,9 @@ def salvar_alteracoes_conta(request):
         return HttpResponseRedirect(reverse('romax:informacaopessoal'))
     else:
         return render(request, 'romax/informacao_pessoal.html')
+
+def sobre_page(request):
+    return render(request, 'romax/sobre_page.html')
 
 #TODO @login_required()
 def criar_propriedade_pagina(request):

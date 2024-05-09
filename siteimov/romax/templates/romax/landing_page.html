@@ -93,20 +93,23 @@
                 const HOW_MANY_AT_A_TIME = 2;
                 const HOW_MANY_TOTAL = {{ highlighted_properties|length  }}; //TODO change this, this is temp
                 const SHIFT_PERIOD = 5000; //TODO
+                const CIDADES_JSON = JSON.stringify({{ CIDADES|safe }});
+
+
 
                 const CARROSSEL_ELEM_LIST = [{% for propriedade in highlighted_properties %}
                 {
                     img:  "/romax/static/media/Logo.png",
-                    titulo : "{{ propriedade.titulo }}",
-                    descricao : "{{ propriedade.descricao }}",
-                    cidade : "{{ propriedade.cidade }}",
-                    preco : {{ propriedade.preco }},
+                    titulo: "{{ propriedade.titulo }}",
+                    descricao: "{{ propriedade.descricao }}",
+                    cidade: JSON.parse(CIDADES_JSON)[{{ propriedade.cidade }}],
+                    preco: {{ propriedade.preco }},
                 }  {%  if not forloop.last %},{% endif %}
                 {% endfor %}].map(i => {
                     //TODO acabar qunado for a altura
                     let template = document.querySelector('#card_for_highlighted_properties');
                     const new_card = template.content.cloneNode(true).children[0];
-                    new_card.querySelector('img').src = '/romax/static/media/' +  i.img
+                    new_card.querySelector('img').src =  i.img
                     new_card.querySelector('.card-title').innerText = i.titulo
                     new_card.querySelector('.card-text').innerText = i.descricao
                     new_card.querySelector('.card-footer').children[0].innerText= i.cidade
