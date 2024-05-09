@@ -66,7 +66,7 @@ class Admin(models.Model):
 
 class Propriedade(models.Model):
     animais = models.BooleanField()
-    #TODO TipoDePropriedade antonio WTF you wanted here ?
+    #TODO TipoDePropriedadeantonio WTF you wanted here ?
     dataDeCriacao= models.DateTimeField(auto_now_add=True)
     #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
     codigoPostal = models.CharField(max_length=8)

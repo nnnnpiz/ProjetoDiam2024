@@ -23,8 +23,9 @@ urlpatterns = [
 
     path('informacao_pessoal/', views.informacaopessoal, name='informacaopessoal'),
 
-    path('informacao_pessoal/salvar_alteracoes_conta', views.salvar_alteracoes_conta, name='salvar_alteracoes_conta'),
+    path('informacao_pessoal/salvar_alteracoes_conta/', views.salvar_alteracoes_conta, name='salvar_alteracoes_conta'),
 
+    path('backend/criar_propriedade_pagina/', views.criar_propriedade_pagina, name='criar_propriedade_pagina' )
     path('sobre_page', views.sobre_page, name='sobre_page'),
 
 ]

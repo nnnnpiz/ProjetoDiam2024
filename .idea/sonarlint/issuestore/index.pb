@@ -2673,3 +2673,9 @@ h
 8siteimov/romax/templates/romax/propriedade_notfound.html,e\0\e0ff9cd6ec57700a48341984729cdd8e52ca3bd3
 b
 2siteimov/romax/static/romax/javascript/saudacao.js,9\9\993e80571acf852859a07dbb949f749caebaecfc
+e
+5siteimov/romax/templates/romax/base_page_BACKEND.html,0\9\0979edf3269934c4fc0a6a18f2e759274947c364
+X
+(siteimov/romax/templates/romax/TEST.html,6\d\6d6d79383e86fa899415bc9a3ad8a45517b53dac
+j
+:siteimov/romax/templates/romax/criar_propriedade_page.html,e\f\efbc0a2670e8f9c467a24be16ee4d8c65cc69dcb

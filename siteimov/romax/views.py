@@ -229,10 +229,11 @@ def salvar_alteracoes_conta(request):
     else:
         return render(request, 'romax/informacao_pessoal.html')
 
-def sobre_page(request):
-    return render(request, 'romax/sobre_page.html')
+#TODO @login_required()
+def criar_propriedade_pagina(request):
+    # try:
+    #     agente = AgenteImobiliario.objects.get(user=request.user)
+    # except(Model.DoesNotExist):
+    #     return HttpResponse(status=401, content="Não tens autorização para aceder" )
 
-
-
-
-
+    return render(request, 'romax/criar_propriedade_page.html')
