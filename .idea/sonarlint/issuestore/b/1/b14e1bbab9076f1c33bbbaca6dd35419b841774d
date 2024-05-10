@@ -1,14 +1,16 @@
 
-wpython:S11923"SDefine a constant instead of duplicating this literal 'romax:landing_page' 3 times.(“Å®Ëûÿÿÿÿ8é†ÿÎõ1
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8ê†ÿÎõ1
-Spython:S1135$"4Complete the task associated to this "TODO" comment.(»Ü¹8Ğ‰öĞõ1
-Spython:S1135U"4Complete the task associated to this "TODO" comment.(½Ê„8ê†ÿÎõ1
-Spython:S1135b"4Complete the task associated to this "TODO" comment.(ğåÎõ8ê†ÿÎõ1
-Xpython:S905i":Remove or refactor this statement; it has no side effects.(·‡€8ê†ÿÎõ1
-Wpython:S905u":Remove or refactor this statement; it has no side effects.(Ôù¸n8ê†ÿÎõ1
-\python:S5754–"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ê†ÿÎõ1
-\python:S5754¤"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ë†ÿÎõ1
-Ypython:S905³":Remove or refactor this statement; it has no side effects.(·‡€8ë†ÿÎõ1
-Xpython:S905¿":Remove or refactor this statement; it has no side effects.(Ôù¸n8ë†ÿÎõ1
-Tpython:S1135è"4Complete the task associated to this "TODO" comment.(·€ßå8ë†ÿÎõ1
-Cpython:S125ê"Remove this commented out code.(ÇÂÔúÿÿÿÿ8±·Ïõ1
+wpython:S1192;"SDefine a constant instead of duplicating this literal 'romax:landing_page' 3 times.(“Å®Ëûÿÿÿÿ8µ¥Ÿşõ1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8µ¥Ÿşõ1
+Xpython:S1135*"4Complete the task associated to this "TODO" comment.(Ã³Òèøÿÿÿÿ8µ¥Ÿşõ1
+Spython:S1135]"4Complete the task associated to this "TODO" comment.(½Ê„8µ¥Ÿşõ1
+Spython:S1135j"4Complete the task associated to this "TODO" comment.(ğåÎõ8µ¥Ÿşõ1
+Xpython:S905q":Remove or refactor this statement; it has no side effects.(·‡€8µ¥Ÿşõ1
+Wpython:S905}":Remove or refactor this statement; it has no side effects.(Ôù¸n8µ¥Ÿşõ1
+\python:S5754"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8µ¥Ÿşõ1
+\python:S5754¬"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8µ¥Ÿşõ1
+Ypython:S905»":Remove or refactor this statement; it has no side effects.(·‡€8µ¥Ÿşõ1
+Xpython:S905Ç":Remove or refactor this statement; it has no side effects.(Ôù¸n8µ¥Ÿşõ1
+Tpython:S1135ó"4Complete the task associated to this "TODO" comment.(·€ßå8µ¥Ÿşõ1
+Ypython:S1135ş"4Complete the task associated to this "TODO" comment.(æÉ´«ıÿÿÿÿ8µ¥Ÿşõ1
+Tpython:S1135‚"4Complete the task associated to this "TODO" comment.(¤²ø§8µ¥Ÿşõ1
+>python:S125“"Remove this commented out code.(Ÿ™ı½8ÒüŸşõ1

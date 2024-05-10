@@ -4,7 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse, reverse_lazy
-from .models import Propriedade, Cliente,PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT
+
+from utils import handle_uploaded_file
+from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
+    TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio
 from django.contrib.auth.models import User
 import re
 from django.contrib.auth.decorators import permission_required, login_required
@@ -20,7 +23,9 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from .models import CIDADES
+from .models import CIDADES, CLASSES_ENERGETICAS
+from django.db import models
+
 
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
@@ -236,10 +241,56 @@ def sobre_page(request):
     return render(request, 'romax/sobre_page.html')
 
 #TODO @login_required()
-def criar_propriedade_pagina(request):
-    # try:
-    #     agente = AgenteImobiliario.objects.get(user=request.user)
-    # except(Model.DoesNotExist):
-    #     return HttpResponse(status=401, content="Não tens autorização para aceder" )
+def criar_propriedade_pagina(request, pedido_id):
+    try:
+        agente = AgenteImobiliario.objects.get(user=request.user)
+        pedido = PedidosCriacaoAnuncio.objects.get(id=pedido_id)
+        user = User.objects.get(id=pedido.user_id)
+        pedinte = Cliente.objects.get(user=user)
+    except models.Model.DoesNotExist:
+        return HttpResponse(status=401, content="Não tens autorização para aceder")
+    if request.method == 'POST':
 
-    return render(request, 'romax/criar_propriedade_page.html')
+        # TODO validacao
+
+        propriedade_criada = Propriedade.objects.create(
+            animais=request.POST['animais'],
+            # TODO TipoDePropriedadeantonio WTF you wanted here ?
+            codigoPostal=request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2'],
+            morada=request.POST['morada'],
+            numQuartos=request.POST['n-quartos'],
+            area=request.POST['area'],
+            anoConstrucao=request.POST['ano-construcao'],
+            mobilada='Mobilada' in request.POST,
+            negociavel='Negociavel' in request.POST,
+            descricao=request.POST['descricao'],
+            numWCs=request.POST['n-casas-banho'],
+            classeEnergetica=request.POST['class-energetica'],
+            # EstadoAnuncio TODO
+            titulo=request.POST['titulo'],
+            highlighted=request.POST[''],
+            preco=request.POST['preco'],
+            cidade=request.POST['Cidade']
+        )
+        #pedido.data_fecho = TODO
+        pedido.tratado_por = agente
+        pedido.save()
+
+        pedinte.add(propriedade_criada)
+        if 'foto_principal' in request.FILES:
+            handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
+            # 'propriedade_criada_P'
+
+        restantes_fotos = request.FILES.get('restantes_fotos', [])
+        for i, img in enumerate(restantes_fotos):
+            handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_{i}', restantes_fotos)
+    else:
+        return render(request, 'romax/criar_propriedade_page.html', context={
+            'CIDADES' : CIDADES,
+            'CLASSES_ENERGETICAS':  CLASSES_ENERGETICAS,
+            #'Dono' : pedinte.nomeCompleto
+        })
+
+
+
+

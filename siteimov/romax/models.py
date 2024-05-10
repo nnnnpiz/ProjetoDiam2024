@@ -79,7 +79,6 @@ class Propriedade(models.Model):
     animais = models.BooleanField()
     #TODO TipoDePropriedadeantonio WTF you wanted here ?
     dataDeCriacao= models.DateTimeField(auto_now_add=True)
-    #TODO como raio vamos famos fazer aquilo das cidades, distritos e freguesias
     codigoPostal = models.CharField(max_length=8)
     morada = models.CharField(max_length=MAX_MORADA_LEN)
     numQuartos = models.PositiveSmallIntegerField()
@@ -100,7 +99,7 @@ class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     data_pedido = models.DateField(auto_now_add=True)
     data_fecho = models.DateField(blank=True)
-
+    tratado_por = models.ForeignKey(AgenteImobiliario, blank=True, on_delete=models.CASCADE)
 class Oferta(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     propriedade_id = models.ForeignKey('Propriedade', on_delete=models.CASCADE)

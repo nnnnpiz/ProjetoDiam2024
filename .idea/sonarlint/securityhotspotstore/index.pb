@@ -2679,3 +2679,5 @@ X
 (siteimov/romax/templates/romax/TEST.html,6\d\6d6d79383e86fa899415bc9a3ad8a45517b53dac
 j
 :siteimov/romax/templates/romax/criar_propriedade_page.html,e\f\efbc0a2670e8f9c467a24be16ee4d8c65cc69dcb
+8
+utils.py,5\0\5031d0ea937a7fcbe0a14f778442700216efff7a
