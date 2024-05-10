@@ -40,7 +40,8 @@ CIDADES = {0: 'Grande Lisboa',
            9: 'Póvoa de Varzim',
            10: 'Viana do Castelo',
            11: 'Vila Franca de Xira',
-           12:'Viseu'}
+           12: 'Viseu'
+}
 
 
 class Cliente(models.Model):
@@ -48,7 +49,7 @@ class Cliente(models.Model):
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     telemovel = models.PositiveIntegerField(unique=True)
     idade = models.PositiveSmallIntegerField(blank=True)
-    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS, blank=True)
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS.items(), blank=True)
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN, default=0)
     animais = models.BooleanField(blank=True)
@@ -59,7 +60,7 @@ class AgenteImobiliario(models.Model):
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
-    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS.items())
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN,default=0)
 
@@ -69,7 +70,7 @@ class Admin(models.Model):
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
     telemovel = models.PositiveIntegerField(default=0)
     idade = models.PositiveSmallIntegerField()
-    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS)
+    estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS.items())
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN, default=0)
 
@@ -88,12 +89,12 @@ class Propriedade(models.Model):
     negociavel = models.BooleanField()
     descricao = models.TextField()
     numWCs = models.PositiveSmallIntegerField()
-    classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS)
+    classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS.items())
     #EstadoAnuncio TODO
     titulo = models.CharField(max_length=MAX_TITULO_LEN)
     highlighted = models.BooleanField()
     preco = models.FloatField()
-    cidade = models.PositiveSmallIntegerField(choices=CIDADES)
+    cidade = models.PositiveSmallIntegerField(choices=CIDADES.items())
 
 class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)

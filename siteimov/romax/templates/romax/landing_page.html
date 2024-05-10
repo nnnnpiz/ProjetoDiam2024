@@ -1,5 +1,6 @@
 {% extends 'romax/base_page.html' %}
 {% block css_of_rest_of_page %}
+{% load static %}
          #welcome_div {
             width : 50vw;
             & #welcome_msg_div {
@@ -45,22 +46,93 @@
                 align-items: center;
             }
     }
+
+
+        #pageintro{
+            padding:180px 0;
+        }
+
+        #pageintro p:first-of-type{
+            margin:0 0 20px 0;
+            text-transform:uppercase;
+            font-size:1.6rem;
+            letter-spacing:2px;
+        }
+
+        /* Media Queries
+        @-ms-viewport{width:device-width;}
+        @media screen and (min-width:1140px){
+            .hoc{max-width:1140px;}
+        }
+
+
 {% endblock %}
+
 {% block rest_of_page %}
-{% if request.user.is_authenticated %}
-    {# TODO inverte condition once there are accounts in the website #}
-    <div class="horizontal_center">
-        <div id="welcome_div">
-            <div class="close_cross_wrapper" onclick="document.getElementById('welcome_div').hidden = true">
-                {% include "romax/cruz.html" %}
-            </div>
-            <div id="welcome_msg_div">
-                <h3 id="welcome_msg" class="horizontal_center">{{ request.user.cliente.nomeCompleto }} estamos gratos de o ver novamente!</h3>
-                <script src="/static/romax/javascript/saudacao.js"></script>
+
+
+    {% if request.user.is_authenticated %}
+        {# TODO inverte condition once there are accounts in the website #}
+        <div class="horizontal_center">
+            <div id="welcome_div">
+                <div class="close_cross_wrapper" onclick="document.getElementById('welcome_div').hidden = true">
+                    {% include "romax/cruz.html" %}
+                </div>
+                <div id="welcome_msg_div">
+                    <h3 id="welcome_msg" class="horizontal_center">{{ request.user.cliente.nomeCompleto }} estamos gratos de o ver novamente!</h3>
+                    <script src="/static/romax/javascript/saudacao.js"></script>
+                </div>
             </div>
         </div>
-    </div>
-{% endif %}
+    {% endif %}
+
+
+<div class="wrapper bgded overlay" style="background-image:url('{% static 'romax/images/landing_background.jpg' %}'); ">
+  <div id="pageintro" class="hoc clear">
+    <!-- ################################################################################################ -->
+
+        <div class="horizontal_center" style="position: relative; z-index: 1;width: 100%">
+             <div style="width: 50%"  class="accordion" id="accordionExample">
+                 <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Pesquisar
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                              <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
+                              <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
+                                  {% csrf_token %}
+                                  <div class="mb-3">
+                                      <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
+                                      <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                        <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                        <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+
+
+
+
+    <!-- CAROUSEL -->
     <div class="horizontal_center">
          <div id="carrossel_outer_div"> {# Carrossel #}
          <template id="card_for_highlighted_properties">
@@ -90,7 +162,7 @@
          </div>
          <script >
                 const CARROSSEL = document.getElementById("Carrossel");
-                const HOW_MANY_AT_A_TIME = 2;
+                const HOW_MANY_AT_A_TIME = 3;
                 const HOW_MANY_TOTAL = {{ highlighted_properties|length  }}; //TODO change this, this is temp
                 const SHIFT_PERIOD = 5000; //TODO
                 const CIDADES_JSON = JSON.stringify({{ CIDADES|safe }});
@@ -143,37 +215,6 @@
          </script>
         </div>
     </div>
-    <div class="horizontal_center">
-         <div style="width: 50%"  class="accordion" id="accordionExample">
-             <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Pesquisar
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                      <p>TODO choose by title (find an algorithm to search by) by place (district, city, freguesia)</p>
-                      <form method="post" action="{% url 'romax:resultados_pesquisa' %}">
-                          {% csrf_token %}
-                        <div class="mb-3">
-                          <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
-                          <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
-                        </div>
-                          <div class="row">
-                              <div class="col">
-                                <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">
-                                <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
-                              </div>
-                          </div>
-                        </form>
-                  </div>
-                </div>
-             </div>
-        </div>
-    </div>
+
+
 {%  endblock %}
