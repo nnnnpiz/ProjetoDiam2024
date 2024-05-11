@@ -43,6 +43,29 @@ CIDADES = {0: 'Grande Lisboa',
            12: 'Viseu'
 }
 
+TIPOS_PROPRIEDADES = {1: 'Apartamento',
+                      2: 'Moradia',
+                      3: 'Outro'
+}
+
+SUBTIPO_PROPRIEDADES ={1:'Studio', #Inicio de subtipos de apartamentos
+                       2:'T1',
+                       3:'T2',
+                       4:'T3+',
+                       5:'Duplex', #tambem para moradias
+                       6:'Triplex', #tambem para moradias
+                       7:'Loft',
+                       8:'Garden', #Fim de subtipos de apartamentos
+                       9:'Penthouse', #Inicio de subtipos de moradias
+                       10:'Térrea',
+                       11:'Vila',
+                       12:'Campo',
+                       13:'Praia', #Fim de subtipos de moradia
+                       14:'Chalé', #O resto são para o tipo "Outro"
+                       15:'Loft'
+}
+
+
 
 class Cliente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -77,7 +100,8 @@ class Admin(models.Model):
 
 class Propriedade(models.Model):
     animais = models.BooleanField()
-    #TODO TipoDePropriedadeantonio WTF you wanted here ?
+    tipo = models.PositiveSmallIntegerField(choices=TIPOS_PROPRIEDADES.items())
+    subtipo = models.PositiveSmallIntegerField(choices=SUBTIPO_PROPRIEDADES.items())
     dataDeCriacao= models.DateTimeField(auto_now_add=True)
     codigoPostal = models.CharField(max_length=8)
     morada = models.CharField(max_length=MAX_MORADA_LEN)

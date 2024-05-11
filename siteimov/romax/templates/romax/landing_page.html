@@ -203,11 +203,13 @@
                     descricao: "{{ propriedade.descricao }}",
                     cidade: JSON.parse(CIDADES_JSON)[{{ propriedade.cidade }}],
                     preco: {{ propriedade.preco }},
+                    url: "{% url 'romax:propriedade' propriedade.id %}",
                 }  {%  if not forloop.last %},{% endif %}
                 {% endfor %}].map(i => {
                     //TODO acabar qunado for a altura
                     let template = document.querySelector('#card_for_highlighted_properties');
                     const new_card = template.content.cloneNode(true).children[0];
+                    new_card.onclick = function() {window.location.href = i.url;};
                     new_card.querySelector('img').src =  i.img
                     new_card.querySelector('.card-title').innerText = i.titulo
                     new_card.querySelector('.card-text').innerText = i.descricao
