@@ -1,21 +1,21 @@
 
-wpython:S11920"SDefine a constant instead of duplicating this literal 'romax:landing_page' 3 times.(“Å®Ëûÿÿÿÿ8‚ã¨Ìö1
+wpython:S1192/"SDefine a constant instead of duplicating this literal 'romax:landing_page' 3 times.(“Å®Ëûÿÿÿÿ8™ÔÃÌö1
 Bpython:S125"Remove this commented out code.(‹†·°ıÿÿÿÿ8‚ã¨Ìö1
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8‚ã¨Ìö1
-Xpython:S1135"4Complete the task associated to this "TODO" comment.(Ã³Òèøÿÿÿÿ8‚ã¨Ìö1
-Rpython:S1135S"4Complete the task associated to this "TODO" comment.(×Â+8‚ã¨Ìö1
-Gpython:S108_")Either remove or fill this block of code.(ã‘Û¾8ƒã¨Ìö1
-Xpython:S1135c"4Complete the task associated to this "TODO" comment.(ñ°›åüÿÿÿÿ8ƒã¨Ìö1
-Gpython:S5780t"(Change or remove duplicates of this key.(Š¥«¼8ƒã¨Ìö1
-Spython:S1135{"4Complete the task associated to this "TODO" comment.(ğåÎõ8ƒã¨Ìö1
-\python:S5754³"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ƒã¨Ìö1
-\python:S5754Á"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ƒã¨Ìö1
-Tpython:S1481â"/Remove the unused local variable "pass_valida".(ÉÌèæøÿÿÿÿ8ƒã¨Ìö1
-Ypython:S905Ğ":Remove or refactor this statement; it has no side effects.(·‡€8ƒã¨Ìö1
-Xpython:S905Ü":Remove or refactor this statement; it has no side effects.(Ôù¸n8ƒã¨Ìö1
-rpython:S930â"NAdd 1 missing arguments; 'pass_tem_requisitos' expects 1 positional arguments.(ÉÌèæøÿÿÿÿ8ƒã¨Ìö1
-Tpython:S1135ˆ"4Complete the task associated to this "TODO" comment.(·€ßå8ƒã¨Ìö1
-Ypython:S1135“"4Complete the task associated to this "TODO" comment.(æÉ´«ıÿÿÿÿ8ƒã¨Ìö1
-Tpython:S1135—"4Complete the task associated to this "TODO" comment.(¤²ø§8ƒã¨Ìö1
->python:S125¨"Remove this commented out code.(Ÿ™ı½8ƒã¨Ìö1
-ypython:S3776Å"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(¢“ÿôşÿÿÿÿ8ƒã¨Ìö1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8šÔÃÌö1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(Ã³Òèøÿÿÿÿ8šÔÃÌö1
+Rpython:S1135R"4Complete the task associated to this "TODO" comment.(×Â+8šÔÃÌö1
+Gpython:S108^")Either remove or fill this block of code.(ã‘Û¾8šÔÃÌö1
+Xpython:S1135b"4Complete the task associated to this "TODO" comment.(ñ°›åüÿÿÿÿ8šÔÃÌö1
+Gpython:S5780s"(Change or remove duplicates of this key.(Š¥«¼8šÔÃÌö1
+Spython:S1135y"4Complete the task associated to this "TODO" comment.(ğåÎõ8šÔÃÌö1
+\python:S5754±"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8šÔÃÌö1
+\python:S5754¿"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8šÔÃÌö1
+Tpython:S1481à"/Remove the unused local variable "pass_valida".(ÉÌèæøÿÿÿÿ8šÔÃÌö1
+Ypython:S905Î":Remove or refactor this statement; it has no side effects.(·‡€8šÔÃÌö1
+Xpython:S905Ú":Remove or refactor this statement; it has no side effects.(Ôù¸n8šÔÃÌö1
+rpython:S930à"NAdd 1 missing arguments; 'pass_tem_requisitos' expects 1 positional arguments.(ÉÌèæøÿÿÿÿ8›ÔÃÌö1
+Tpython:S1135†"4Complete the task associated to this "TODO" comment.(·€ßå8›ÔÃÌö1
+Ypython:S1135‘"4Complete the task associated to this "TODO" comment.(æÉ´«ıÿÿÿÿ8›ÔÃÌö1
+Tpython:S1135•"4Complete the task associated to this "TODO" comment.(¤²ø§8›ÔÃÌö1
+>python:S125¦"Remove this commented out code.(Ÿ™ı½8›ÔÃÌö1
+ypython:S3776Ã"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(¢“ÿôşÿÿÿÿ8›ÔÃÌö1
