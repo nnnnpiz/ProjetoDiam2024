@@ -1,0 +1,139 @@
+{% extends 'romax/base_page_BACKEND.html' %}
+
+{% block BACKEND_css_rest_of_page %}
+    body  {
+         background-color : grey;
+    }
+    #FormAnunciarPropriedades {
+    }
+{%  endblock %}
+
+{% block BACKEND_rest_of_page %}
+         <form method="post" id="FormAnunciarPropriedades" enctype="multipart/form-data" action="{% url 'romax:criar_propriedade_pagina' %}" >
+            {% csrf_token %}
+            <h3 style="text-align: center">Preencha com os dados da propriedade a publicar</h3>
+            <div style="height: 4vh"></div>
+            <div class="mb-3">
+                <label class="form-label" for="titulo" >Título:</label>
+                <input id="titulo" name="titulo" type="text" value="" maxlength="150" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="descricao">Breve descrição:</label>
+                <textarea class="form-control" form="FormAnunciarPropriedades" rows="5"
+                          name="descricao" id="descricao" maxlength="1500"></textarea>
+            </div>
+            <div class="row justify-content-between">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="Cidade">Cidade *</label>
+                  <select class="form-select" name="Cidade" id="Cidade" required>
+
+                         {% for k,v in CIDADES.items %}
+                            <option  value="{{ k }}" >{{ v }}</option>
+                        {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Código postal *</span>
+                        <div id="codigo-postal" style="width: 25ch" class="input-group flex-nowrap">
+                            <input type="number" class="form-control" placeholder="XXXX"
+                                  size="4" max="9999" min="1000"  name="codigo-postal-1"  required>
+                            <span class="input-group-text" id="addon-wrapping">-</span>
+                            <input type="number"  size="3" class="form-control" placeholder="XXX"
+                                    max="999" min="100" name="codigo-postal-2" required>
+                        </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="morada">Morada *</label>
+                <input id="morada" type="text" maxlength="150"  name="morada" class="form-control" required>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Número de casas de banho</span>
+              <input type="number" name="n-casas-banho"  min="0" max="25" class="form-control"  required>
+            </div>  </div>
+              <div class="col">
+                <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Número de quartos</span>
+              <input type="number" name="n-quartos" min="0" max="25"   class="form-control"  required>
+            </div>  </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">Área (em m<sup>2</sup>)</span>
+                  <input type="number"  name="area"  min="0" step="any" class="form-control" max="" required>
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">Ano de construção</span>
+                  <input type="number"  step="1" name="ano-construcao" min="1083" max="{% now "Y" %}{% comment %}{{ value|date:"Y" }}{% endcomment %}"  class="form-control"  required>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="Tpropriedade">Tipo de propriedade</label>
+                    <select class="form-select" name="Tpropriedade" id="Tpropriedade" required>
+                        {% for Tpropriedade in Tpropriedades %}
+                            <option  value="{{ Tpropriedade.0 }}" >{{ Tpropriedade.1 }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+             <div class="input-group mb-3">
+                  <label class="input-group-text" for="class-energetica">Classe Energetica *</label>
+                  <select class="form-select" name="class-energetica" id="class-energetica" required>
+                         {% for k,v in CLASSES_ENERGETICAS.items %}
+                            <option  value="{{ k }}" >{{ v }}</option>
+                        {% endfor %}
+                  </select>
+                </div>
+              <div class="mb-3">
+                <label class="form-label" for="preco">Preço:</label>
+                <input id="preco" type="number"  min="0" step="0.01"  name="preco" class="form-control" required>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="Estado">Estado: </label>
+                <select class="form-select" name="Estado" id="Estado">
+                    {% for Estado in ListaDeEstados %}
+                        <option  value="{{ Estado.0 }}" >{{ Estado.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3" >
+                 <div class="form-check" >
+                  <input class="form-check-input" type="checkbox" name="animais" value="animais" id="animais">
+                  <label   class="form-check-label" for="animais">Permite animais?</label>
+                </div>
+                <div class="form-check" >
+                  <input class="form-check-input" type="checkbox" name="Mobilada" value="Mobilada" id="Mobilada">
+                  <label   class="form-check-label" for="Mobilada">Mobilada?</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="Negociavel" value="Negociavel" id="Negociavel">
+                  <label class="form-check-label" for="Negociavel">Negociavel?</label>
+                </div>
+            </div>
+           <div class="mb-3">
+                <label class="form-label" for="foto_principal" style="font-size: small">Adicione aqui a fotografia principal</label>
+                <input class="form-control" type="file" name="foto_principal" id="foto_principal" accept="image/*" >
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="restantes_fotos" style="font-size: small">Adicione aqui todas as fotografias que desejar</label>
+                <input class="form-control" type="file" name="restantes_fotos" id="restantes_fotos" accept="image/*" multiple>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="dono">Dono: </label>
+                <input class="form-control" type="text" placeholder="{{ Dono }}" disabled>
+
+            </div>
+            <input type="submit" class="btn btn-primary mb-3" value="Submeter" />
+        </form>
+{%  endblock %}

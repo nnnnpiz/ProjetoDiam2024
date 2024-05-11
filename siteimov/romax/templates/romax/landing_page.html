@@ -1,0 +1,247 @@
+{% extends 'romax/base_page.html' %}
+{% block css_of_rest_of_page %}
+{% load static %}
+         #welcome_div {
+            width : 50vw;
+            & #welcome_msg_div {
+                & #welcome_msg  {
+                    font-size: large;
+                    color: #725500;
+                }
+            }
+            margin: 10px;
+            border-radius: 12px;
+            background-color: #fff3cd;
+            padding: 5px 0 20px 0;//TODO ADD
+        }
+        #carrossel_outer_div {
+            display: grid;
+            grid-template-columns: 10% 1fr 10%;
+            grid-template-rows: min-content 1fr;
+            & #Title {
+                grid-area: 1 / 2 / 2 / 4;
+                color: #FAB605;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            & #left_button {
+                grid-area: 2 / 1 / 3 / 2;
+            }
+            & #Carrossel {
+                grid-area: 2 / 2 / 3 / 3;
+                display: flex;
+                flex-direction: row;
+                /* justify-content: space-evenly; */
+                column-gap: 20px;
+            }
+            & #right_button {
+                grid-area: 2 / 3 / 3 / 4;
+            }
+            & #right_button , & #left_button {
+                width: 100%;
+                /* color: red;  TODO change the buttons icon's colors*/
+                /* This centeres the div content vertically and horizontally */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    }
+
+
+        #pageintro{
+            padding:180px 0;
+        }
+
+        #pageintro p:first-of-type{
+            margin:0 0 20px 0;
+            text-transform:uppercase;
+            font-size:1.6rem;
+            letter-spacing:2px;
+        }
+
+        /* Media Queries
+        @-ms-viewport{width:device-width;}
+        @media screen and (min-width:1140px){
+            .hoc{max-width:1140px;}
+        }
+
+
+{% endblock %}
+
+{% block rest_of_page %}
+
+
+    {% if request.user.is_authenticated %}
+        <div class="horizontal_center">
+            <div id="welcome_div">
+                <div class="close_cross_wrapper" onclick="document.getElementById('welcome_div').hidden = true">
+                    {% include "romax/cruz.html" %}
+                </div>
+                <div id="welcome_msg_div">
+                    {# TODO so primeiro e ultimo nome #}
+                    <h3 id="welcome_msg" class="horizontal_center">{{ request.user.cliente.nomeCompleto }} estamos gratos de o ver novamente!</h3>
+                    <script src="/static/romax/javascript/saudacao.js"></script>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+<div class="wrapper bgded overlay" style="background-image:url('{% static 'romax/images/landing_background.jpg' %}'); ">
+  <div id="pageintro" class="hoc clear">
+    <!-- ################################################################################################ -->
+
+        <div class="horizontal_center" style="position: relative; z-index: 1;width: 100%">
+             <div style="width: 50%"  class="accordion" id="accordionExample">
+                 <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Pesquisar
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                              <form id="pesquisa_simples" method="post" action="{% url 'romax:resultados_pesquisa' %}">
+                                  {% csrf_token %}
+                                  <div class="input-group mb-3">
+                                      <label class="input-group-text" for="Cidade">Cidade</label>
+                                      <select class="form-select" name="Cidade" id="Cidade">
+                                          <option  value="-1"></option>
+                                             {% for k,v in CIDADES.items %}
+                                                <option  value="{{ k }}" >{{ v }}</option>
+                                            {% endfor %}
+                                      </select>
+                                  </div>
+
+                                  <div class="mb-3">
+                                      <label for="barra_pesquisa" class="form-label">Pesquisa pelo título</label>
+                                      <input type="search" class="form-control" id="barra_pesquisa" placeholder="título" name="titulo">
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                        <button style="float: right" type="submit" class="btn btn-primary">Pesquisar</button>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                        <p style="float: right; font-size: x-small"><a href="{% url 'romax:pesquisa_avancada' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Queres fazer uma pesquisa mais avançada?</a></p>
+                                      </div>
+                                  </div>
+                              </form>
+                              <script>
+                                  /*
+                                  Simples script para submeter formulario vazios.
+
+                                  Motivo para não usar required é pelo facto que nenhum dos 2 é obrigatorio,
+                                  posso fazer uma pesquisa por um parametro ou/e pelo o outro.
+
+                                  Por outras palavras, nenhum  parametro de pesquisa  é obrigatorio mas tem que haver.
+                                   */
+                                  $('#pesquisa_simples').on('submit', function (event ) {
+                                        const vazio = $('#Cidade').val()  == -1 && $('#barra_pesquisa').val() === ''
+
+                                      if (vazio){
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                  })
+                              </script>
+                          </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+
+
+
+
+    <!-- CAROUSEL -->
+    <div class="horizontal_center">
+         <div id="carrossel_outer_div"> {# Carrossel #}
+         <template id="card_for_highlighted_properties">
+             <div  class="card" > {# TODO tirar isto do inline CSS #}
+              <img  class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text"></p>
+              </div>
+              <div class="card-footer text-body-secondary">
+                  <span></span><span style="float: right"></span>
+              </div>
+            </div>
+         </template>
+         <h2 id="Title"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
+            <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+            </svg>Destacado
+         </h2>
+         <div id="left_button" onclick="on_click_left_button()">
+             {# TODO mudar cor center e size #}
+             {% include "romax/left_button.html" %}
+         </div>
+         <div id="Carrossel"></div>
+         <div id="right_button" onclick=" on_click_right_button()">
+             {#  TODO mudar cor center e size #}
+             {% include "romax/right_button.html" %}
+         </div>
+         <script >
+                const CARROSSEL = document.getElementById("Carrossel");
+                const HOW_MANY_AT_A_TIME = 3;
+                const HOW_MANY_TOTAL = {{ highlighted_properties|length  }}; //TODO change this, this is temp
+                const SHIFT_PERIOD = 5000; //TODO
+                const CIDADES_JSON = JSON.stringify({{ CIDADES|safe }});
+
+
+
+                const CARROSSEL_ELEM_LIST = [{% for propriedade in highlighted_properties %}
+                {
+                    img:  "/romax/static/media/Logo.png",
+                    titulo: "{{ propriedade.titulo }}",
+                    descricao: "{{ propriedade.descricao }}",
+                    cidade: JSON.parse(CIDADES_JSON)[{{ propriedade.cidade }}],
+                    preco: {{ propriedade.preco }},
+                }  {%  if not forloop.last %},{% endif %}
+                {% endfor %}].map(i => {
+                    //TODO acabar qunado for a altura
+                    let template = document.querySelector('#card_for_highlighted_properties');
+                    const new_card = template.content.cloneNode(true).children[0];
+                    new_card.querySelector('img').src =  i.img
+                    new_card.querySelector('.card-title').innerText = i.titulo
+                    new_card.querySelector('.card-text').innerText = i.descricao
+                    new_card.querySelector('.card-footer').children[0].innerText= i.cidade
+                    new_card.querySelector('.card-footer').children[1].innerText= i.preco + '€'
+                    return new_card;
+                })
+
+                let first_showed = 0;
+                let last_showed = HOW_MANY_AT_A_TIME - 1;
+
+                setInterval(on_click_right_button, SHIFT_PERIOD);
+
+                for(let i = 0; i < HOW_MANY_AT_A_TIME; i++){
+                    CARROSSEL.appendChild(CARROSSEL_ELEM_LIST[i])
+                }
+
+                 function on_click_left_button(){
+                    first_showed=--first_showed >= 0? first_showed: HOW_MANY_TOTAL - 1
+                     console.log(CARROSSEL_ELEM_LIST.length)
+                     CARROSSEL.prepend(CARROSSEL_ELEM_LIST[first_showed])
+                     CARROSSEL.removeChild(CARROSSEL.lastChild)
+                     //TODO fix line above
+                    last_showed=  --last_showed >= 0? last_showed: HOW_MANY_TOTAL - 1
+                }
+                function on_click_right_button(){
+                     first_showed= ++first_showed < HOW_MANY_TOTAL? first_showed : 0
+                     last_showed= ++last_showed < HOW_MANY_TOTAL? last_showed : 0
+                     CARROSSEL.removeChild(CARROSSEL.firstChild)
+                     CARROSSEL.append(CARROSSEL_ELEM_LIST[last_showed])
+                }
+         </script>
+        </div>
+    </div>
+
+
+{%  endblock %}

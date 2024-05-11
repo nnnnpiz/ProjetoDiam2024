@@ -1,0 +1,129 @@
+{% extends 'romax/base_page.html' %}
+
+{% block css_of_rest_of_page %}
+    .main-prop {
+
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            margin-top: 0;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-image {
+            flex: 0 0 auto;
+            width: 100%;
+            height: auto;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .prev-btn {
+            left: 10px;
+        }
+        .next-btn {
+            right: 10px;
+        }
+
+{% endblock %}
+
+
+{% block rest_of_page %}
+    <div class="main-prop">
+        <div class="container">
+        <h1>{{ propriedade.titulo }}</h1>
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- TODO Re-fazer para percorrer a lista associada à propriedade
+                 que vai ser passada para o contexto e dps display de cada-->
+
+                <img src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
+                <img src="/romax/static/media/casa2.png" alt="Imagem 2" class="carousel-image">
+                <img src="/romax/static/media/casa.png" alt="Imagem 3" class="carousel-image">
+
+
+            </div>
+            <div class="carousel-btn prev-btn" onclick="prevSlide()">
+                             {# TODO mudar cor center e size #}
+
+                 {% include "romax/left_button.html" %}
+            </div>
+
+            <div  class="carousel-btn next-btn"  onclick="nextSlide()">
+                {# TODO mudar cor center e size #}
+
+                {% include "romax/right_button.html" %}
+            </div>
+        </div>
+
+
+        <h2>Descrição:</h2>
+        <p>{{ propriedade.descricao }}</p>
+        <h2>Detalhes da Propriedade:</h2>
+        <ul>
+            <li><strong>Localização:</strong> {{ propriedade.morada }}, Cidade {{ propriedade.codigoPostal }}</li>
+            <li><strong>Preço:</strong> XXX,XXX €</li>
+            <li><strong>Quartos:</strong> {{ propriedade.numQuartos }}</li>
+            <li><strong>WCs:</strong> {{ propriedade.numWCs }}</li>
+            <li><strong>Área:</strong> {{ propriedade.area }} m²</li>
+            <li><strong>Mobilada:</strong>
+                {% if propriedade.mobilada == 1 %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
+            <li><strong>Negociável:</strong>
+                {% if propriedade.negociavel == 1 %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
+            <!-- TODO classe energetica ; e ver Pais, CIdade etc -->
+            <li><strong>Ano Construção:</strong> {{ propriedade.anoConstrucao }} m²</li>
+            <li><strong>Permite animais:</strong>
+                {% if propriedade.animais %}
+                    sim
+                {% else %}
+                    nao
+                {% endif %}
+            </li>
+        </ul>
+        <h2>Contato do Agente:</h2>
+        <p>Nome do Agente: João Silva</p>
+        <p>Email: joaosilva@example.com</p>
+        <p>Telefone: +55 123 456 789</p>
+        <p>Data de Criação: {{ propriedade.dataDeCriacao }}</p>
+    </div>
+    <script src="/static/romax/javascript/carousel_propriedade.js">
+    </script>
+    </div>
+
+
+{% endblock %}

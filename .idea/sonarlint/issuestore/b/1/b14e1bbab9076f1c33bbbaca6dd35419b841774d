@@ -1,0 +1,20 @@
+
+wpython:S1192/"SDefine a constant instead of duplicating this literal 'romax:landing_page' 3 times.(“Å®Ëûÿÿÿÿ8ò¾ªö1
+Bpython:S125"Remove this commented out code.(‹†·°ıÿÿÿÿ8ò¾ªö1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8ò¾ªö1
+Xpython:S1135"4Complete the task associated to this "TODO" comment.(Ã³Òèøÿÿÿÿ8ò¾ªö1
+Rpython:S1135P"4Complete the task associated to this "TODO" comment.(×Â+8ò¾ªö1
+Gpython:S108\")Either remove or fill this block of code.(ã‘Û¾8ò¾ªö1
+Xpython:S1135`"4Complete the task associated to this "TODO" comment.(ñ°›åüÿÿÿÿ8ò¾ªö1
+Spython:S1135v"4Complete the task associated to this "TODO" comment.(ğåÎõ8ò¾ªö1
+Xpython:S905}":Remove or refactor this statement; it has no side effects.(·‡€8ò¾ªö1
+Xpython:S905‰":Remove or refactor this statement; it has no side effects.(Ôù¸n8ò¾ªö1
+\python:S5754ª"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ò¾ªö1
+\python:S5754¸"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ò¾ªö1
+Ypython:S905Ç":Remove or refactor this statement; it has no side effects.(·‡€8ó¾ªö1
+Xpython:S905Ó":Remove or refactor this statement; it has no side effects.(Ôù¸n8ó¾ªö1
+Tpython:S1135ÿ"4Complete the task associated to this "TODO" comment.(·€ßå8ó¾ªö1
+Ypython:S1135Š"4Complete the task associated to this "TODO" comment.(æÉ´«ıÿÿÿÿ8ó¾ªö1
+Tpython:S1135"4Complete the task associated to this "TODO" comment.(¤²ø§8ó¾ªö1
+>python:S125Ÿ"Remove this commented out code.(Ÿ™ı½8ó¾ªö1
+ypython:S3776¼"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(¢“ÿôşÿÿÿÿ8ó¾ªö1

@@ -1,0 +1,48 @@
+-----  Duvidas  -----------
+
+Filipe: pessoal, eu meti o media dentro do static pq é assim que o prof nos ensinou.
+sei que é meio cagativo mas nao quero q ele noie com nada de mt diferente. temos que depois
+ver como é para quando temos varias dirs diferentes de cada propriiedade para ir buscar essas fotos de cada.
+por enquanto deixei as fotos no media fora da dir "imagem_propriedade" pq nao estava a conseguir chama-la c elas la dentro.
+tmb mudei os settings.py para a parte das fotos para tar de acordo.
+
+-----   TODO   -----------
+
+como vamos fazer para paginas de tel or de computer or de tablet
+Como enviar a pagina html mais os dados para fazer rendering dos elementos:
+    exemplo landing page + titutlo, fotos zona, ... das casas destacadas
+decide colors
+Mudar o favicon (Mendy qnd ele tiver tempo)
+
+Definir colors, style, font type, font letters
+
+Por botão de save
+
+-------------   EXTRA   ----------------
+
+Simples Search engine para a barra de pesquisas
+Chatbot para apoio ao cliente
+
+
+------------- Dados    ------------------
+nomeConpleto
+        max de MAX_NAME_LEN
+        regex: ([A-Z][a-z]{2,} )+ [A-Z][a-z]{2,} #TODO incluir ç
+        telemovel
+                unique
+                remover espaços se chegarem
+                entre 900_000_000 e 999_999_999
+                regex = 9[0-9]{2} ?[0-9]{3} ?[0-9]{3}
+        idade
+                null
+                entre 18 e 130 (? o que acham)
+        estado civil
+                um de aqueles
+                null
+        nif
+            remover espaços se chegarem
+            regex: [0-9]{3} ?[0-9]{3} ?[0-9]{3}
+            unique
+        cc
+            unique
+            regex: [0-9]{3} ?[0-9]{3} ?[0-9]{3}

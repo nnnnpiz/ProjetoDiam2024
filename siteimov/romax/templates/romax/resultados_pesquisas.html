@@ -1,0 +1,31 @@
+{% extends 'romax/base_page.html' %}
+
+{% block css_of_rest_of_page %}
+{%  endblock %}
+
+{% block rest_of_page %}
+<div class="d-flex flex-column mb-3">
+     <div class="list-group" id="lista_propriedades" >
+        {% for propriedade in Resultados %}
+             <a href="../propriedades/{{ propriedade.id }}" class="list-group-item list-group-item-action d-flex flex-row" style="padding: 0">
+                  {# TODO #}
+                 <img src="/romax/static/media/Logo.png"  style="height: 100%">
+                <div style="width: 100%">
+                    <div class="d-flex w-100 justify-content-between align-self-end" style="width: 100%;height: auto">
+                        <h3 class="mb-1" style="height: auto">{{ propriedade.titulo }}</h3>
+                        <h5 class="mb-1" style="height: auto;color: dimgray">{{ propriedade.preco }}€</h5>
+                    </div>
+                    <h5 class="mb-1" style="height: auto;width: 100%">{{ propriedade.TipoDePropriedadeNome }}</h5>
+                    <div style="width: 100%" class="d-flex flex-row mb-3 justify-content-between">
+                        <div class="p-2">Área : {{ propriedade.area }} m<sup>2</sup></div>
+                        <div class="p-2">Nº de Quartos : {{ propriedade.numQuartos }}</div>
+                        <div class="p-2"> Nº de Casas de Banho : {{ propriedade.numWCs }}</div>
+                    </div>
+                </div>
+             </a>
+        {% empty %}
+             {# TODO #}
+        {% endfor %}
+     </div>
+</div>
+{%  endblock %}
