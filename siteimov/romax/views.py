@@ -123,7 +123,7 @@ def criar_conta(request):
 
     #validar o nome completo
     nome_completo = request.POST['nome-completo']
-    len(nome_completo) <= MAX_NAME_LEN
+    nome_completo = len(nome_completo) <= MAX_NAME_LEN
     re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)
 
     #validar Telemovel
@@ -347,4 +347,12 @@ def favorito(request, propriedade_id):
     return render(request, 'romax/propriedade.html',
                   context={'propriedade': prop})
 #retornar HTPP RESPONSE
+
+
+def favoritos_page(request):
+    usr=Cliente.objects.get(user=request.user)
+    props_fav=usr.salvos.all()
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': props_fav
+    })
 
