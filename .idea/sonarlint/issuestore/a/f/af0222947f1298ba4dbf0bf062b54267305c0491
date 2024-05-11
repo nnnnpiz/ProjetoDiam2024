@@ -1,0 +1,11 @@
+
+Hpython:S5806'"+Rename this variable; it shadows a builtin.(Ô¾Ê¼ıÿÿÿÿ
+|python:S117@"`Rename this local variable "DadosFormulario" to match the regular expression ^[_a-z][a-z0-9_]*$.(—°£úÿÿÿÿ
+spython:S117B"\Rename this local variable "Finalidades" to match the regular expression ^[_a-z][a-z0-9_]*$.(åŞ•
+Qpython:S1135A"4Complete the task associated to this "TODO" comment.(×šÎúÿÿÿÿ
+Lpython:S1135D"4Complete the task associated to this "TODO" comment.(µŸ
+Lpython:S1135"4Complete the task associated to this "TODO" comment.(…´¸‘
+€python:S117¾"cRename this local variable "dir_da_Propriedade" to match the regular expression ^[_a-z][a-z0-9_]*$.(›ËÊıüÿÿÿÿ
+>python:S1481Ç"%Remove the unused local variable "l".(ÅÑ–ø
+Ipython:S5806×"+Rename this variable; it shadows a builtin.(Ô¾Ê¼ıÿÿÿÿ
+spython:S117ö"VRename this local variable "Email" to match the regular expression ^[_a-z][a-z0-9_]*$.(¥Òºùÿÿÿÿ
