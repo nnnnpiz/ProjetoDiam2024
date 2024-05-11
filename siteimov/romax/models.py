@@ -10,6 +10,7 @@ CC_LEN= 10 #TODO see this
 NOME_COMPLETO_REGEX_FORMAT = '([A-Z][a-z]{1,} ?)+[A-Z][a-z]{2,}'
 TELEMOVEL_REGEX_FORMAT = '9[0-9]{2} ?[0-9]{3} ?[0-9]{3}'
 NIF_OR_CC_REGEX_FORMAT='[0-9]{3} ?[0-9]{3} ?[0-9]{3}'
+SYMBOLS_PASS =   '|\\!"@#£$§%€&/{()[]=}?\';,:.-_*+ºª´`~^'
 
 ESTADOS_CIVIS = {
       1: 'Solteiro',

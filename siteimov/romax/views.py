@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 #from utils import handle_uploaded_file
-from .models import CIDADES, CLASSES_ENERGETICAS
+from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS
 from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
     TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio
 from django.db.models import Q
@@ -113,6 +113,8 @@ def criar_conta_page(request):
         'NOME_COMPLETO_REGEX_FORMAT': NOME_COMPLETO_REGEX_FORMAT,
         'TELEMOVEL_REGEX_FORMAT' : TELEMOVEL_REGEX_FORMAT,
         'NIF_OR_CC_REGEX_FORMAT' : NIF_OR_CC_REGEX_FORMAT,
+        'PASSWORD_LEN' : PASSWORD_LEN,
+        'SYMBOLS_PASS' : SYMBOLS_PASS,
         'PASSWORD_LEN' : PASSWORD_LEN
     })
 
@@ -121,30 +123,34 @@ def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
     #Validar o email
-    re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])
+    email_valido = type(re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])) == type(re.Match)
 
     #validar o nome completo
     nome_completo = request.POST['nome-completo']
-    len(nome_completo) <= MAX_NAME_LEN
-    re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)
+    is_valid_length = len(nome_completo) <= MAX_NAME_LEN
+    is_valid_format = type(re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)) == type(re.Match)
+
 
     #validar Telemovel
     telemovel = request.POST['telemovel']
-    re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel)
-    telemovel = telemovel.replace(' ', '')
+    tel_valido = type(re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel) )== type(re.Match)
+    telemovel = transformar_em_tel(telemovel)
 
     #Validar idade se Cliente inseriu uma
     if('idade' in request.POST):
         idade = int(request.POST['idade'])
 
-        18 <= idade <=122
+        idade_valida = 18 <= idade <=122
         del idade
 
     #validar Estado Civil e Cliente inseriu um
-
+    estado_civil_valido = request.POST['Estado-Civil'] in  list(ESTADOS_CIVIS.keys()) + ['']
 
     #validar password
+    pass_valida = pass_tem_requisitos(request.POST['password'])
 
+    if( not (email_valido and pass_valida and estado_civil_valido and  idade_valida and tel_valido and is_valid_format and is_valid_length) ):
+        return HttpResponse(status=401, content="Es retardado")
     #url:
     myfile = request.FILES.get('myfile')
     if myfile:
@@ -217,7 +223,7 @@ def salvar_alteracoes_conta(request):
         # validar Estado Civil e Cliente inseriu um
 
         # validar password
-
+        pass_valida = pass_tem_requisitos()
 
         #buscar user: (se quiser aceder ao cliente p mudar fzr objc.cliente
         objc = User.objects.get(username=request.user.username)
@@ -308,7 +314,7 @@ def criar_propriedade_pagina(request, pedido_id):
 
 #################   Utilies   #################
 
-def transformar_em_tel(tel_str: str):
+def transformar_em_tel(tel_str : str) -> int :
     return int(re.sub('\s+', '', tel_str))
 def handle_uploaded_file(diretory: str, filename: str, file):
     with open(f'{diretory}/{filename}', "wb+") as destination:
@@ -332,7 +338,13 @@ def pass_tem_requisitos(password: str)-> bool:
             if(chr in "1234567890"):
                 return True
         return False
-    return tem_minuscula(password) and tem_numero(password) and tem_maiscula(password) and len(password) >=10
+    def tem_simbolo(password: str)-> bool:
+        for chr in password:#ver se tem uma minuscula
+            if(chr in SYMBOLS_PASS):
+                return True
+        return False
+
+    return tem_simbolo(password) and tem_minuscula(password) and tem_numero(password) and tem_maiscula(password) and len(password) >=PASSWORD_LEN
 
 
 def favorito(request, propriedade_id):
