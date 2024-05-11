@@ -6,7 +6,7 @@
             margin: 0;
             padding: 0;
         }
-        .container {
+        .container-prop {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
@@ -14,6 +14,7 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+
         h1, h2 {
             margin-top: 0;
         }
@@ -24,15 +25,18 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+
         .carousel {
             display: flex;
             transition: transform 0.5s ease;
         }
+
         .carousel-image {
             flex: 0 0 auto;
             width: 100%;
             height: auto;
         }
+
         .carousel-btn {
             position: absolute;
             top: 50%;
@@ -46,6 +50,7 @@
         .prev-btn {
             left: 10px;
         }
+
         .next-btn {
             right: 10px;
         }
@@ -55,7 +60,7 @@
 
 {% block rest_of_page %}
     <div class="main-prop">
-        <div class="container">
+        <div class="container-prop">
         <h1>{{ propriedade.titulo }}</h1>
         <div class="carousel-container">
             <div class="carousel">
