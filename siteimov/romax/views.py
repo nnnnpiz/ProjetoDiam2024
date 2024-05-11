@@ -92,16 +92,15 @@ def resultados_pesquisa(request):
             pass
         case id_cidade  if id_cidade  in range(len(CIDADES)):
             pesquisa_cliente.add(Q(cidade=id_cidade),Q.AND)
-        case _ :
+        case _:
             pass #TODO lancçar erro ou algo
 
     if parametros_pesquisa['titulo'] != '':
         pesquisa_cliente.add(Q(titulo=parametros_pesquisa['titulo']), Q.AND)
 
 
-
     return render(request, 'romax/resultados_pesquisas.html', context ={
-        'Resultados' : Propriedade.objects.filter(pesquisa_cliente)
+        'Resultados': Propriedade.objects.filter(pesquisa_cliente)
     })
 
 def criar_conta_page(request):
