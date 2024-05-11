@@ -39,7 +39,6 @@ def landing_page(request):
     return render(request, 'romax/landing_page.html', context=context)
 
 def login_view(request):
-
     if request.method == 'POST':
         if request.POST['user-email'] and request.POST['password'] and 'user-email' in request.POST and 'password' in request.POST: #se username e pass estao preenchidos
             user = authenticate(username=request.POST['user-email'], password=request.POST['password'])
@@ -119,7 +118,6 @@ def criar_conta_page(request):
     })
 
 def criar_conta(request):
-    print(request.POST)
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
     #Validar o email
@@ -361,4 +359,12 @@ def favorito(request, propriedade_id):
     return render(request, 'romax/propriedade.html',
                   context={'propriedade': prop})
 #retornar HTPP RESPONSE
+
+
+def favoritos_page(request):
+    usr=Cliente.objects.get(user=request.user)
+    props_fav=usr.salvos.all()
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': props_fav
+    })
 

@@ -31,5 +31,6 @@ urlpatterns = [
 
     path('favorito/<int:propriedade_id>', views.favorito, name='favorito'),
 
+    path('favoritos_page', views.favoritos_page, name='favoritos_page'),
 ]
 
