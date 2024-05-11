@@ -29,5 +29,7 @@ urlpatterns = [
 
     path('sobre_page', views.sobre_page, name='sobre_page'),
 
+    path('favorito/<int:propriedade_id>', views.favorito, name='favorito'),
+
 ]
 

@@ -76,7 +76,7 @@ class Cliente(models.Model):
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN, default=0)
     animais = models.BooleanField(blank=True)
-    salvos = models.ManyToManyField('Propriedade')
+    salvos = models.ManyToManyField('Propriedade', related_name="props_salvas")
     urlprofilepic = models.URLField(default='')
 class AgenteImobiliario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -65,7 +65,9 @@ def propriedade(request, propriedade_id):
         propriedade = Propriedade.objects.get(pk=propriedade_id)
         return render(request,
         'romax/propriedade.html',
-                      context={'propriedade': propriedade}
+                      context={'propriedade': propriedade,
+                               'favorito': Cliente.objects.get(user=request.user).salvos.filter(pk=propriedade.id).exists()
+                               }
                       )
     except (KeyError, Propriedade.DoesNotExist):
         return render(request, 'romax/propriedade_notfound.html', context={
@@ -331,4 +333,20 @@ def pass_tem_requisitos(password: str)-> bool:
                 return True
         return False
     return tem_minuscula(password) and tem_numero(password) and tem_maiscula(password) and len(password) >=10
+
+
+def favorito(request, propriedade_id):
+
+    usr = Cliente.objects.get(user=request.user)
+    prop = Propriedade.objects.get(pk=propriedade_id)
+
+    if not usr.salvos.filter(pk=prop.pk).exists():
+        usr.salvos.add(prop)
+        print("prop added")
+    else:
+        usr.salvos.remove(prop)
+
+    return render(request, 'romax/propriedade.html',
+                  context={'propriedade': prop})
+#retornar HTPP RESPONSE
 
