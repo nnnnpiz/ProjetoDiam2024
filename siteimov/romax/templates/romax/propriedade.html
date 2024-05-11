@@ -55,13 +55,57 @@
             right: 10px;
         }
 
+     /* style p icon de favorito nao preenchido */
+    #favorite-icon {
+        position: absolute;
+        top: 145px; /* Adjust this value to position the star vertically */
+        right: 600px; /* Adjust this value to position the star horizontally */
+        color: gold; /* Change the color of the star */
+        transition: transform 0.3s ease; /* Add transition for smooth animation */
+        cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    }
+
+    #favorite-icon:hover {
+        transform: rotate(-30deg) scale(1.2); /* Scale and rotate the star on hover */
+    }
+
+    /* style p icon de favorito preenchido */
+    #favorite-icon-fill {
+
+        position: absolute;
+        top: 145px; /* Adjust this value to position the star vertically */
+        right: 600px; /* Adjust this value to position the star horizontally */
+        color: gold; /* Change the color of the star */
+        transition: transform 0.3s ease; /* Add transition for smooth animation */
+        cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    }
+
+    #favorite-icon-fill:hover {
+        transform: rotate(-30deg) scale(1.2); /* Scale and rotate the star on hover */
+    }
+
 {% endblock %}
 
 
 {% block rest_of_page %}
+
+
     <div class="main-prop">
         <div class="container-prop">
         <h1>{{ propriedade.titulo }}</h1>
+
+            {% if request.user.is_authenticated %}
+
+                <svg onclick="adicionar_fav()" id="favorite-icon" xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" viewBox="0 0 16 16" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                </svg>
+
+
+                <svg onclick="remover_fav()" id="favorite-icon-fill"  xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" viewBox="0 0 16 16" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
+                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+            {% endif %}
+
         <div class="carousel-container">
             <div class="carousel">
                 <!-- TODO Re-fazer para percorrer a lista associada à propriedade
@@ -128,6 +172,76 @@
     </div>
     <script src="/static/romax/javascript/carousel_propriedade.js">
     </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Passar isto p base maybe e outro p JS aparte-->
+
+    <script>
+        {% if not favorito %}
+            $("#favorite-icon-fill").hide()
+            $("#favorite-icon").show()
+        {% else %}
+            $("#favorite-icon").hide()
+            $("#favorite-icon-fill").show()
+        {% endif %}
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Check if this cookie contains the CSRF token
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken');
+
+
+        function adicionar_fav(){
+
+            const request = new Request("{% url 'romax:favorito' propriedade.id %}",
+            {
+                method: 'POST',
+                headers: {'X-CSRFToken':csrftoken },
+                mode: 'same-origin'
+            }
+            );
+            fetch(request).then(function(response) {
+                $("#favorite-icon").hide()
+                $("#favorite-icon-fill").show()
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+
+            });
+        }
+
+        function remover_fav(){
+            const request = new Request("{% url 'romax:favorito' propriedade.id %}",
+            {
+                method: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                mode: 'same-origin'
+            }
+            );
+            fetch(request).then(function(response) {
+                $("#favorite-icon-fill").hide()
+                $("#favorite-icon").show()
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+
+            });
+        }
+    </script>
+
     </div>
 
 
