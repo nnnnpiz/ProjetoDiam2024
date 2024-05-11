@@ -19,3 +19,9 @@ h
 8siteimov/romax/templates/romax/resultados_pesquisas.html,4\1\416e933969d87cd7f2944f71fe1b4e7f3b1a8051
 f
 6siteimov/romax/templates/romax/informacao_pessoal.html,e\2\e2032bccbc682806a14fe0105fcc48eaac4642c5
+J
+apps/AppDosAdmins/views.py,c\f\cf2d4f635cb4c7af6f2b1862bf8acbb0505c37eb
+I
+apps/AppDosAdmins/urls.py,b\5\b504c25a70a409ea9e36f65cbe69d5b8e98858b1
+L
+apps/PRIMACASA_SITE/views.py,a\f\af0222947f1298ba4dbf0bf062b54267305c0491
