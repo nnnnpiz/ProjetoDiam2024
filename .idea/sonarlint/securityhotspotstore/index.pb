@@ -25,3 +25,19 @@ I
 apps/AppDosAdmins/urls.py,b\5\b504c25a70a409ea9e36f65cbe69d5b8e98858b1
 L
 apps/PRIMACASA_SITE/views.py,a\f\af0222947f1298ba4dbf0bf062b54267305c0491
+w
+G.idea/sonarlint/issuestore/b/5/b504c25a70a409ea9e36f65cbe69d5b8e98858b1,d\3\d3c7dc7879a61dff57f13319ceb3f9b5110939f8
+Å
+Q.idea/sonarlint/securityhotspotstore/b/5/b504c25a70a409ea9e36f65cbe69d5b8e98858b1,d\0\d0c9ac6151c19c9d7481280e5b8b30aea8a0c227
+Å
+Q.idea/sonarlint/securityhotspotstore/c/f/cf2d4f635cb4c7af6f2b1862bf8acbb0505c37eb,1\2\12959e9c644ce54e1a91ecc90f62d48746061254
+\
+,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
+Å
+Q.idea/sonarlint/securityhotspotstore/a/f/af0222947f1298ba4dbf0bf062b54267305c0491,0\a\0a0c88e115fa58be1b87eb64e45dc00997330d7e
+^
+..idea/inspectionProfiles/profiles_settings.xml,1\e\1e9075f5bf079c01ef2c910709e91a497d262080
+Å
+Q.idea/sonarlint/securityhotspotstore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d,1\0\10a03f31c4dce92cb371e761ce9429428bb6c176
+w
+G.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d,b\4\b4a0b63ce8560bbc5de0f9995c20cc861dc2adb3
