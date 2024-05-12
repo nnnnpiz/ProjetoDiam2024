@@ -94,7 +94,7 @@
         <div class="container-prop">
         <h1>{{ propriedade.titulo }}</h1>
 
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and request.user.cliente %}
 
                 <svg onclick="adicionar_fav()" id="favorite-icon" xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" viewBox="0 0 16 16" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
@@ -134,9 +134,13 @@
         <h2>Descrição:</h2>
         <p>{{ propriedade.descricao }}</p>
         <h2>Detalhes da Propriedade:</h2>
-        <ul>
-            <li><strong>Localização:</strong> {{ propriedade.morada }}, Cidade {{ propriedade.codigoPostal }}</li>
-            <li><strong>Preço:</strong> XXX,XXX €</li>
+        <ul>{% load custom_filters %}
+            <li><strong>Localização:</strong> {{ propriedade.morada }}, {{ propriedade.cidade|cidade_name }}
+                {{ propriedade.codigoPostal }}</li>
+            <li><strong>Preço:</strong> {{ propriedade.preco }} €</li>
+            <li><strong>Classe Energética: </strong>{{ propriedade.classeEnergetica|classe_name }}</li>
+            <li><strong>Tipo: </strong>{{ propriedade.tipo|tipo_name }}</li>
+            <li><strong>SubTipo: </strong>{{ propriedade.subtipo|subtipo_name }}</li>
             <li><strong>Quartos:</strong> {{ propriedade.numQuartos }}</li>
             <li><strong>WCs:</strong> {{ propriedade.numWCs }}</li>
             <li><strong>Área:</strong> {{ propriedade.area }} m²</li>
@@ -154,8 +158,8 @@
                     nao
                 {% endif %}
             </li>
-            <!-- TODO classe energetica ; e ver Pais, CIdade etc -->
-            <li><strong>Ano Construção:</strong> {{ propriedade.anoConstrucao }} m²</li>
+            <!-- TODO classe energetica ; Tipo e subtipo -->
+            <li><strong>Ano Construção:</strong> {{ propriedade.anoConstrucao }} </li>
             <li><strong>Permite animais:</strong>
                 {% if propriedade.animais %}
                     sim

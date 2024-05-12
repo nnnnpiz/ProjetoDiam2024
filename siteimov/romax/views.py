@@ -40,9 +40,10 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
-    PedidosCriacaoAnuncio.objects.create(
-        user_id=User.objects.get(username='frego4242@gmail.com'),
-    )
+    #PedidosCriacaoAnuncio.objects.create(
+     #   user_id=User.objects.get(username='frego4242@gmail.com'),
+    #)
+
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
         'CIDADES': CIDADES
@@ -79,10 +80,18 @@ def logout_view(request):
 def propriedade(request, propriedade_id):
     try:
         propriedade = Propriedade.objects.get(pk=propriedade_id)
+        favorito = False
+        if request.user.is_authenticated:
+            if hasattr(request.user, 'agenteimobiliario'):
+                favorito = False
+            elif hasattr(request.user, 'cliente'):
+                cliente = get_object_or_404(Cliente, user=request.user)
+                favorito = cliente.salvos.filter(pk=propriedade.id).exists()
+
         return render(request,
         'romax/propriedade.html',
                       context={'propriedade': propriedade,
-                               'favorito': Cliente.objects.get(user=request.user).salvos.filter(pk=propriedade.id).exists()
+                               'favorito': favorito
                                }
                       )
     except (KeyError, Propriedade.DoesNotExist):
@@ -525,6 +534,7 @@ def search_avancada_treat(request):
             maxarea = None
 
 
+
         mobilia = request.POST.get('mobilia')
         animais = request.POST.get('animais')
         minpreco = request.POST.get('minpreco')
@@ -557,6 +567,7 @@ def search_avancada_treat(request):
             filters['area__gte'] = minarea
         if maxarea:
             filters['area__lte'] = maxarea
+
 
 
 

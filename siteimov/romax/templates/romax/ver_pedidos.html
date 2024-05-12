@@ -1,10 +1,17 @@
 {% extends 'romax/base_page_BACKEND.html' %}
 
 {% block BACKEND_css_rest_of_page %}
+    #title {
+        font-size: xxx-large;
+        text-align: center;
+        padding-bottom: 30px;
+    }
 {%  endblock %}
 
 {% block BACKEND_rest_of_page %}
+<h1 id="title">Pedidos</h1>
 <div class="list-group">
+
     {% for pedido in Pedidos %}
         <a href="{% url 'romax:criar_propriedade_pagina' pedido.id %}" class="list-group-item list-group-item-action " aria-current="true">
             <h2>Pedido de: {{ pedido.user_id }}</h2>
