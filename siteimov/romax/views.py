@@ -80,10 +80,18 @@ def logout_view(request):
 def propriedade(request, propriedade_id):
     try:
         propriedade = Propriedade.objects.get(pk=propriedade_id)
+        favorito = False
+        if request.user.is_authenticated:
+            if hasattr(request.user, 'agenteimobiliario'):
+                favorito = False
+            elif hasattr(request.user, 'cliente'):
+                cliente = get_object_or_404(Cliente, user=request.user)
+                favorito = cliente.salvos.filter(pk=propriedade.id).exists()
+
         return render(request,
         'romax/propriedade.html',
                       context={'propriedade': propriedade,
-                               'favorito': Cliente.objects.get(user=request.user).salvos.filter(pk=propriedade.id).exists()
+                               'favorito': favorito
                                }
                       )
     except (KeyError, Propriedade.DoesNotExist):
@@ -535,6 +543,7 @@ def search_avancada_treat(request):
             maxarea = None
 
 
+
         mobilia = request.POST.get('mobilia')
         animais = request.POST.get('animais')
         minpreco = request.POST.get('minpreco')
@@ -567,6 +576,7 @@ def search_avancada_treat(request):
             filters['area__gte'] = minarea
         if maxarea:
             filters['area__lte'] = maxarea
+
 
 
 

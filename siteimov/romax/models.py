@@ -111,7 +111,7 @@ class Propriedade(models.Model):
     highlighted = models.BooleanField(default=False)
     preco = models.FloatField()
     cidade = models.PositiveSmallIntegerField(choices=CIDADES.items())
-    dono = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    dono = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
 
 class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
