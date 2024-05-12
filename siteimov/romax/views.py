@@ -9,12 +9,22 @@ from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework.views import APIView
 
 #from utils import handle_uploaded_file
-from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS
+from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES,TIPOS_PROPRIEDADES
 from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
     TELEMOVEL_REGEX_FORMAT,MAX_TITULO_LEN,MAX_MORADA_LEN, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio, CODIGO_POSTAL_REGEX_FORMAT
 from django.db.models import Q
+from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+
+from .serializers import LoginSerializer
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
 
@@ -82,8 +92,13 @@ def propriedade(request, propriedade_id):
 
 def pesquisa_avancada(request):
     ordernar = [ "Preço ascendente", "Preço descendente", "Maior área", "Menor área", "Mais recente", "Mais antigo"]
+
     return render(request, 'romax/pesquisa_avancada.html', context={
-       'ordernar' : zip(range(1,len(ordernar) ),ordernar)
+       'ordernar' : zip(range(1,len(ordernar) ),ordernar),
+        'CIDADES':CIDADES,
+        'TIPOS_PROPRIEDADES':TIPOS_PROPRIEDADES,
+        'SUBTIPO_PROPRIEDADES': SUBTIPO_PROPRIEDADES,
+        'CLASSES_ENERGETICAS': CLASSES_ENERGETICAS
     })
 
 def resultados_pesquisa(request):
@@ -100,14 +115,16 @@ def resultados_pesquisa(request):
     match id_cidade:
         case -1:
             pass
-        case id_cidade  if id_cidade  in range(len(CIDADES)):
+        case id_cidade if id_cidade in range(len(CIDADES)):
             pesquisa_cliente.add(Q(cidade=id_cidade),Q.AND)
         case _:
             pass #TODO lancçar erro ou algo
 
-    if parametros_pesquisa['titulo'] != '':
-        pesquisa_cliente.add(Q(titulo=parametros_pesquisa['titulo']), Q.AND)
+    titulo = parametros_pesquisa.get('titulo', '')
 
+    if titulo != '':
+        pesquisa_cliente &= Q(titulo__icontains=titulo)
+        #pesquisa_cliente.add(Q(titulo=parametros_pesquisa['titulo']), Q.AND)
 
     return render(request, 'romax/resultados_pesquisas.html', context ={
         'Resultados': Propriedade.objects.filter(pesquisa_cliente)
@@ -150,7 +167,7 @@ def criar_conta(request):
         del idade
 
     #validar Estado Civil e Cliente inseriu um
-    estado_civil_valido = request.POST['Estado-Civil'] in  list(ESTADOS_CIVIS.keys()) + ['']
+    estado_civil_valido = request.POST['Estado-Civil'] in list(ESTADOS_CIVIS.keys()) + ['']
 
     #validar password
     pass_valida = pass_tem_requisitos(request.POST['password'])
@@ -371,30 +388,6 @@ def criar_propriedade_pagina(request, pedido_id):
             'Dono' : pedinte.nomeCompleto
         })
 
-def favorito(request, propriedade_id):
-
-    usr = Cliente.objects.get(user=request.user)
-    prop = Propriedade.objects.get(pk=propriedade_id)
-
-    if not usr.salvos.filter(pk=prop.pk).exists():
-        usr.salvos.add(prop)
-        print("prop added")
-    else:
-        usr.salvos.remove(prop)
-
-    return render(request, 'romax/propriedade.html',
-                  context={'propriedade': prop})
-#retornar HTPP RESPONSE
-
-
-def favoritos_page(request):
-    usr=Cliente.objects.get(user=request.user)
-    props_fav=usr.salvos.all()
-    return render(request, 'romax/resultados_pesquisas.html', context={
-        'Resultados': props_fav
-    })
-
-
 #################   Utilies   #################
 
 def transformar_em_tel(tel_str : str) -> int :
@@ -428,3 +421,188 @@ def pass_tem_requisitos(password: str)-> bool:
         return False
 
     return tem_simbolo(password) and tem_minuscula(password) and tem_numero(password) and tem_maiscula(password) and len(password) >=PASSWORD_LEN
+
+
+def favorito(request, propriedade_id):
+
+    usr = Cliente.objects.get(user=request.user)
+    prop = Propriedade.objects.get(pk=propriedade_id)
+
+    if not usr.salvos.filter(pk=prop.pk).exists():
+        usr.salvos.add(prop)
+        print("prop added")
+    else:
+        usr.salvos.remove(prop)
+
+    return render(request, 'romax/propriedade.html',
+                  context={'propriedade': prop})
+#retornar HTPP RESPONSE
+
+
+def favoritos_page(request):
+    usr=Cliente.objects.get(user=request.user)
+    props_fav=usr.salvos.all()
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': props_fav
+    })
+
+def propriedades_all(request):
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': Propriedade.objects.all()
+    })
+
+def imoveis_luxo(request):
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': Propriedade.objects.filter(preco__gt=150000)
+    })
+
+def search_avancada_treat(request):
+    if request.method == 'POST':
+
+        cidade = request.POST.get('cidades')
+        if cidade:
+            cidade = int(cidade)
+        else:
+            cidade = None
+
+        tipopropriedade = request.POST.get('tipopropriedade')
+        if tipopropriedade:
+            tipopropriedade = int(tipopropriedade)
+        else:
+            tipopropriedade = None
+
+
+        subtipopropriedade = request.POST.get('subtipopropriedade')
+        if subtipopropriedade:
+            subtipopropriedade = int(subtipopropriedade)
+        else:
+            subtipopropriedade = None
+
+
+        classeenergetica = request.POST.get('classeenergetica')
+        if classeenergetica:
+            classeenergetica = int(classeenergetica)
+        else:
+            classeenergetica = None
+
+        minwc = request.POST.get('minwc', 0)
+        if minwc:
+            minwc = int(minwc)
+        else:
+            minwc = None
+
+
+        maxwc = request.POST.get('maxwc', 0)
+        if maxwc:
+            maxwc = int(maxwc)
+        else:
+            maxwc = None
+
+
+        minquartos = request.POST.get('minquartos',0)
+        if minquartos:
+            minquartos = int(minquartos)
+        else:
+            minquartos = None
+
+        maxquartos = request.POST.get('maxquartos',0)
+        if maxquartos:
+            maxquartos = int(maxquartos)
+        else:
+            maxquartos = None
+
+        minarea = request.POST.get('minarea',0)
+        if minarea:
+            minarea = float(minarea)
+        else:
+            minarea = None
+
+        maxarea = request.POST.get('maxarea',0)
+        if maxarea:
+            maxarea = float(maxarea)
+        else:
+            maxarea = None
+
+
+        mobilia = request.POST.get('mobilia')
+        animais = request.POST.get('animais')
+        minpreco = request.POST.get('minpreco')
+        maxpreco = request.POST.get('maxpreco')
+        negociavel = request.POST.get('negociavel')
+        ordenar = request.POST.get('ordenar')
+
+        # Construct filter parameters
+        filters = {}
+
+        if cidade:
+            filters['cidade'] = cidade
+        if tipopropriedade:
+            filters['tipo'] = tipopropriedade
+        if subtipopropriedade:
+            filters['subtipo'] = subtipopropriedade
+        if classeenergetica:
+            filters['classeEnergetica'] = classeenergetica
+        if minwc:
+            filters['numWCs__gte'] = minwc
+        if maxwc:
+            filters['numWCs__lte'] = maxwc
+
+        if minquartos:
+            filters['numQuartos__gte'] = minquartos
+        if maxquartos:
+            filters['numQuartos__lte'] = maxquartos
+
+        if minarea:
+            filters['area__gte'] = minarea
+        if maxarea:
+            filters['area__lte'] = maxarea
+
+
+
+
+        if mobilia:
+            filters['mobilado'] = True if mobilia == 'true' else False
+        if animais:
+            filters['animais_estimacao'] = True if animais == 'true' else False
+        if minpreco:
+            filters['preco__gte'] = minpreco
+        if maxpreco:
+            filters['preco__lte'] = maxpreco
+        if negociavel:
+            filters['preco_negociavel'] = True if negociavel == 'true' else False
+
+        if filters:
+            propriedades = Propriedade.objects.filter(**filters)
+        else:
+            propriedades = Propriedade.objects.none()
+
+        return render(request, 'romax/resultados_pesquisas.html', context={
+            'Resultados': propriedades
+        })
+
+    return HttpResponse('Method Not Allowed', status=405)
+
+
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return JsonResponse({'token': token.key}, safe=False)
+        else:
+            return JsonResponse("{'error': 'Credenciais inválidas'}", safe=False, status=400)
+
+
+
+
+
+
+
+
+
+
+

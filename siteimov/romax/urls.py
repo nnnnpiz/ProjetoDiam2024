@@ -1,5 +1,7 @@
 from django.urls import include, path
 from . import views
+from .views import LoginView
+
 # (. significa que importa views da mesma directoria)
 
 
@@ -34,5 +36,13 @@ urlpatterns = [
     path('favorito/<int:propriedade_id>', views.favorito, name='favorito'),
 
     path('favoritos_page', views.favoritos_page, name='favoritos_page'),
+
+    path('propriedades_all', views.propriedades_all, name='propriedades_all'),
+
+    path('imoveis_luxo', views.imoveis_luxo, name='imoveis_luxo'),
+
+    path('pesquisa_avancada/search_avancada_treat', views.search_avancada_treat, name='search_avancada_treat'),
+
+    path('login_react/', LoginView.as_view(), name='login_react')
 ]
 
