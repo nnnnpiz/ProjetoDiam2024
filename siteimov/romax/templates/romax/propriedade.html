@@ -111,9 +111,12 @@
                 <!-- TODO Re-fazer para percorrer a lista associada à propriedade
                  que vai ser passada para o contexto e dps display de cada-->
 
-                <img src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
-                <img src="/romax/static/media/casa2.png" alt="Imagem 2" class="carousel-image">
-                <img src="/romax/static/media/casa.png" alt="Imagem 3" class="carousel-image">
+                {% for i in nomes_das_img %}
+                     <img src="/romax/static/media/imgs_props/{{i}}" alt="Imagem 1" class="carousel-image">
+                {% empty %}
+                     <img src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
+                {% endfor  %}
+
 
 
             </div>

@@ -212,6 +212,10 @@
                     const new_card = template.content.cloneNode(true).children[0];
                     new_card.onclick = function() {window.location.href = i.url;};
                     new_card.querySelector('img').src =  i.img
+                    new_card.querySelector('img').addEventListener('error', (e) => {
+                        new_card.querySelector('img').src = "/romax/static/media/Logo.png"
+                    }, true)
+
                     new_card.querySelector('.card-title').innerText = i.titulo
                     new_card.querySelector('.card-text').innerText = i.descricao
                     new_card.querySelector('.card-footer').children[0].innerText= i.cidade

@@ -42,18 +42,20 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
-    PedidosCriacaoAnuncio.objects.create(
-        user_id=User.objects.get(username='frego4242@gmail.com'),
-    )
+
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
         'CIDADES': CIDADES
         }
-    # if(request.user.is_authenticated):
-    #     cliente= Cliente.objects.get(user=request.user)
-    #     nomes = cliente.nomeCompleto.split(' ')
-    #     context['Cliente_1_nome']: nomes[0]
-    #     context['Cliente_ultimo_nome']: nomes[-1]
+    if(request.user.is_authenticated):
+        if hasattr(request.user, 'agenteimobiliario'):
+            agente = AgenteImobiliario.objects.get(user=request.user)
+            nomes = agente.nomeCompleto.split(' ')
+        elif hasattr(request.user, 'cliente'):
+            cliente = Cliente.objects.get(user=request.user)
+            nomes = cliente.nomeCompleto.split(' ')
+        context['Cliente_1_nome'] = nomes[0]
+        context['Cliente_ultimo_nome'] = nomes[-1]
 
     return render(request, 'romax/landing_page.html', context=context)
 
@@ -92,7 +94,8 @@ def propriedade(request, propriedade_id):
         return render(request,
         'romax/propriedade.html',
                       context={'propriedade': propriedade,
-                               'favorito': favorito
+                               'favorito': favorito,
+                               'nomes_das_img' :  list(filter(lambda i: i.startswith(str(propriedade.id)),os.listdir(settings.MEDIA_ROOT+ '\\imgs_props')))
                                }
                       )
     except (KeyError, Propriedade.DoesNotExist):
@@ -410,9 +413,7 @@ def criar_propriedade_pagina(request, pedido_id):
 def transformar_em_tel(tel_str : str) -> int :
     return int(re.sub('\s+', '', tel_str))
 def handle_uploaded_file(diretory: str, filename: str, file):
-    _, extension = os.path.splitext(file.name)
-    filename_with_extension = f'{filename}{extension}'
-    with open(f'{diretory}\\{filename_with_extension}', "wb+") as destination:
+    with open(f'{diretory}\\{filename}', "wb+") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
