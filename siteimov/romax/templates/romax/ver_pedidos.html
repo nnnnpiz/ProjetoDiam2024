@@ -1,0 +1,17 @@
+{% extends 'romax/base_page_BACKEND.html' %}
+
+{% block BACKEND_css_rest_of_page %}
+{%  endblock %}
+
+{% block BACKEND_rest_of_page %}
+<div class="list-group">
+    {% for pedido in Pedidos %}
+        <a href="{% url 'romax:criar_propriedade_pagina' pedido.id %}" class="list-group-item list-group-item-action " aria-current="true">
+            <h2>Pedido de: {{ pedido.user_id }}</h2>
+            <small>em {{ pedido.data_pedido }}</small>
+        </a>
+    {% empty %}
+        <a class="list-group-item disabled" href="#">Não há pedidos por tratar</a>
+    {% endfor %}
+</div>
+{%  endblock %}

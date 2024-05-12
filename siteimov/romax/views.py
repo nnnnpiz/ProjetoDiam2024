@@ -1,9 +1,9 @@
 import re
 import string
-
+import datetime
 from django.contrib.auth import authenticate
 from django.contrib.auth import login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,7 +13,7 @@ from django.urls import reverse
 #from utils import handle_uploaded_file
 from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS
 from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
-    TELEMOVEL_REGEX_FORMAT, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio
+    TELEMOVEL_REGEX_FORMAT,MAX_TITULO_LEN,MAX_MORADA_LEN, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio, CODIGO_POSTAL_REGEX_FORMAT
 from django.db.models import Q
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
@@ -28,6 +28,11 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
+    PedidosCriacaoAnuncio.objects.create(
+        user_id = User.objects.get(username='frego4242@gmail.com'),
+        data_fecho= datetime.datetime.now(),
+        tratado_por= AgenteImobiliario.objects.get(user=User.objects.get(username="filipe_super_zaddy@seplerzaddyclube.com"))
+    )
 
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
@@ -195,8 +200,6 @@ def criar_conta(request):
         user.delete()
     return HttpResponseRedirect(reverse('romax:landing_page'))
 
-
-
 def informacaopessoal(request):
     return render(request, 'romax/informacao_pessoal.html')
 
@@ -262,12 +265,17 @@ def salvar_alteracoes_conta(request):
 def sobre_page(request):
     return render(request, 'romax/sobre_page.html')
 
-#TODO @login_required()
+def ver_pedidos(request):
+    # TODO ver se o reuest.user é agente imobilario
+    return render(request,'romax/ver_pedidos.html', context={
+        'Pedidos' : PedidosCriacaoAnuncio.objects.all()#TODO .filter(tratado_por=None)#.order_by()
+    })
 def criar_propriedade_pagina(request, pedido_id):
     #TODO ver se o reuest.user é agente imobilario
 
     pedido = PedidosCriacaoAnuncio.objects.get(id=pedido_id)
-    if not pedido.exists() or pedido.data_fecho != None:
+    pedinte = Cliente.objects.get(user=User.objects.get(username=pedido.user_id))
+    if not PedidosCriacaoAnuncio.objects.filter(id=pedido_id).exists() :#or pedido.data_fecho != None:
         return HttpResponse(staus=400,
             content=f'''Ocorreu um problema:
             Existe o pedido: {pedido.exists()}
@@ -283,7 +291,7 @@ def criar_propriedade_pagina(request, pedido_id):
         codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
 
         morada_valida = len(request.POST['morada'])
-        class_energitica_valida = 'class-energetica' in in list(CLASSES_ENERGETICAS.keys())
+        class_energitica_valida = 'class-energetica' in  list(CLASSES_ENERGETICAS.keys())
         try:
             n_quartos = int(request.POST['n-quartos'])
             n_quartos_valido = n_quartos >= 0
@@ -341,7 +349,6 @@ def criar_propriedade_pagina(request, pedido_id):
         pedido.tratado_por = AgenteImobiliario.objects.get(user=request.user)
         pedido.save()
 
-        pedinte = user_id
         pedinte.add(propriedade_criada)
         if 'foto_principal' in request.FILES:
             handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
@@ -359,7 +366,6 @@ def criar_propriedade_pagina(request, pedido_id):
             'MAX_TITULO_LEN' : MAX_TITULO_LEN,
             'MAX_MORADA_LEN': MAX_MORADA_LEN,
             'OLDEST_HOUSE_IN_PORTUGAL': OLDEST_HOUSE_IN_PORTUGAL,
-
             'Dono' : pedinte.nomeCompleto
         })
 

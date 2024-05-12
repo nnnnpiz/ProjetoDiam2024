@@ -9,9 +9,8 @@
 {%  endblock %}
 
 {% block BACKEND_rest_of_page %}
-
-        {#  {% url 'romax:criar_propriedade_pagina' %} #}
-         <form method="post" id="FormAnunciarPropriedades" enctype="multipart/form-data" action="" >
+{# {% url 'romax:criar_propriedade_pagina' pedido.id %} #}
+        <form method="post" id="FormAnunciarPropriedades" enctype="multipart/form-data" action="" >
             {% csrf_token %}
             <h3 style="text-align: center">Preencha com os dados da propriedade a publicar</h3>
             <div style="height: 4vh"></div>

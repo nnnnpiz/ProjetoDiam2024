@@ -155,3 +155,9 @@ M
 siteimov/siteimov/settings.py,8\8\8866b2f29ecbd5d865c2805f89e93f156bafd02e
 F
 siteimov/romax/urls.py,3\5\356af0341d2e1705cd4498e44c9ad1294b59e8b6
+b
+2templates/AppDosAdmins/VerPedidosPropriedades.html,8\c\8c0372932e80bf0b7f46fe64aec60a048977e90d
+_
+/siteimov/romax/templates/romax/ver_pedidos.html,4\7\47bbe4e64da96664b9fde44432ddf6debb0ae01f
+e
+5siteimov/romax/templates/romax/base_page_BACKEND.html,0\9\0979edf3269934c4fc0a6a18f2e759274947c364
