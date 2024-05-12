@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.views import APIView
+from django.urls import reverse_lazy
 
 #from utils import handle_uploaded_file
 from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES,TIPOS_PROPRIEDADES
@@ -25,7 +26,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from .serializers import LoginSerializer
-
+from django.contrib.auth.decorators import permission_required
+from django.contrib.contenttypes.models import ContentType
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
 
 OLDEST_HOUSE_IN_PORTUGAL = 1083
@@ -39,20 +41,17 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 
 def landing_page(request):
     PedidosCriacaoAnuncio.objects.create(
-        user_id = User.objects.get(username='frego4242@gmail.com'),
-        data_fecho= datetime.datetime.now(),
-        tratado_por= AgenteImobiliario.objects.get(user=User.objects.get(username="filipe_super_zaddy@seplerzaddyclube.com"))
+        user_id=User.objects.get(username='frego4242@gmail.com'),
     )
-
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
         'CIDADES': CIDADES
         }
-    if(request.user.is_authenticated):
-        cliente= Cliente.objects.get(user=request.user)
-        nomes = cliente.nomeCompleto.split(' ')
-        context['Cliente_1_nome']: nomes[0]
-        context['Cliente_ultimo_nome']: nomes[-1]
+    # if(request.user.is_authenticated):
+    #     cliente= Cliente.objects.get(user=request.user)
+    #     nomes = cliente.nomeCompleto.split(' ')
+    #     context['Cliente_1_nome']: nomes[0]
+    #     context['Cliente_ultimo_nome']: nomes[-1]
 
     return render(request, 'romax/landing_page.html', context=context)
 
@@ -282,11 +281,13 @@ def salvar_alteracoes_conta(request):
 def sobre_page(request):
     return render(request, 'romax/sobre_page.html')
 
+#@permission_required('romax.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
 def ver_pedidos(request):
     # TODO ver se o reuest.user é agente imobilario
     return render(request,'romax/ver_pedidos.html', context={
-        'Pedidos' : PedidosCriacaoAnuncio.objects.all()#TODO .filter(tratado_por=None)#.order_by()
+        'Pedidos' : PedidosCriacaoAnuncio.objects.filter(tratado_por=None)#.order_by()
     })
+#@permission_required('romax.AgenteImobiliario')
 def criar_propriedade_pagina(request, pedido_id):
     #TODO ver se o reuest.user é agente imobilario
 
@@ -307,8 +308,10 @@ def criar_propriedade_pagina(request, pedido_id):
         codigo_postal = request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2']
         codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
 
-        morada_valida = len(request.POST['morada'])
+        morada_valida = 0 < len(request.POST['morada']) <= MAX_MORADA_LEN
         class_energitica_valida = 'class-energetica' in  list(CLASSES_ENERGETICAS.keys())
+
+        #TODO varevalidar esta validações
         try:
             n_quartos = int(request.POST['n-quartos'])
             n_quartos_valido = n_quartos >= 0
