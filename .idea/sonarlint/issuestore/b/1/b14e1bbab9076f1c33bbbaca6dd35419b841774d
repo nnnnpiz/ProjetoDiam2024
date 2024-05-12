@@ -17,8 +17,8 @@ Ypython:S905å":Remove or refactor this statement; it has no side effects.(·‡
 Xpython:S905ñ":Remove or refactor this statement; it has no side effects.(Ôù¸n8··óîö1
 rpython:S930÷"NAdd 1 missing arguments; 'pass_tem_requisitos' expects 1 positional arguments.(ÉÌèæøÿÿÿÿ8¹·óîö1
 Ypython:S1135Ÿ"4Complete the task associated to this "TODO" comment.(Ş‰Ç†úÿÿÿÿ8¹·óîö1
-tpython:S3776¤"TRefactor this function to reduce its Cognitive Complexity from 23 to the 15 allowed.(·Ÿ‰ş8¹·óîö1
+tpython:S3776¤"TRefactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.(·Ÿ‰ş8¹·óîö1
 Ypython:S1135¥"4Complete the task associated to this "TODO" comment.(Ş‰Ç†úÿÿÿÿ8¹·óîö1
-ypython:S3776˜"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(¢“ÿôşÿÿÿÿ8¹·óîö1
-Ppython:S1481›"+Remove the unused local variable "ordenar".(¨î÷óøÿÿÿÿ8¹·óîö1
-tpython:S3776Ò"TRefactor this function to reduce its Cognitive Complexity from 73 to the 15 allowed.(««Ğ8¹·óîö1
+ypython:S3776œ"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(¢“ÿôşÿÿÿÿ8¹·óîö1
+Ppython:S1481Ÿ"+Remove the unused local variable "ordenar".(¨î÷óøÿÿÿÿ8¹·óîö1
+tpython:S3776Ö"TRefactor this function to reduce its Cognitive Complexity from 73 to the 15 allowed.(««Ğ8¹·óîö1

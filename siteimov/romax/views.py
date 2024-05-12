@@ -380,7 +380,11 @@ def criar_propriedade_pagina(request, pedido_id):
 
         restantes_fotos = request.FILES.get('restantes_fotos', [])
         for i, img in enumerate(restantes_fotos):
-            handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_{i}', restantes_fotos)
+            #handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_{i}', restantes_fotos)
+
+            with open(settings.MEDIA_ROOT+ '\\imgs_props', 'wb') as destination:
+                for chunk in img.chunks():
+                    destination.write(chunk)
 
         return HttpResponse(status=200, content='Criado com sucesso')
     else:
