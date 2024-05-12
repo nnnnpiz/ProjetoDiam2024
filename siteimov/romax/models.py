@@ -125,3 +125,8 @@ class Oferta(models.Model):
     quantia = models.FloatField()
     mensagem = models.TextField(blank=True)
 
+MAX_EMAIL_LEN = 320
+class Comentario(models.Model):
+    nome= models.CharField(max_length=MAX_NAME_LEN)
+    email=models.CharField(max_length=MAX_EMAIL_LEN)
+    com= models.TextField()

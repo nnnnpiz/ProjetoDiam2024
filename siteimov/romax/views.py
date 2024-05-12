@@ -15,7 +15,7 @@ from django.urls import reverse_lazy
 from django.conf import settings
 
 #from utils import handle_uploaded_file
-from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES,TIPOS_PROPRIEDADES
+from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES, TIPOS_PROPRIEDADES, Comentario
 from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
     TELEMOVEL_REGEX_FORMAT,MAX_TITULO_LEN,MAX_MORADA_LEN, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio, CODIGO_POSTAL_REGEX_FORMAT
 from django.db.models import Q
@@ -606,6 +606,14 @@ def search_avancada_treat(request):
 
     return HttpResponse('Method Not Allowed', status=405)
 
+def indexReact(request):
+    return render(request, 'romax/index.html')
+
+def comentarioReact(request):
+    return render(request, 'romax/index.html')
+
+
+
 
 class LoginView(APIView):
     def post(self, request):
@@ -616,9 +624,21 @@ class LoginView(APIView):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'token': token.key}, safe=False)
+            return JsonResponse({'int': 0}, safe=False) #{'token': token.key}
         else:
-            return JsonResponse("{'error': 'Credenciais inválidas'}", safe=False, status=400)
+            return JsonResponse({'int': 1}, safe=False, status=400)
+
+class ComentarioView(APIView):
+    def post(self, request):
+        nome = request.data.get('nome')
+        email = request.data.get('email')
+        com = request.data.get('com')
+
+        c = Comentario.objects.create(nome=nome, email=email, com=com)
+        c.save()
+        return JsonResponse({'int': 0}, safe=False) #{'token': token.key}
+
+
 
 
 
