@@ -2,9 +2,7 @@
 
 {% block css_of_rest_of_page %}
 
-    body{
-        background-color: #dee9ff;
-    }
+
     .main_nav{
         padding: 50px 0;
     }
@@ -64,62 +62,75 @@
 {% block rest_of_page %}
     <body>
     <div class="main_nav">
-        <form action="" name="filtros" method="post">
+        <form action="{% url 'romax:search_avancada_treat' %}" name="filtros" method="post">
             {% csrf_token %}
             <div>
                 <h5 class="titles">Localização</h5>
-                <input type="text" class="form_control" id="distrito" placeholder="Distrito">
-                <input type="text" class="form_control" id="cidade" placeholder="Cidade">
-                <br>
-                <input type="text" class="form_control" id="freguesia" placeholder="Freguesia" width="150px">
+                <label for="cidades" class="form-label">Cidade</label>
+                <select class="form-select"  id="cidades" name="cidades">
+                    <option selected value=''></option>
+                    {% for id, cidade in CIDADES.items %}
+                    <option value="{{ id }}">{{ cidade }}</option>
+                    {% endfor %}
+                </select>
             </div>
+
             <div>
                 <h5 class="titles">Propriedade</h5>
-                <select class="form_control" id="tipopropriedade">
-                    <option value="" disabled selected>Tipo de Propriedade</option>
-                    <option value="0">Apartamento</option>
-                    <option value="1">Moradia</option>
-                    <option value="2">Outro</option>
+                <label for="tipopropriedade" class="form-label">Tipo Propriedade</label>
+                <select class="form-select"  id="tipopropriedade" name="tipopropriedade">
+                    <option selected value=''></option>
+                    {% for id, tipo in TIPOS_PROPRIEDADES.items %}
+                    <option value="{{ id }}">{{ tipo }}</option>
+                    {% endfor %}
                 </select>
-                <select class="form_control" id="subtipopropriedade">
-                    <option value="" disabled selected>Subtipo de Propriedade</option>
+
+                <label for="subtipopropriedade" class="form-label">SubTipo Propriedade</label>
+                <select class="form-select"  id="subtipopropriedade" name="subtipopropriedade">
+                    <option selected value=''></option>
+                    {% for id, subtipo in SUBTIPO_PROPRIEDADES.items %}
+                    <option value="{{ id }}">{{ subtipo }}</option>
+                    {% endfor %}
+                </select>
+
+
+                <label for="classeenergetica" class="form-label">Classe Energetica</label>
+                <select class="form-select"  id="classeenergetica" name="classeenergetica">
+                    <option selected value=''></option>
+                    {% for id, classe in CLASSES_ENERGETICAS.items %}
+                    <option value="{{ id }}">{{ classe }}</option>
+                    {% endfor %}
                 </select>
                 <br>
-                <select class="form_control" id="classeenergetica">
-                    <option value="" disabled selected>Classe Energética</option>
-                    <option value="A+">A+</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="B-">B-</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="F">F</option>
-                </select>
-                <br>
+
+
                 <span class="mini_titles">Nº WC's:</span>
                 <br>
                 <label for="minwc" class="label">Min:</label>
-                <input type="number" min="0" class="form_control" id="minwc">
+                <input type="number" class="form_control" id="minwc" name="minwc">
                 <br>
                 <label for="maxwc" class="label">Máx:</label>
-                <input type="number" min="0" class="form_control" id="maxwc">
+                <input type="number" class="form_control" id="maxwc" name="maxwc">
                 <br>
+
                 <span class="mini_titles">Nº quartos:</span>
                 <br>
                 <label for="minquartos" class="label">Min:</label>
-                <input type="number" min="0" class="form_control" id="minquartos">
+                <input type="number"  class="form_control" id="minquartos" name="minquartos">
                 <br>
                 <label for="maxquartos" class="label">Máx:</label>
-                <input type="number" min="0" class="form_control" id="maxquartos">
+                <input type="number" class="form_control" id="maxquartos" name="maxquartos">
                 <br>
+
                 <span class="mini_titles">Área:</span>
                 <br>
                 <label for="minarea" class="label">Min:</label>
-                <input type="number" min="0" class="form_control" id="minarea" placeholder="m2">
+                <input type="text" class="form_control" id="minarea" placeholder="m2" name="minarea">
                 <label for="maxarea" class="label">Máx:</label>
-                <input type="number" min="0" class="form_control" id="maxarea" placeholder="m2">
+                <input type="text" class="form_control" id="maxarea" placeholder="m2" name="maxarea">
                 <br>
+
+
                 <span class="mini_titles">Mobilado:</span>
                 <br>
                 <label for="mobilia" class="label">Sim</label>
@@ -127,6 +138,10 @@
                 <label for="smobilia" class="label">Não</label>
                 <input id="smobilia" type="radio" class="form_control" value="false">
                 <br>
+
+
+
+
                 <span class="mini_titles">Animais de estimação:</span>
                 <br>
                 <label for="animais" class="label">Sim</label>

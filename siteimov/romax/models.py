@@ -20,13 +20,13 @@ ESTADOS_CIVIS = {
       5: 'Separado judicialmente de pessoas e bens'
 }
 
-CLASSES_ENERGETICAS = {1: 'A+',
-                       2: 'A',
-                       3: 'B',
-                       4: 'B-',
-                       5: 'C',
-                       6: 'D',
-                       7: 'E'
+CLASSES_ENERGETICAS = {0: 'A+',
+                       1: 'A',
+                       2: 'B',
+                       3: 'B-',
+                       4: 'C',
+                       5: 'D',
+                       6: 'E'
 }
 
 CIDADES = {0: 'Grande Lisboa',
@@ -44,26 +44,22 @@ CIDADES = {0: 'Grande Lisboa',
            12: 'Viseu'
 }
 
-TIPOS_PROPRIEDADES = {1: 'Apartamento',
-                      2: 'Moradia',
-                      3: 'Outro'
+TIPOS_PROPRIEDADES = {0: 'Apartamento',
+                      1: 'Moradia',
+                      2: 'Outro'
 }
 
-SUBTIPO_PROPRIEDADES ={1:'Studio', #Inicio de subtipos de apartamentos
-                       2:'T1',
-                       3:'T2',
-                       4:'T3+',
-                       5:'Duplex', #tambem para moradias
-                       6:'Triplex', #tambem para moradias
-                       7:'Loft',
-                       8:'Garden', #Fim de subtipos de apartamentos
-                       9:'Penthouse', #Inicio de subtipos de moradias
-                       10:'Térrea',
-                       11:'Vila',
-                       12:'Campo',
-                       13:'Praia', #Fim de subtipos de moradia
-                       14:'Chalé', #O resto são para o tipo "Outro"
-                       15:'Loft'
+SUBTIPO_PROPRIEDADES ={0:'Studio',
+                       1:'T1',
+                       2:'T2',
+                       3:'T3+',
+                       4:'Duplex',
+                       5:'Triplex',
+                       6:'Penthouse',
+                       7:'Térrea',
+                       8:'Vila',
+                       9:'Campo',
+
 }
 
 
@@ -101,8 +97,8 @@ class Admin(models.Model):
 
 class Propriedade(models.Model):
     animais = models.BooleanField()
-    tipo = models.PositiveSmallIntegerField(choices=TIPOS_PROPRIEDADES.items())
-    subtipo = models.PositiveSmallIntegerField(choices=SUBTIPO_PROPRIEDADES.items())
+    tipo = models.PositiveSmallIntegerField(choices=TIPOS_PROPRIEDADES.items(), blank=True)
+    subtipo = models.PositiveSmallIntegerField(choices=SUBTIPO_PROPRIEDADES.items(), blank=True)
     dataDeCriacao= models.DateTimeField(auto_now_add=True)
     codigoPostal = models.CharField(max_length=8)
     morada = models.CharField(max_length=MAX_MORADA_LEN)
