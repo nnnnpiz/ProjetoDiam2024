@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.views import APIView
 from django.urls import reverse_lazy
+from django.conf import settings
 
 #from utils import handle_uploaded_file
 from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES,TIPOS_PROPRIEDADES
@@ -291,9 +292,9 @@ def ver_pedidos(request):
 def criar_propriedade_pagina(request, pedido_id):
     #TODO ver se o reuest.user é agente imobilario
 
-    pedido = PedidosCriacaoAnuncio.objects.get(id=pedido_id)
+    pedido = PedidosCriacaoAnuncio.objects.get(pk=pedido_id)
     pedinte = Cliente.objects.get(user=User.objects.get(username=pedido.user_id))
-    if not PedidosCriacaoAnuncio.objects.filter(id=pedido_id).exists() :#or pedido.data_fecho != None:
+    if not PedidosCriacaoAnuncio.objects.filter(pk=pedido_id).exists() or pedido.data_fecho != None:
         return HttpResponse(staus=400,
             content=f'''Ocorreu um problema:
             Existe o pedido: {pedido.exists()}
@@ -309,9 +310,10 @@ def criar_propriedade_pagina(request, pedido_id):
         codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
 
         morada_valida = 0 < len(request.POST['morada']) <= MAX_MORADA_LEN
-        class_energitica_valida = 'class-energetica' in  list(CLASSES_ENERGETICAS.keys())
+        class_energitica_valida = int(request.POST['class-energetica']) in  list(CLASSES_ENERGETICAS.keys())
+        tipo_valido = int(request.POST['tipo']) in  list(CLASSES_ENERGETICAS.keys())
+        subtipo_valido = int(request.POST['subtipo']) in  list(CLASSES_ENERGETICAS.keys())
 
-        #TODO varevalidar esta validações
         try:
             n_quartos = int(request.POST['n-quartos'])
             n_quartos_valido = n_quartos >= 0
@@ -329,8 +331,8 @@ def criar_propriedade_pagina(request, pedido_id):
         except(ValueError):
             area_valida = False
         try:
-            ano_construcao = float(request.POST['ano-construcao'])
-            ano_construcao_valido = datetime.datetime.now().year >= ano_construcao >= 1083
+            ano_construcao = int(request.POST['ano-construcao'])
+            ano_construcao_valido = datetime.datetime.now().year >= ano_construcao >= OLDEST_HOUSE_IN_PORTUGAL
         except(ValueError):
             ano_construcao_valido = False
 
@@ -340,13 +342,15 @@ def criar_propriedade_pagina(request, pedido_id):
             preco_valido = preco >= 0
         except(ValueError):
             preco_valido = False
+        print(request.POST)
 
-        if (not (area_valida and titulo_n_vazio and descricao_valido and cidade_opcao_valida and codigo_postal_valido and morada_valida and class_energitica_valida and n_quartos_valido and n_wcs_valido and ano_construcao_valido and preco_valido)):
-            return HttpResponse(staus=400, content= 'Dados submetidos invalidos')
+        if (not (tipo_valido and subtipo_valido and area_valida and titulo_n_vazio and descricao_valido and cidade_opcao_valida and codigo_postal_valido and morada_valida and class_energitica_valida and n_quartos_valido and n_wcs_valido and ano_construcao_valido and preco_valido)):
+            return HttpResponse(status=400, content= 'Dados submetidos invalidos')
         try:
             propriedade_criada = Propriedade.objects.create(
-                animais='animais' in request.POST,
-                # TODO TipoDePropriedadeantonio WTF you wanted here ?
+                animais= 'animais' in request.POST,
+                tipo = int(request.POST['tipo']),
+                subtipo = int(request.POST['subtipo']),
                 codigoPostal=codigo_postal,
                 morada=request.POST['morada'],
                 numQuartos=n_quartos,
@@ -356,29 +360,29 @@ def criar_propriedade_pagina(request, pedido_id):
                 negociavel='Negociavel' in request.POST,
                 descricao=request.POST['descricao'],
                 numWCs=n_wcs,
-                classeEnergetica=int(request.POST['class-energetica']),
-                # EstadoAnuncio TODO
+                classeEnergetica= int(request.POST['class-energetica']),
                 titulo=request.POST['titulo'],
                 preco=preco,
-                cidade=int(request.POST['Cidade'])
+                cidade=int(request.POST['Cidade']),
+                dono = pedinte
             )
-        except:
-            return HttpResponse(staus=500, content='Ocorreu um erro na inserção do pedido no sistema')
+        except Exception as e:
+            return HttpResponse(status=500, content='Ocorreu um erro na inserção do pedido no sistema' + str(e))
 
-        pedido.data_fecho = date(datetime.datetime.now())
+        pedido.data_fecho = datetime.datetime.now().date()
         pedido.tratado_por = AgenteImobiliario.objects.get(user=request.user)
         pedido.save()
 
-        pedinte.add(propriedade_criada)
+        #pedinte.add(propriedade_criada)
         if 'foto_principal' in request.FILES:
-            handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
+            handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
             # 'propriedade_criada_P'
 
         restantes_fotos = request.FILES.get('restantes_fotos', [])
         for i, img in enumerate(restantes_fotos):
-            handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_{i}', restantes_fotos)
+            handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_{i}', restantes_fotos)
 
-        return HttpResponse(staus=200, content='Criado com sucesso')
+        return HttpResponse(status=200, content='Criado com sucesso')
     else:
         return render(request, 'romax/criar_propriedade_page.html', context={
             'CIDADES': CIDADES,
@@ -386,7 +390,9 @@ def criar_propriedade_pagina(request, pedido_id):
             'MAX_TITULO_LEN' : MAX_TITULO_LEN,
             'MAX_MORADA_LEN': MAX_MORADA_LEN,
             'OLDEST_HOUSE_IN_PORTUGAL': OLDEST_HOUSE_IN_PORTUGAL,
-            'Dono' : pedinte.nomeCompleto
+            'Dono' : pedinte.nomeCompleto,
+            'TIPOS_PROPRIEDADES' : TIPOS_PROPRIEDADES,
+            'SUBTIPO_PROPRIEDADES' : SUBTIPO_PROPRIEDADES,
         })
 
 #################   Utilies   #################
@@ -394,7 +400,7 @@ def criar_propriedade_pagina(request, pedido_id):
 def transformar_em_tel(tel_str : str) -> int :
     return int(re.sub('\s+', '', tel_str))
 def handle_uploaded_file(diretory: str, filename: str, file):
-    with open(f'{diretory}/{filename}', "wb+") as destination:
+    with open(f'{diretory}\\{filename}', "wb+") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
