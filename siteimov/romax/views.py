@@ -1,3 +1,4 @@
+import os
 import re
 import string
 import datetime
@@ -345,7 +346,7 @@ def criar_propriedade_pagina(request, pedido_id):
             ano_construcao_valido = False
 
         try:
-            preco = float(request.POST['n-quartos'])
+            preco = float(request.POST['preco'])
             preco = round(preco, 2)
             preco_valido = preco >= 0
         except(ValueError):
@@ -386,9 +387,10 @@ def criar_propriedade_pagina(request, pedido_id):
             handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
             # 'propriedade_criada_P'
 
-        restantes_fotos = request.FILES.get('restantes_fotos', [])
+        restantes_fotos = request.FILES.getlist('restantes_fotos', [])
         for i, img in enumerate(restantes_fotos):
-            handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_{i}', restantes_fotos)
+            handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_{i}', img)
+
 
         return HttpResponse(status=200, content='Criado com sucesso')
     else:
@@ -408,7 +410,9 @@ def criar_propriedade_pagina(request, pedido_id):
 def transformar_em_tel(tel_str : str) -> int :
     return int(re.sub('\s+', '', tel_str))
 def handle_uploaded_file(diretory: str, filename: str, file):
-    with open(f'{diretory}\\{filename}', "wb+") as destination:
+    _, extension = os.path.splitext(file.name)
+    filename_with_extension = f'{filename}{extension}'
+    with open(f'{diretory}\\{filename_with_extension}', "wb+") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
