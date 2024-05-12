@@ -6,6 +6,7 @@ MAX_NAME_LEN=400
 MAX_MORADA_LEN=400
 MAX_TITULO_LEN=300
 PASSWORD_LEN = 15
+MAX_EMAIL_LEN = 320
 CC_LEN= 10 #TODO see this
 NOME_COMPLETO_REGEX_FORMAT = '([A-Z][a-z]{1,} ?)+[A-Z][a-z]{2,}'
 TELEMOVEL_REGEX_FORMAT = '9[0-9]{2} ?[0-9]{3} ?[0-9]{3}'
@@ -125,7 +126,6 @@ class Oferta(models.Model):
     quantia = models.FloatField()
     mensagem = models.TextField(blank=True)
 
-MAX_EMAIL_LEN = 320
 class Comentario(models.Model):
     nome= models.CharField(max_length=MAX_NAME_LEN)
     email=models.CharField(max_length=MAX_EMAIL_LEN)
