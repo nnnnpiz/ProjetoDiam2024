@@ -49,11 +49,15 @@ def landing_page(request):
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
         'CIDADES': CIDADES
         }
-    # if(request.user.is_authenticated):
-    #     cliente= Cliente.objects.get(user=request.user)
-    #     nomes = cliente.nomeCompleto.split(' ')
-    #     context['Cliente_1_nome']: nomes[0]
-    #     context['Cliente_ultimo_nome']: nomes[-1]
+    if (request.user.is_authenticated):
+        if hasattr(request.user, 'agenteimobiliario'):
+            agente = AgenteImobiliario.objects.get(user=request.user)
+            nomes = agente.nomeCompleto.split(' ')
+        elif hasattr(request.user, 'cliente'):
+            cliente = Cliente.objects.get(user=request.user)
+            nomes = cliente.nomeCompleto.split(' ')
+        context['Cliente_1_nome']= nomes[0]
+        context['Cliente_ultimo_nome']= nomes[-1]
 
     return render(request, 'romax/landing_page.html', context=context)
 
