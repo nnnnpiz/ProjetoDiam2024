@@ -59,7 +59,6 @@ SUBTIPO_PROPRIEDADES ={0:'Studio',
                        7:'Térrea',
                        8:'Vila',
                        9:'Campo',
-
 }
 
 
@@ -108,7 +107,6 @@ class Propriedade(models.Model):
     descricao = models.TextField()
     numWCs = models.PositiveSmallIntegerField()
     classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS.items())
-    #EstadoAnuncio TODO
     titulo = models.CharField(max_length=MAX_TITULO_LEN,unique=True)
     highlighted = models.BooleanField(default=False)
     preco = models.FloatField()
@@ -117,8 +115,8 @@ class Propriedade(models.Model):
 class PedidosCriacaoAnuncio(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     data_pedido = models.DateField(auto_now_add=True)
-    data_fecho = models.DateField(blank=True)
-    tratado_por = models.ForeignKey(AgenteImobiliario, blank=True, on_delete=models.CASCADE)
+    data_fecho = models.DateField(blank=True,null=True)
+    tratado_por = models.ForeignKey(AgenteImobiliario,null=True , blank=True, on_delete=models.CASCADE)
 class Oferta(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     propriedade_id = models.ForeignKey('Propriedade', on_delete=models.CASCADE)

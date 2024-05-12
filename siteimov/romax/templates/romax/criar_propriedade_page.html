@@ -99,14 +99,6 @@
                 <label class="form-label" for="preco">Preço: <span style="color: red">*</span></label>
                 <input id="preco" type="number"  min="0" step="0.01"  name="preco" class="form-control" required>
             </div>
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="Estado">Estado: <span style="color: red">*</span></label>
-                <select class="form-select" name="Estado" id="Estado">
-                    {% for Estado in ListaDeEstados %}
-                        <option  value="{{ Estado.0 }}" >{{ Estado.1 }}</option>
-                    {% endfor %}
-                </select>
-            </div>
             <div class="mb-3" >
                  <div class="form-check" >
                   <input class="form-check-input" type="checkbox" name="animais" value="animais" id="animais">
