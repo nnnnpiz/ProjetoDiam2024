@@ -11,7 +11,7 @@ NOME_COMPLETO_REGEX_FORMAT = '([A-Z][a-z]{1,} ?)+[A-Z][a-z]{2,}'
 TELEMOVEL_REGEX_FORMAT = '9[0-9]{2} ?[0-9]{3} ?[0-9]{3}'
 NIF_OR_CC_REGEX_FORMAT='[0-9]{3} ?[0-9]{3} ?[0-9]{3}'
 SYMBOLS_PASS =   '|\\!"@#£$§%€&/{()[]=}?\';,:.-_*+ºª´`~^'
-
+CODIGO_POSTAL_REGEX_FORMAT= "[0-9]{4}-[0-9]{3}"
 ESTADOS_CIVIS = {
       1: 'Solteiro',
       2: 'Casado',
@@ -87,8 +87,6 @@ class AgenteImobiliario(models.Model):
     estadoCivil = models.PositiveSmallIntegerField(choices=ESTADOS_CIVIS.items())
     nif = models.PositiveBigIntegerField(default=0)
     cc = models.CharField(max_length=CC_LEN,default=0)
-
-
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nomeCompleto = models.CharField(max_length=MAX_NAME_LEN, unique=True)
@@ -107,16 +105,16 @@ class Propriedade(models.Model):
     codigoPostal = models.CharField(max_length=8)
     morada = models.CharField(max_length=MAX_MORADA_LEN)
     numQuartos = models.PositiveSmallIntegerField()
-    area = models.FloatField()
-    anoConstrucao = models.PositiveSmallIntegerField()
+    area = models.FloatField() #acima de zero
+    anoConstrucao = models.PositiveSmallIntegerField() #maoir que a casa mais velha de Portugal (1083)
     mobilada = models.BooleanField()
     negociavel = models.BooleanField()
     descricao = models.TextField()
     numWCs = models.PositiveSmallIntegerField()
     classeEnergetica = models.PositiveSmallIntegerField(choices=CLASSES_ENERGETICAS.items())
     #EstadoAnuncio TODO
-    titulo = models.CharField(max_length=MAX_TITULO_LEN)
-    highlighted = models.BooleanField()
+    titulo = models.CharField(max_length=MAX_TITULO_LEN,unique=True)
+    highlighted = models.BooleanField(default=False)
     preco = models.FloatField()
     cidade = models.PositiveSmallIntegerField(choices=CIDADES.items())
 

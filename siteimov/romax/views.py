@@ -18,14 +18,17 @@ from django.db.models import Q
 
 EMAIL_VALIDATION_REGEX='^[a-z._-]+@[a-z]+.[a-z]+$' #TODO Voltar aqui
 
-
+OLDEST_HOUSE_IN_PORTUGAL = 1083
 EMAIL_VALIDATION_REGEX_COMPILE = re.compile(EMAIL_VALIDATION_REGEX)
 NOME_COMPLETO_REGEX_FORMAT_COMPILE = re.compile(NOME_COMPLETO_REGEX_FORMAT)
 TELEMOVEL_REGEX_FORMAT_COMPILE = re.compile(TELEMOVEL_REGEX_FORMAT)
 NIF_OR_CC_REGEX_FORMAT_COMPILE = re.compile(NIF_OR_CC_REGEX_FORMAT)
+
+CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
+
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
         'CIDADES': CIDADES
@@ -261,40 +264,84 @@ def sobre_page(request):
 
 #TODO @login_required()
 def criar_propriedade_pagina(request, pedido_id):
-    try:
-        agente = AgenteImobiliario.objects.get(user=request.user)
-        pedido = PedidosCriacaoAnuncio.objects.get(id=pedido_id)
-        user = User.objects.get(id=pedido.user_id)
-        pedinte = Cliente.objects.get(user=user)
-    except models.Model.DoesNotExist:
-        return HttpResponse(status=401, content="Não tens autorização para aceder")
+    #TODO ver se o reuest.user é agente imobilario
+
+    pedido = PedidosCriacaoAnuncio.objects.get(id=pedido_id)
+    if not pedido.exists() or pedido.data_fecho != None:
+        return HttpResponse(staus=400,
+            content=f'''Ocorreu um problema:
+            Existe o pedido: {pedido.exists()}
+            Data de fecho: {pedido.data_fecho}''')
+
     if request.method == 'POST':
+        # validar dados
+        titulo_n_vazio = 0 < len(request.POST['titulo']) <= MAX_TITULO_LEN
+        descricao_valido = 0 < len(request.POST['descricao'])
+        cidade_opcao_valida = int(request.POST['Cidade']) in list(CIDADES.keys())
 
-        # TODO validacao
+        codigo_postal = request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2']
+        codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
 
-        propriedade_criada = Propriedade.objects.create(
-            animais=request.POST['animais'],
-            # TODO TipoDePropriedadeantonio WTF you wanted here ?
-            codigoPostal=request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2'],
-            morada=request.POST['morada'],
-            numQuartos=request.POST['n-quartos'],
-            area=request.POST['area'],
-            anoConstrucao=request.POST['ano-construcao'],
-            mobilada='Mobilada' in request.POST,
-            negociavel='Negociavel' in request.POST,
-            descricao=request.POST['descricao'],
-            numWCs=request.POST['n-casas-banho'],
-            classeEnergetica=request.POST['class-energetica'],
-            # EstadoAnuncio TODO
-            titulo=request.POST['titulo'],
-            highlighted=request.POST[''],
-            preco=request.POST['preco'],
-            cidade=request.POST['Cidade']
-        )
-        #pedido.data_fecho = TODO
-        pedido.tratado_por = agente
+        morada_valida = len(request.POST['morada'])
+        class_energitica_valida = 'class-energetica' in in list(CLASSES_ENERGETICAS.keys())
+        try:
+            n_quartos = int(request.POST['n-quartos'])
+            n_quartos_valido = n_quartos >= 0
+        except(ValueError):
+            n_quartos_valido = False
+
+        try:
+            n_wcs = int(request.POST['n-casas-banho'])
+            n_wcs_valido = n_wcs >= 0
+        except(ValueError):
+            n_wcs_valido = False
+        try:
+            area = float(request.POST['area'])
+            area_valida = area >= 0
+        except(ValueError):
+            area_valida = False
+        try:
+            ano_construcao = float(request.POST['ano-construcao'])
+            ano_construcao_valido = datetime.datetime.now().year >= ano_construcao >= 1083
+        except(ValueError):
+            ano_construcao_valido = False
+
+        try:
+            preco = float(request.POST['n-quartos'])
+            preco = round(preco, 2)
+            preco_valido = preco >= 0
+        except(ValueError):
+            preco_valido = False
+
+        if (not (area_valida and titulo_n_vazio and descricao_valido and cidade_opcao_valida and codigo_postal_valido and morada_valida and class_energitica_valida and n_quartos_valido and n_wcs_valido and ano_construcao_valido and preco_valido)):
+            return HttpResponse(staus=400, content= 'Dados submetidos invalidos')
+        try:
+            propriedade_criada = Propriedade.objects.create(
+                animais='animais' in request.POST,
+                # TODO TipoDePropriedadeantonio WTF you wanted here ?
+                codigoPostal=codigo_postal,
+                morada=request.POST['morada'],
+                numQuartos=n_quartos,
+                area=area,
+                anoConstrucao=ano_construcao,
+                mobilada='Mobilada' in request.POST,
+                negociavel='Negociavel' in request.POST,
+                descricao=request.POST['descricao'],
+                numWCs=n_wcs,
+                classeEnergetica=int(request.POST['class-energetica']),
+                # EstadoAnuncio TODO
+                titulo=request.POST['titulo'],
+                preco=preco,
+                cidade=int(request.POST['Cidade'])
+            )
+        except:
+            return HttpResponse(staus=500, content='Ocorreu um erro na inserção do pedido no sistema')
+
+        pedido.data_fecho = date(datetime.datetime.now())
+        pedido.tratado_por = AgenteImobiliario.objects.get(user=request.user)
         pedido.save()
 
+        pedinte = user_id
         pedinte.add(propriedade_criada)
         if 'foto_principal' in request.FILES:
             handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
@@ -303,11 +350,17 @@ def criar_propriedade_pagina(request, pedido_id):
         restantes_fotos = request.FILES.get('restantes_fotos', [])
         for i, img in enumerate(restantes_fotos):
             handle_uploaded_file('diretory: str', f'{propriedade_criada.id}_{i}', restantes_fotos)
+
+        return HttpResponse(staus=200, content='Criado com sucesso')
     else:
         return render(request, 'romax/criar_propriedade_page.html', context={
-            'CIDADES' : CIDADES,
-            'CLASSES_ENERGETICAS':  CLASSES_ENERGETICAS,
-            #'Dono' : pedinte.nomeCompleto
+            'CIDADES': CIDADES,
+            'CLASSES_ENERGETICAS': CLASSES_ENERGETICAS,
+            'MAX_TITULO_LEN' : MAX_TITULO_LEN,
+            'MAX_MORADA_LEN': MAX_MORADA_LEN,
+            'OLDEST_HOUSE_IN_PORTUGAL': OLDEST_HOUSE_IN_PORTUGAL,
+
+            'Dono' : pedinte.nomeCompleto
         })
 
 #################   Utilies   #################
