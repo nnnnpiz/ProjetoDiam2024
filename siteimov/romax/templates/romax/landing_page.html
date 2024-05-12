@@ -197,7 +197,9 @@
 
                 const CARROSSEL_ELEM_LIST = [{% for propriedade in highlighted_properties %}
                 {
-                    img:  "/romax/static/media/Logo.png",
+                  //  img:  "/romax/static/media/Logo.png",
+                   img:  "/romax/static/media/imgs_props/{{ propriedade.id }}_P",
+
                     titulo: "{{ propriedade.titulo }}",
                     descricao: "{{ propriedade.descricao }}",
                     cidade: JSON.parse(CIDADES_JSON)[{{ propriedade.cidade }}],
@@ -240,6 +242,8 @@
                      CARROSSEL.removeChild(CARROSSEL.firstChild)
                      CARROSSEL.append(CARROSSEL_ELEM_LIST[last_showed])
                 }
+
+
          </script>
         </div>
     </div>
