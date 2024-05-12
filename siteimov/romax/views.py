@@ -290,8 +290,10 @@ def criar_propriedade_pagina(request, pedido_id):
         codigo_postal = request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2']
         codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
 
-        morada_valida = len(request.POST['morada'])
+        morada_valida = 0 < len(request.POST['morada']) <= MAX_MORADA_LEN
         class_energitica_valida = 'class-energetica' in  list(CLASSES_ENERGETICAS.keys())
+
+        #TODO varevalidar esta validações
         try:
             n_quartos = int(request.POST['n-quartos'])
             n_quartos_valido = n_quartos >= 0
@@ -369,6 +371,30 @@ def criar_propriedade_pagina(request, pedido_id):
             'Dono' : pedinte.nomeCompleto
         })
 
+def favorito(request, propriedade_id):
+
+    usr = Cliente.objects.get(user=request.user)
+    prop = Propriedade.objects.get(pk=propriedade_id)
+
+    if not usr.salvos.filter(pk=prop.pk).exists():
+        usr.salvos.add(prop)
+        print("prop added")
+    else:
+        usr.salvos.remove(prop)
+
+    return render(request, 'romax/propriedade.html',
+                  context={'propriedade': prop})
+#retornar HTPP RESPONSE
+
+
+def favoritos_page(request):
+    usr=Cliente.objects.get(user=request.user)
+    props_fav=usr.salvos.all()
+    return render(request, 'romax/resultados_pesquisas.html', context={
+        'Resultados': props_fav
+    })
+
+
 #################   Utilies   #################
 
 def transformar_em_tel(tel_str : str) -> int :
@@ -402,28 +428,3 @@ def pass_tem_requisitos(password: str)-> bool:
         return False
 
     return tem_simbolo(password) and tem_minuscula(password) and tem_numero(password) and tem_maiscula(password) and len(password) >=PASSWORD_LEN
-
-
-def favorito(request, propriedade_id):
-
-    usr = Cliente.objects.get(user=request.user)
-    prop = Propriedade.objects.get(pk=propriedade_id)
-
-    if not usr.salvos.filter(pk=prop.pk).exists():
-        usr.salvos.add(prop)
-        print("prop added")
-    else:
-        usr.salvos.remove(prop)
-
-    return render(request, 'romax/propriedade.html',
-                  context={'propriedade': prop})
-#retornar HTPP RESPONSE
-
-
-def favoritos_page(request):
-    usr=Cliente.objects.get(user=request.user)
-    props_fav=usr.salvos.all()
-    return render(request, 'romax/resultados_pesquisas.html', context={
-        'Resultados': props_fav
-    })
-
