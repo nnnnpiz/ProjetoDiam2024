@@ -17,7 +17,7 @@ from django.conf import settings
 #from utils import handle_uploaded_file
 from .models import CIDADES, CLASSES_ENERGETICAS, SYMBOLS_PASS, SUBTIPO_PROPRIEDADES,TIPOS_PROPRIEDADES
 from .models import Propriedade, Cliente, PASSWORD_LEN, ESTADOS_CIVIS, MAX_NAME_LEN, NOME_COMPLETO_REGEX_FORMAT, \
-    TELEMOVEL_REGEX_FORMAT,MAX_TITULO_LEN,MAX_MORADA_LEN, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio, CODIGO_POSTAL_REGEX_FORMAT
+    TELEMOVEL_REGEX_FORMAT,MAX_TITULO_LEN, Comentario ,MAX_MORADA_LEN, NIF_OR_CC_REGEX_FORMAT, AgenteImobiliario, PedidosCriacaoAnuncio, CODIGO_POSTAL_REGEX_FORMAT
 from django.db.models import Q
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render
@@ -42,6 +42,7 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
+
 
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
@@ -153,39 +154,42 @@ def criar_conta_page(request):
         'SYMBOLS_PASS' : SYMBOLS_PASS,
         'PASSWORD_LEN' : PASSWORD_LEN
     })
+def publicar_propriedade(request):
+    PedidosCriacaoAnuncio.objects.create(user_id=request.user)
 
+    return HttpResponseRedirect(
+        reverse('romax:landing_page')
+    )
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
+    print(request.POST)
     #Validar o email
-    email_valido = type(re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email'])) == type(re.Match)
+    email_valido = bool(re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email']))
 
     #validar o nome completo
     nome_completo = request.POST['nome-completo']
-    is_valid_length = len(nome_completo) <= MAX_NAME_LEN
-    is_valid_format = type(re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)) == type(re.Match)
+    is_valid_length = 0 < len(nome_completo) <= MAX_NAME_LEN
+    is_valid_format = bool(re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo))
 
 
     #validar Telemovel
     telemovel = request.POST['telemovel']
-    tel_valido = type(re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel) )== type(re.Match)
+    tel_valido = bool(re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel))
     telemovel = transformar_em_tel(telemovel)
 
     #Validar idade se Cliente inseriu uma
     if('idade' in request.POST):
-        idade = int(request.POST['idade'])
+        idade_valida = 18 <= int(request.POST['idade']) <=122
 
-        idade_valida = 18 <= idade <=122
-        del idade
-
-    #validar Estado Civil e Cliente inseriu um
-    estado_civil_valido = request.POST['Estado-Civil'] in list(ESTADOS_CIVIS.keys()) + ['']
+    #TODO validar Estado Civil se Cliente inseriu um
+    estado_civil_valido = int(request.POST['Estado-Civil']) in list(ESTADOS_CIVIS.keys())
 
     #validar password
     pass_valida = pass_tem_requisitos(request.POST['password'])
 
     if( not (email_valido and pass_valida and estado_civil_valido and  idade_valida and tel_valido and is_valid_format and is_valid_length) ):
-        return HttpResponse(status=401, content="Es retardado")
+        return HttpResponse(status=401, content="Há um campo invalido")
     #url:
     myfile = request.FILES.get('myfile')
     if myfile:
@@ -199,16 +203,12 @@ def criar_conta(request):
         uploaded_file_url = fs.url(filename)
     else:
         uploaded_file_url=''
-
-
-
     #Criar conta
     try:
         if not User.objects.filter(username=request.POST['email']).exists():
             user = User.objects.create_user(request.POST['email'],
                                         request.POST['email'],
-                                        request.POST['password']
-                                        )
+                                        request.POST['password'])
         else:
             return render(request, 'romax/criar_conta_page.html', context={'error_msg': "User ja existe",})
     except:
@@ -217,15 +217,16 @@ def criar_conta(request):
         Cliente.objects.create(
             user=user,
             nomeCompleto =nome_completo,
-            telemovel = int(telemovel),
+            telemovel = telemovel,
             idade = None if 'idade' not in request.POST else int(request.POST['idade']),
-            estadoCivil = None if 'Estado-Civil' not in request.POST else int(request.POST['Estado-Civil']),
-            nif = int(request.POST['NIF']),
-            cc = request.POST['CC'],
+            estadoCivil = int(request.POST['Estado-Civil']),
+            nif = int(request.POST['NIF'].replace(' ', '')),
+            cc = request.POST['CC'].replace(' ', ''),
             animais = 'tem-animais' in request.POST,
             urlprofilepic = uploaded_file_url
         )
-    except:
+    except Exception as e:
+        print(e)
         user.delete()
     return HttpResponseRedirect(reverse('romax:landing_page'))
 
@@ -234,29 +235,28 @@ def informacaopessoal(request):
 
 def salvar_alteracoes_conta(request):
     if request.method == 'POST':
-        re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE, request.POST['email'])
+        # Validar o email
+        email_valido = bool(re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE, request.POST['email']))
 
         # validar o nome completo
         nome_completo = request.POST['nome-completo']
-        len(nome_completo) <= MAX_NAME_LEN
-        re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo)
+        is_valid_length = 0 < len(nome_completo) <= MAX_NAME_LEN
+        is_valid_format = bool(re.fullmatch(NOME_COMPLETO_REGEX_FORMAT_COMPILE, nome_completo))
 
         # validar Telemovel
         telemovel = request.POST['telemovel']
-        re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel)
-        telemovel = telemovel.replace(' ', '')
+        tel_valido = bool(re.fullmatch(TELEMOVEL_REGEX_FORMAT_COMPILE, telemovel))
+        telemovel = transformar_em_tel(telemovel)
 
         # Validar idade se Cliente inseriu uma
         if ('idade' in request.POST):
-            idade = int(request.POST['idade'])
+            idade_valida = 18 <= int(request.POST['idade']) <= 122
 
-            18 <= idade <= 122
-            del idade
-
-        # validar Estado Civil e Cliente inseriu um
+        # TODO validar Estado Civil se Cliente inseriu um
+        estado_civil_valido = request.POST['Estado-Civil'] in list(ESTADOS_CIVIS.keys()) + ['']
 
         # validar password
-        pass_valida = pass_tem_requisitos()
+        pass_valida = pass_tem_requisitos(request.POST['password'])
 
         #buscar user: (se quiser aceder ao cliente p mudar fzr objc.cliente
         objc = User.objects.get(username=request.user.username)
@@ -294,13 +294,12 @@ def salvar_alteracoes_conta(request):
 def sobre_page(request):
     return render(request, 'romax/sobre_page.html')
 
-#@permission_required('romax.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
+@permission_required('auth.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
 def ver_pedidos(request):
-    # TODO ver se o reuest.user é agente imobilario
     return render(request,'romax/ver_pedidos.html', context={
         'Pedidos' : PedidosCriacaoAnuncio.objects.filter(tratado_por=None)#.order_by()
     })
-#@permission_required('romax.AgenteImobiliario')
+@permission_required('auth.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
 def criar_propriedade_pagina(request, pedido_id):
     #TODO ver se o reuest.user é agente imobilario
 
@@ -319,7 +318,7 @@ def criar_propriedade_pagina(request, pedido_id):
         cidade_opcao_valida = int(request.POST['Cidade']) in list(CIDADES.keys())
 
         codigo_postal = request.POST['codigo-postal-1'] + '-' + request.POST['codigo-postal-2']
-        codigo_postal_valido = re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal)
+        codigo_postal_valido =bool(re.fullmatch(CODIGO_POSTAL_REGEX_FORMAT_COMPILE, codigo_postal))
 
         morada_valida = 0 < len(request.POST['morada']) <= MAX_MORADA_LEN
         class_energitica_valida = int(request.POST['class-energetica']) in  list(CLASSES_ENERGETICAS.keys())
@@ -384,8 +383,6 @@ def criar_propriedade_pagina(request, pedido_id):
         pedido.data_fecho = datetime.datetime.now().date()
         pedido.tratado_por = AgenteImobiliario.objects.get(user=request.user)
         pedido.save()
-
-        #pedinte.add(propriedade_criada)
         if 'foto_principal' in request.FILES:
             handle_uploaded_file(settings.MEDIA_ROOT+ '\\imgs_props', f'{propriedade_criada.id}_P', request.FILES['foto_principal'])
             # 'propriedade_criada_P'

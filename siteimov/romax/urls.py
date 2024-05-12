@@ -41,6 +41,8 @@ urlpatterns = [
 
     path('imoveis_luxo', views.imoveis_luxo, name='imoveis_luxo'),
 
+    path('publicar_propriedade/', views.publicar_propriedade, name='publicar_propriedade'),
+
     path('pesquisa_avancada/search_avancada_treat', views.search_avancada_treat, name='search_avancada_treat'),
 
     path('login_react/', LoginView.as_view(), name='login_react')

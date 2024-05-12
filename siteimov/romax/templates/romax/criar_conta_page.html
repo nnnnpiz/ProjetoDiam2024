@@ -36,8 +36,7 @@
         </div>
         <div class="col">
             <label for="idade" class="form-label">Idade</label>
-            <input type="number" class="form-control" id="idade" name="idade"
-            min="18" max="122">
+            <input type="number" class="form-control" id="idade" name="idade" min="18" max="122">
         </div>
     </div>
 
@@ -62,7 +61,6 @@
         <div class="col">
             <label for="Estado-Civil" class="form-label">Estado Civil</label>
             <select class="form-select"  id="Estado-Civil" name="Estado-Civil">
-                <option selected value=''></option>
                 {% for id, estado_civil in ESTADOS_CIVIS.items %}
                 <option value="{{ id }}">{{ estado_civil }}</option>
                 {% endfor %}

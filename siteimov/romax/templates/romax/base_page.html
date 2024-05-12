@@ -259,7 +259,8 @@
 
             {% if  request.user.is_authenticated %}
                 {% if request.user.cliente %}
-                    <a href="#">Vender</a>
+
+                    <a href="{% url 'romax:publicar_propriedade' %}">Vender</a>
                     <a style="margin-left: auto;" href="{% url 'romax:favoritos_page' %}">Favoritos</a>
                 {% endif %}
                 <a style="margin-left: auto;" href="{% url 'romax:logout_view' %}">Logout</a>
