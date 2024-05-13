@@ -45,6 +45,8 @@ urlpatterns = [
 
     path('pesquisa_avancada/search_avancada_treat', views.search_avancada_treat, name='search_avancada_treat'),
 
+    path('comentarios', views.comentarios, name='comentarios'),
+
     path('login_react/', LoginView.as_view(), name='login_react'),
 
     path('comentario/', ComentarioView.as_view(), name='comentario'),
