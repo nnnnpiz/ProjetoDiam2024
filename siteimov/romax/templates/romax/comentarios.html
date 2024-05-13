@@ -1,0 +1,30 @@
+{% extends 'romax/base_page.html' %}
+
+
+{% block css_of_rest_of_page %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'romax/CSS/comentarios.css' %}">
+{% endblock %}
+
+
+{% block rest_of_page %}
+
+
+
+
+
+    <div class="com-cont">
+    <h2 class="com-header">COMENTARIOS: </h2>
+    <div class="comment">
+        {% for i in coms %}
+        <div class="single-comment">
+            <p class="comment-info">Nome: {{ i.nome }}</p>
+            <p class="comment-info">Email: {{ i.email }}</p>
+            <p class="comment-text">Comentario: {{ i.com }}</p>
+        </div>
+        <hr class="comment-divider">
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

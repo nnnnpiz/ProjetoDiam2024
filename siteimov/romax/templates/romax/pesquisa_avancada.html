@@ -1,62 +1,8 @@
 {% extends 'romax/base_page.html' %}
 
 {% block css_of_rest_of_page %}
-
-
-    .main_nav{
-        padding: 50px 0;
-    }
-
-    .main_nav form{
-        background-color: #fff;
-        max-width: 1200px;
-        width:70%;
-        margin: auto;
-        padding: 50px 70px;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
-    }
-
-    .main_nav .form_block{
-        text-align: center;
-        background-color: #5891ff;
-        border-radius: 50%;
-        font-size: 40px;
-        color: white;
-        width: 100px;
-        height: 100px;
-        margin: auto;
-        margin-bottom: 50px;
-        line-height: 100px;
-    }
-    .main_nav .form_control {
-        border-radius: 20px;
-        margin-bottom: 25px;
-        padding: 10px 20px;
-    }
-
-    .main_nav .titles{
-        font-family: Arial, sans-serif;
-        margin: 20px auto;
-        margin-bottom: 15px;
-        border-radius: 5px;
-    }
-
-    .main_nav .mini_titles{
-        font-family: Arial, sans-serif;
-        padding-bottom: 60px;
-        margin: 20px auto;
-        border-radius: 5px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        padding-bottom:30px;
-    }
-
-    input{
-        text-align:middle;
-    }
-
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'romax/CSS/pesquisa_avancada.css' %}">
 {% endblock %}
 
 {% block rest_of_page %}
@@ -70,7 +16,7 @@
                 <select class="form-select"  id="cidades" name="cidades">
                     <option selected value=''></option>
                     {% for id, cidade in CIDADES.items %}
-                    <option value="{{ id }}">{{ cidade }}</option>
+                    <option value="{{ id }}" name="cidades" >{{ cidade }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -81,7 +27,7 @@
                 <select class="form-select"  id="tipopropriedade" name="tipopropriedade">
                     <option selected value=''></option>
                     {% for id, tipo in TIPOS_PROPRIEDADES.items %}
-                    <option value="{{ id }}">{{ tipo }}</option>
+                    <option value="{{ id }}" name="tipopropriedade">{{ tipo }}</option>
                     {% endfor %}
                 </select>
 
@@ -134,38 +80,46 @@
                 <span class="mini_titles">Mobilado:</span>
                 <br>
                 <label for="mobilia" class="label">Sim</label>
-                <input id="mobilia" type="radio" class="form_control" value="true">
+                <input id="mobilia" name="mobilia" type="radio" class="form_control" value="1">
                 <label for="smobilia" class="label">Não</label>
-                <input id="smobilia" type="radio" class="form_control" value="false">
+                <input id="smobilia" name="mobilia" type="radio" class="form_control" value="0">
                 <br>
-
-
 
 
                 <span class="mini_titles">Animais de estimação:</span>
                 <br>
-                <label for="animais" class="label">Sim</label>
-                <input id="animais" type="radio" class="form_control" value="true">
-                <label for="sanimais" class="label">Não</label>
-                <input id="sanimais" type="radio" class="form_control" value="false">
+                <label for="temanimais" class="label">Sim</label>
+                <input id="temanimais" name="temanimais" type="radio" class="form_control" value="1">
+                <label for="stemanimais" class="label">Não</label>
+                <input id="stemanimais" name="temanimais" type="radio" class="form_control" value="0">
             </div>
+
+
+
+
             <div>
                 <h5 class="titles">Preço:</h5>
                 <label for="minpreco" class="label">Min:</label>
-                <input type="number" min="0" class="form_control" id="minpreco" placeholder="€">
+                <input type="text" class="form_control" id="minpreco" placeholder="€" name="minpreco">
                 <label for="maxpreco" class="label">Máx:</label>
-                <input type="number" min="0" class="form_control" id="maxpreco" placeholder="€">
+                <input type="text" class="form_control" id="maxpreco" placeholder="€" name="maxpreco">
             </div>
+
+
+
             <div>
                 <h5 class="titles">Preço negociável:</h5>
                 <label for="negociavel" class="label">Sim</label>
-                <input id="negociavel" type="radio" class="form_control" value="true">
+                <input id="negociavel" name="negociavel" type="radio" class="form_control" value="1">
                 <label for="snegociavel" class="label">Não</label>
-                <input id="snegociavel" type="radio" class="form_control" value="false">
+                <input id="snegociavel" name="negociavel" type="radio" class="form_control" value="0">
             </div>
+
+
+
             <div>
                 <h5 class="titles">Ordenar:</h5>
-                <select class="form_control" id="ordenar">
+                <select class="form_control" id="ordenar" name="ordenar">
                     <option value="" disabled selected>Critério de ordenação</option>
                     <option value="0">Preço ascendente</option>
                     <option value="1">Preço descendente</option>
@@ -178,15 +132,6 @@
             <input type="submit" class="submitButton" value="Procurar">
         </form>
     </div>
-    <script>
-        const minPriceInput = document.getElementById("minpreco");
-        const maxPriceInput = document.getElementById("maxpreco");
-
-        minPriceInput.addEventListener("change", function() {
-          const newMinPrice = parseInt(this.value);
-          if(newMinPrice > parseInt(maxPriceInput.value))
-            maxPriceInput.value = newMinPrice
-        });
-    </script>
+    <script src="/static/romax/javascript/pesquisa_avanc_logic.js"></script>
     </body>
 {% endblock %}

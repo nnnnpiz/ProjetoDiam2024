@@ -1,6 +1,6 @@
 from django.urls import include, path
 from . import views
-from .views import LoginView
+from .views import LoginView, ComentarioView
 
 # (. significa que importa views da mesma directoria)
 
@@ -45,6 +45,16 @@ urlpatterns = [
 
     path('pesquisa_avancada/search_avancada_treat', views.search_avancada_treat, name='search_avancada_treat'),
 
-    path('login_react/', LoginView.as_view(), name='login_react')
+    path('comentarios', views.comentarios, name='comentarios'),
+
+
+#REACTS
+    path('login_react/', LoginView.as_view(), name='login_react'),
+
+    path('comentario/', ComentarioView.as_view(), name='comentario'),
+
+    path('indexReact', views.indexReact, name='indexReact'),
+
+
 ]
 

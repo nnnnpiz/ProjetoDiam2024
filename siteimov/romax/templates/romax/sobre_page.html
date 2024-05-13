@@ -1,42 +1,43 @@
 {% extends 'romax/base_page.html' %}
 
-
 {% block css_of_rest_of_page %}
-
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'romax/CSS/sobre_page.css' %}">
 {% endblock %}
+
+
 
 
 {% block rest_of_page %}
 
-<div>
-    <h1>Sobre nós:</h1>
-    <p>
-        O mercado imobiliário está a sofrer uma profunda transformação. Na ROMAX acreditamos que esta transformação constitui uma grande oportunidade que só poderá ser aproveitada se utilizarmos um conjunto de ferramentas e técnicas muito específicas.
-    </p>
-    <p>
-        A primeira dúvida de quem cria um negócio próprio é saber se o seu investimento terá retorno. A primeira dúvida de um franchisado ROMAX é saber quando terá o retorno do investimento.
-    </p>
-    <p>
-        Estamos presentes em Portugal desde 2000, somos comprovadamente líderes de mercado com mais de 400 agências e 11.000 agentes.
-    </p>
-    <p>
-        As Agências e Agentes Independentes, formam uma força própria ao criar o seu negócio pessoal, dentro da nossa Rede. A ROMAX dá ao seu Franchisado a oportunidade de criar o seu próprio negócio de forma independente mas, em simultâneo, com o apoio de uma estrutura consolidada e ferramentas que o orientam na sua actividade, com base num sistema de cooperação e partilha, que favorece a concretização de negócios onde todos ganham.
-    </p>
-    <p>
-    As ferramentas do Franchising RE/MAX estão assentes sobre os pilares do negócio:
-    </p>
-        - Marca
-        - Publicidade
-        - Rede
-        - Tecnologia
-        - Formação
-        - Modelo de Gestão
-    <p>
-        Com modelos de gestão próprios, uma vasta rede e com recurso a ferramentas tecnológicas de apoio à gestão do negócio, a ROMAX garante um modelo de sucesso independente e rentável baseado num conceito de êxito com mais de 40 anos de experiência.
-    </p>
-
-
-
-</div>
+    <div class="cont-out">
+        <h1>Sobre nós:</h1>
+        <p>
+            O mercado imobiliário está a sofrer uma profunda transformação. Na ROMAX acreditamos que esta transformação constitui uma grande oportunidade que só poderá ser aproveitada se utilizarmos um conjunto de ferramentas e técnicas muito específicas.
+        </p>
+        <p>
+            A primeira dúvida de quem cria um negócio próprio é saber se o seu investimento terá retorno. A primeira dúvida de um franchisado ROMAX é saber quando terá o retorno do investimento.
+        </p>
+        <p>
+            Estamos presentes em Portugal desde 2000, somos comprovadamente líderes de mercado com mais de 400 agências e 11.000 agentes.
+        </p>
+        <p>
+            As Agências e Agentes Independentes, formam uma força própria ao criar o seu negócio pessoal, dentro da nossa Rede. A ROMAX dá ao seu Franchisado a oportunidade de criar o seu próprio negócio de forma independente mas, em simultâneo, com o apoio de uma estrutura consolidada e ferramentas que o orientam na sua actividade, com base num sistema de cooperação e partilha, que favorece a concretização de negócios onde todos ganham.
+        </p>
+        <p>
+        As ferramentas do Franchising RE/MAX estão assentes sobre os pilares do negócio:
+        </p>
+        <ul>
+            <li>Marca</li>
+            <li>Publicidade</li>
+            <li>Rede</li>
+            <li>Tecnologia</li>
+            <li>Formação</li>
+            <li>Modelo de Gestão</li>
+        </ul>
+        <p>
+            Com modelos de gestão próprios, uma vasta rede e com recurso a ferramentas tecnológicas de apoio à gestão do negócio, a ROMAX garante um modelo de sucesso independente e rentável baseado num conceito de êxito com mais de 40 anos de experiência.
+        </p>
+    </div>
 
 {% endblock %}

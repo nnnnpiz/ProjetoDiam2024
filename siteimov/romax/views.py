@@ -42,11 +42,10 @@ CODIGO_POSTAL_REGEX_FORMAT_COMPILE= re.compile(CODIGO_POSTAL_REGEX_FORMAT)
 # Create your views here.
 
 def landing_page(request):
-
-
     context = {
         'highlighted_properties': Propriedade.objects.filter(highlighted=True), #TODO ver depois criterio para highlighted ! (ex: mais favoritos, mendy quer por agora todas as highlighted)
-        'CIDADES': CIDADES
+        'CIDADES': CIDADES,
+
         }
     if(request.user.is_authenticated):
         if hasattr(request.user, 'agenteimobiliario'):
@@ -163,7 +162,6 @@ def publicar_propriedade(request):
 def criar_conta(request):
     # TODO page para se nao foi possivel criar conta (failed server-side validation or server error (5xx))
 
-    print(request.POST)
     #Validar o email
     email_valido = bool(re.fullmatch(EMAIL_VALIDATION_REGEX_COMPILE,request.POST['email']))
 
@@ -255,8 +253,6 @@ def salvar_alteracoes_conta(request):
         # TODO validar Estado Civil se Cliente inseriu um
         estado_civil_valido = request.POST['Estado-Civil'] in list(ESTADOS_CIVIS.keys()) + ['']
 
-        # validar password
-        pass_valida = pass_tem_requisitos(request.POST['password'])
 
         #buscar user: (se quiser aceder ao cliente p mudar fzr objc.cliente
         objc = User.objects.get(username=request.user.username)
@@ -482,6 +478,7 @@ def search_avancada_treat(request):
         else:
             cidade = None
 
+        print("OLAOLA => " + str(cidade))
         tipopropriedade = request.POST.get('tipopropriedade')
         if tipopropriedade:
             tipopropriedade = int(tipopropriedade)
@@ -540,25 +537,36 @@ def search_avancada_treat(request):
         else:
             maxarea = None
 
-
-
         mobilia = request.POST.get('mobilia')
-        animais = request.POST.get('animais')
-        minpreco = request.POST.get('minpreco')
-        maxpreco = request.POST.get('maxpreco')
+        temanimais = request.POST.get('temanimais')
+
+        minpreco = request.POST.get('minpreco',0)
+        if minpreco:
+            minpreco = float(minpreco)
+        else:
+            minpreco = None
+
+        maxpreco = request.POST.get('maxpreco',0)
+        if maxpreco:
+            maxpreco = float(maxpreco)
+        else:
+            maxpreco = None
+
         negociavel = request.POST.get('negociavel')
+
+
         ordenar = request.POST.get('ordenar')
 
         # Construct filter parameters
         filters = {}
 
-        if cidade:
+        if cidade is not None:
             filters['cidade'] = cidade
-        if tipopropriedade:
+        if tipopropriedade is not None:
             filters['tipo'] = tipopropriedade
-        if subtipopropriedade:
+        if subtipopropriedade is not None:
             filters['subtipo'] = subtipopropriedade
-        if classeenergetica:
+        if classeenergetica is not None:
             filters['classeEnergetica'] = classeenergetica
         if minwc:
             filters['numWCs__gte'] = minwc
@@ -575,31 +583,70 @@ def search_avancada_treat(request):
         if maxarea:
             filters['area__lte'] = maxarea
 
+        if mobilia is not None:
+            if mobilia == '1':
+                filters['mobilada'] = 1
+            elif mobilia == '0':
+                filters['mobilada'] = 0
+        else:
+            pass
 
+        if temanimais is not None:
+            if temanimais == '1':
+                filters['animais'] = 1
+            elif temanimais == '0':
+                filters['animais'] = 0
+        else:
+            pass
 
-
-
-        if mobilia:
-            filters['mobilado'] = True if mobilia == 'true' else False
-        if animais:
-            filters['animais_estimacao'] = True if animais == 'true' else False
         if minpreco:
             filters['preco__gte'] = minpreco
         if maxpreco:
             filters['preco__lte'] = maxpreco
-        if negociavel:
-            filters['preco_negociavel'] = True if negociavel == 'true' else False
+
+        if negociavel is not None:
+            if negociavel == '1':
+                filters['negociavel'] = 1
+            elif negociavel == '0':
+                filters['negociavel'] = 0
+        else:
+            pass
+
 
         if filters:
             propriedades = Propriedade.objects.filter(**filters)
         else:
             propriedades = Propriedade.objects.none()
 
+        #Sort:
+        if ordenar == '0':  # Preço ascendente
+            propriedades = propriedades.order_by('preco')
+        elif ordenar == '1':  # Preço descendente
+            propriedades = propriedades.order_by('-preco')
+        elif ordenar == '2':  # Maior área
+            propriedades = propriedades.order_by('-area')
+        elif ordenar == '3':  # Menor área
+            propriedades = propriedades.order_by('area')
+        elif ordenar == '4':  # Mais recente
+            propriedades = propriedades.order_by('-dataDeCriacao')
+        elif ordenar == '5':  # Mais antigo
+            propriedades = propriedades.order_by('dataDeCriacao')
+
         return render(request, 'romax/resultados_pesquisas.html', context={
             'Resultados': propriedades
         })
 
     return HttpResponse('Method Not Allowed', status=405)
+
+def comentarios(request):
+    return render(request, 'romax/comentarios.html', context={
+        'coms': Comentario.objects.all()
+    })
+
+
+########REACT:########################REACT:########################REACT:########################REACT:################
+def indexReact(request):
+    return render(request, 'romax/index.html')
 
 
 class LoginView(APIView):
@@ -611,9 +658,21 @@ class LoginView(APIView):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'token': token.key}, safe=False)
+            return JsonResponse({'int': 0, 'token': token.key}, safe=False) #{'token': token.key}
         else:
-            return JsonResponse("{'error': 'Credenciais inválidas'}", safe=False, status=400)
+            return JsonResponse({'int': 1, 'error': 'Invalid username or password.'}, safe=False, status=400)
+
+class ComentarioView(APIView):
+    def post(self, request):
+        nome = request.data.get('nome')
+        email = request.data.get('email')
+        com = request.data.get('com')
+
+        c = Comentario.objects.create(nome=nome, email=email, com=com)
+        c.save()
+        return JsonResponse({'int': 0}, safe=False) #{'token': token.key}
+
+########REACT:########################REACT:########################REACT:########################REACT:################
 
 
 
