@@ -1,27 +1,3 @@
 
-…python:S1192"`Define a constant instead of duplicating this literal 'romax/resultados_pesquisas.html' 5 times.(ºåë¹øÿÿÿÿ8İ¬¶øö1
-wpython:S1192E"SDefine a constant instead of duplicating this literal 'romax:landing_page' 4 times.(“Å®Ëûÿÿÿÿ8Ş¬¶øö1
-qpython:S1192c"MDefine a constant instead of duplicating this literal '\\imgs_props' 3 times.(ø´¥Óıÿÿÿÿ8Ş¬¶øö1
 Bpython:S125"Remove this commented out code.(‹†·°ıÿÿÿÿ8Ş¬¶øö1
 Xpython:S1135!"4Complete the task associated to this "TODO" comment.(ÍŸ£ÿıÿÿÿÿ8Ş¬¶øö1
-Xpython:S11350"4Complete the task associated to this "TODO" comment.(Ã³Òèøÿÿÿÿ8Ş¬¶øö1
-Rpython:S1135v"4Complete the task associated to this "TODO" comment.(×Â+8Ş¬¶øö1
-Hpython:S108‚")Either remove or fill this block of code.(ã‘Û¾8Ş¬¶øö1
-Ypython:S1135†"4Complete the task associated to this "TODO" comment.(ñ°›åüÿÿÿÿ8Ş¬¶øö1
-Hpython:S5780™"(Change or remove duplicates of this key.(Š¥«¼8Ş¬¶øö1
-Tpython:S1135¤"4Complete the task associated to this "TODO" comment.(ğåÎõ8ß¬¶øö1
-Tpython:S1135¹"4Complete the task associated to this "TODO" comment.(í™Ì”8ß¬¶øö1
-\python:S5754Ö"<Specify an exception class to catch or reraise the exception(ˆÊÉ·8ß¬¶øö1
-Xpython:S1481ó"3Remove the unused local variable "is_valid_length".(Şš¸¬üÿÿÿÿ8ß¬¶øö1
-Upython:S1481ı"0Remove the unused local variable "idade_valida".(Ëò»şÿÿÿÿ8ß¬¶øö1
-Opython:S1481ƒ"/Remove the unused local variable "pass_valida".(àŒ´´8ß¬¶øö1
-Npython:S1481ø".Remove the unused local variable "tel_valido".(’ ­…8ß¬¶øö1
-Spython:S1481ô"3Remove the unused local variable "is_valid_format".(à€ÈÖ8ß¬¶øö1
-Vpython:S1481€"7Remove the unused local variable "estado_civil_valido".(¢›'8ß¬¶øö1
-Upython:S1481ï"0Remove the unused local variable "email_valido".(¦“ÛŸøÿÿÿÿ8ß¬¶øö1
-Tpython:S1135ÿ"4Complete the task associated to this "TODO" comment.(í™Ì”8ß¬¶øö1
-tpython:S3776¯"TRefactor this function to reduce its Cognitive Complexity from 23 to the 15 allowed.(·Ÿ‰ş8ß¬¶øö1
-Ypython:S1135°"4Complete the task associated to this "TODO" comment.(Ş‰Ç†úÿÿÿÿ8ß¬¶øö1
-ypython:S3776¢"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(¢“ÿôşÿÿÿÿ8ß¬¶øö1
-Ppython:S1481¦"+Remove the unused local variable "ordenar".(¨î÷óøÿÿÿÿ8ß¬¶øö1
-tpython:S3776Ü"TRefactor this function to reduce its Cognitive Complexity from 73 to the 15 allowed.(««Ğ8ß¬¶øö1
