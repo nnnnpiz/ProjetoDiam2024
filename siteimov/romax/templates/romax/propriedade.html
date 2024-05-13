@@ -7,8 +7,6 @@
 
 
 {% block rest_of_page %}
-
-
     <div class="main-prop">
         <div class="container-prop">
         <h1>{{ propriedade.titulo }}</h1>
@@ -26,18 +24,12 @@
             {% endif %}
 
         <div class="carousel-container">
-            <div class="carousel">
-                <!-- TODO Re-fazer para percorrer a lista associada à propriedade
-                 que vai ser passada para o contexto e dps display de cada-->
-
+            <div class="carousel" >
                 {% for i in nomes_das_img %}
-                     <img src="/romax/static/media/imgs_props/{{i}}" alt="Imagem 1" class="carousel-image">
+                     <img  src="/romax/static/media/imgs_props/{{i}}" alt="Imagem 1" class="carousel-image">
                 {% empty %}
-                     <img src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
+                     <img  src="/romax/static/media/Logo.png" alt="Imagem 1" class="carousel-image">
                 {% endfor  %}
-
-
-
             </div>
             <div class="carousel-btn prev-btn" onclick="prevSlide()">
                              {# TODO mudar cor center e size #}
@@ -80,7 +72,6 @@
                     nao
                 {% endif %}
             </li>
-            <!-- TODO classe energetica ; Tipo e subtipo -->
             <li><strong>Ano Construção:</strong> {{ propriedade.anoConstrucao }} </li>
             <li><strong>Permite animais:</strong>
                 {% if propriedade.animais %}
@@ -163,12 +154,8 @@
             })
             .catch(error => {
                 console.error('Erro:', error);
-
             });
         }
     </script>
-
     </div>
-
-
 {% endblock %}

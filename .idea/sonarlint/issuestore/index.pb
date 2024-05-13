@@ -1123,3 +1123,7 @@ Q.idea/sonarlint/securityhotspotstore/9/2/92ca162b23cf2c5cd8602e3542733eae66b502
 Q.idea/sonarlint/securityhotspotstore/9/2/92c9ac29a43647e6807c9a7730c17e6a120e4b6c,b\c\bc6dcd95b019e57f5a4411757430d1fbd1075776
 _
 /siteimov/romax/templates/romax/propriedade.html,f\7\f769ac315243b03bd23cc89f9227b4ed27034191
+\
+,siteimov/romax/migrations/0022_comentario.py,c\c\ccfa483bd9afa161519149b6b89a5ab126e36756
+Å
+Q.idea/sonarlint/securityhotspotstore/f/7/f769ac315243b03bd23cc89f9227b4ed27034191,2\6\261ad16787b30963543cb5626b448e86d9a95239
