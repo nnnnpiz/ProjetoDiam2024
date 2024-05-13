@@ -1,0 +1,63 @@
+#welcome_div {
+            width : 50vw;
+            & #welcome_msg_div {
+                & #welcome_msg  {
+                    font-size: large;
+                    color: #725500;
+                }
+            }
+            margin: 10px;
+            border-radius: 12px;
+            background-color: #fff3cd;
+            padding: 5px 0 20px 0;//TODO ADD
+        }
+        #carrossel_outer_div {
+            display: grid;
+            grid-template-columns: 10% 1fr 10%;
+            grid-template-rows: min-content 1fr;
+            & #Title {
+                grid-area: 1 / 2 / 2 / 4;
+                color: #FAB605;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            & #left_button {
+                grid-area: 2 / 1 / 3 / 2;
+            }
+            & #Carrossel {
+                grid-area: 2 / 2 / 3 / 3;
+                display: flex;
+                flex-direction: row;
+                /* justify-content: space-evenly; */
+                column-gap: 20px;
+            }
+            & #right_button {
+                grid-area: 2 / 3 / 3 / 4;
+            }
+            & #right_button , & #left_button {
+                width: 100%;
+                /* color: red;  TODO change the buttons icon's colors*/
+                /* This centeres the div content vertically and horizontally */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    }
+
+
+        #pageintro{
+            padding:180px 0;
+        }
+
+        #pageintro p:first-of-type{
+            margin:0 0 20px 0;
+            text-transform:uppercase;
+            font-size:1.6rem;
+            letter-spacing:2px;
+        }
+
+        /* Media Queries
+        @-ms-viewport{width:device-width;}
+        @media screen and (min-width:1140px){
+            .hoc{max-width:1140px;}
+        }

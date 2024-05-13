@@ -47,12 +47,14 @@ urlpatterns = [
 
     path('comentarios', views.comentarios, name='comentarios'),
 
+
+#REACTS
     path('login_react/', LoginView.as_view(), name='login_react'),
 
     path('comentario/', ComentarioView.as_view(), name='comentario'),
 
     path('indexReact', views.indexReact, name='indexReact'),
 
-    path('comentarioReact', views.comentarioReact, name='comentarioReact'),
+
 ]
 

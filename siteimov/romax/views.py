@@ -253,8 +253,6 @@ def salvar_alteracoes_conta(request):
         # TODO validar Estado Civil se Cliente inseriu um
         estado_civil_valido = request.POST['Estado-Civil'] in list(ESTADOS_CIVIS.keys()) + ['']
 
-        # validar password
-        pass_valida = pass_tem_requisitos(request.POST['password'])
 
         #buscar user: (se quiser aceder ao cliente p mudar fzr objc.cliente
         objc = User.objects.get(username=request.user.username)
@@ -646,14 +644,9 @@ def comentarios(request):
     })
 
 
-########REACT:################
+########REACT:########################REACT:########################REACT:########################REACT:################
 def indexReact(request):
     return render(request, 'romax/index.html')
-
-def comentarioReact(request):
-    return render(request, 'romax/index.html')
-
-########REACT:################
 
 
 class LoginView(APIView):
@@ -665,9 +658,9 @@ class LoginView(APIView):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'int': 0}, safe=False) #{'token': token.key}
+            return JsonResponse({'int': 0, 'token': token.key}, safe=False) #{'token': token.key}
         else:
-            return JsonResponse({'int': 1}, safe=False, status=400)
+            return JsonResponse({'int': 1, 'error': 'Invalid username or password.'}, safe=False, status=400)
 
 class ComentarioView(APIView):
     def post(self, request):
@@ -679,7 +672,7 @@ class ComentarioView(APIView):
         c.save()
         return JsonResponse({'int': 0}, safe=False) #{'token': token.key}
 
-
+########REACT:########################REACT:########################REACT:########################REACT:################
 
 
 

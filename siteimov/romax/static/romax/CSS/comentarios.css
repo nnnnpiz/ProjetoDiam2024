@@ -1,0 +1,53 @@
+
+.com-cont {
+    margin: 20px auto;
+    margin-top: 100px;
+    padding: 20px;
+    max-width: 900px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.comment {
+    margin-bottom: 20px;
+}
+
+.com-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.single-comment {
+    margin-bottom: 20px;
+}
+
+.comment-info {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    animation: colorChange 3s infinite;
+}
+
+.comment-divider {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@keyframes colorChange {
+    0% { color: #ff0000; } /* Start color */
+    50% { color: #00ff00; } /* Middle color */
+    100% { color: #0000ff; } /* End color */
+}
+
