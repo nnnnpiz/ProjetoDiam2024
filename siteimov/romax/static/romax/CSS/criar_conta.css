@@ -1,0 +1,10 @@
+#criar_conta {
+        padding-top: 2.5%;
+        margin-left: 15%;
+        width : 70%;
+
+        & #submeter_div{
+            display: flex;
+            justify-content: end;
+        }
+    }
