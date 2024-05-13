@@ -297,7 +297,7 @@ def sobre_page(request):
 @permission_required('auth.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
 def ver_pedidos(request):
     return render(request,'romax/ver_pedidos.html', context={
-        'Pedidos' : PedidosCriacaoAnuncio.objects.filter(tratado_por=None)#.order_by()
+        'Pedidos' : PedidosCriacaoAnuncio.objects.filter(tratado_por=None)
     })
 @permission_required('auth.AgenteImobiliario',login_url=reverse_lazy('romax:landing_page'))
 def criar_propriedade_pagina(request, pedido_id):
